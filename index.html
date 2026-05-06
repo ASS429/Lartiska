@@ -3124,23 +3124,31 @@
         });
 
         /* ─────────────────────────────────────────────────────────
-           9. VIDEO AUTOPLAY — robust iOS Safari handling
+           9. VIDEO AUTOPLAY — robust iOS / Android handling
            ───────────────────────────────────────────────────────── */
         (function lazyPlayback() {
             const vids = document.querySelectorAll('video');
 
-            // iOS sometimes ignores the `muted` attribute → enforce in JS
+            // Some platforms (iOS, Android Lite, Samsung Internet) may ignore
+            // the `muted` HTML attribute → enforce programmatically
             vids.forEach(v => {
                 v.muted = true;
                 v.defaultMuted = true;
                 v.playsInline = true;
                 v.setAttribute('playsinline', '');
                 v.setAttribute('webkit-playsinline', '');
-                // Try to start as soon as data is available
+                // Boot once data lands
                 v.addEventListener('loadeddata', () => v.play().catch(() => {}), { once: true });
+                // Recover from accidental pauses (background tab, system interruption)
+                v.addEventListener('pause', () => {
+                    const r = v.getBoundingClientRect();
+                    if (r.bottom > 0 && r.top < window.innerHeight && document.visibilityState === 'visible') {
+                        setTimeout(() => v.play().catch(() => {}), 80);
+                    }
+                });
             });
 
-            // Pause when off-screen, resume when visible
+            // Pause off-screen, resume on entry
             const io = new IntersectionObserver(entries => {
                 entries.forEach(e => {
                     const v = e.target;
@@ -3153,14 +3161,24 @@
             }, { threshold: 0.05 });
             vids.forEach(v => io.observe(v));
 
-            // iOS workaround: first user interaction (tap, scroll, click) retries play
-            const kick = () => {
+            // Safety net: retry paused videos on EVERY user gesture
+            // (covers iOS, Android data-saver, Samsung battery saver, etc.)
+            const playPausedVisible = () => {
                 vids.forEach(v => {
-                    if (v.paused) v.play().catch(() => {});
+                    if (!v.paused) return;
+                    const r = v.getBoundingClientRect();
+                    if (r.bottom > 0 && r.top < window.innerHeight) {
+                        v.play().catch(() => {});
+                    }
                 });
             };
-            ['touchstart', 'touchend', 'click', 'scroll'].forEach(evt => {
-                window.addEventListener(evt, kick, { once: true, passive: true });
+            ['touchstart', 'touchend', 'click', 'scroll', 'pointerdown'].forEach(evt => {
+                window.addEventListener(evt, playPausedVisible, { passive: true });
+            });
+
+            // When tab regains focus, replay (Android Chrome backgrounds tabs aggressively)
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') playPausedVisible();
             });
         })();
 
