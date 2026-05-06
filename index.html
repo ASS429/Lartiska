@@ -2490,7 +2490,7 @@
 
                 <!-- 3D Logo video — RIGHT -->
                 <div class="welcome-video-wrap" id="welcomeVidWrap">
-                    <video class="welcome-video" id="welcomeVideo" src="Lartiska.mp4" aria-label="Logo Lartiska animé en 3D" autoplay muted loop playsinline preload="metadata" poster="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%2314100B'/%3E%3C/svg%3E"></video>
+                    <video class="welcome-video" id="welcomeVideo" src="Lartiska.mp4" aria-label="Logo Lartiska animé en 3D" autoplay muted loop playsinline webkit-playsinline disablepictureinpicture x-webkit-airplay="deny" preload="auto" poster="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%2314100B'/%3E%3C/svg%3E"></video>
                 </div>
 
                 <!-- Title — LEFT, artistic split -->
@@ -2520,7 +2520,7 @@
      ───────────────────────────────────────────────────────── -->
         <section class="video-section explosion" aria-label="Notre essence créative">
             <div class="video-bg">
-                <video src="V1.mp4" aria-hidden="true" autoplay muted loop playsinline preload="metadata"></video>
+                <video src="V1.mp4" aria-hidden="true" autoplay muted loop playsinline webkit-playsinline disablepictureinpicture x-webkit-airplay="deny" preload="auto"></video>
             </div>
 
             <div class="container">
@@ -2539,7 +2539,7 @@
      ───────────────────────────────────────────────────────── -->
         <section class="video-section premium" id="services" aria-label="Nos services">
             <div class="video-bg">
-                <video src="V5.mp4" aria-hidden="true" autoplay muted loop playsinline preload="metadata"></video>
+                <video src="V5.mp4" aria-hidden="true" autoplay muted loop playsinline webkit-playsinline disablepictureinpicture x-webkit-airplay="deny" preload="auto"></video>
             </div>
 
             <div class="container">
@@ -2592,7 +2592,7 @@
      ───────────────────────────────────────────────────────── -->
         <section class="video-section portfolio" id="portfolio" aria-label="Quelques projets à travers le Sénégal">
             <div class="video-bg">
-                <video src="V4.mp4" aria-hidden="true" autoplay muted loop playsinline preload="metadata"></video>
+                <video src="V4.mp4" aria-hidden="true" autoplay muted loop playsinline webkit-playsinline disablepictureinpicture x-webkit-airplay="deny" preload="auto"></video>
             </div>
 
             <div class="container">
@@ -2701,7 +2701,7 @@
      ───────────────────────────────────────────────────────── -->
         <section class="video-section contact" id="contact" aria-label="Contactez Lartiska">
             <div class="video-bg">
-                <video src="V6.mp4" aria-hidden="true" autoplay muted loop playsinline preload="metadata"></video>
+                <video src="V6.mp4" aria-hidden="true" autoplay muted loop playsinline webkit-playsinline disablepictureinpicture x-webkit-airplay="deny" preload="auto"></video>
             </div>
 
             <div class="container">
@@ -3023,6 +3023,11 @@
            5. SECTION 1 — Welcome scroll-driven parallax (GSAP)
            ───────────────────────────────────────────────────────── */
         (function welcomeScroll() {
+            const isMobile = window.matchMedia('(max-width: 900px)').matches;
+
+            // Lock GSAP onto the existing CSS centering so it doesn't get clobbered
+            gsap.set('#welcomeVidWrap', { yPercent: isMobile ? 0 : -50 });
+
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: '.welcome',
@@ -3032,54 +3037,29 @@
                 }
             });
 
-            // Background — slowest parallax (far layer)
-            tl.to('#welcomeBg', {
-                y: 80,
-                scale: 1.06,
-                ease: 'none'
-            }, 0);
+            tl.to('#welcomeBg', { y: 80, scale: 1.06, ease: 'none' }, 0);
+            tl.to('#welcomeEyebrow', { y: -60, opacity: 0, ease: 'power1.in' }, 0);
 
-            // Eyebrow at top — fade & rise
-            tl.to('#welcomeEyebrow', {
-                y: -60,
-                opacity: 0,
-                ease: 'power1.in'
-            }, 0);
+            // Logo video — scale + opacity in both modes;
+            // horizontal drift only on desktop where layout supports it
+            tl.fromTo('#welcomeVidWrap',
+                { scale: 0.95, x: 0, opacity: 1 },
+                {
+                    scale: isMobile ? 1.08 : 1.22,
+                    x: isMobile ? 0 : 80,
+                    opacity: isMobile ? 0.35 : 0.12,
+                    ease: 'none'
+                }, 0);
 
-            // Logo video on right — scales up & drifts, depth-of-field via blur
-            tl.fromTo('#welcomeVidWrap', {
-                scale: 0.95,
-                x: 0,
-                opacity: 1
-            }, {
-                scale: 1.22,
-                x: 80,
-                opacity: 0.12,
-                ease: 'none'
-            }, 0);
-
-            // Title on left — rises faster, fades
             tl.to('#welcomeTitle', {
                 y: -220,
-                x: -40,
+                x: isMobile ? 0 : -40,
                 opacity: 0,
                 ease: 'power1.in'
             }, 0);
 
-            // Sub-quote bottom — drifts down & fades
-            tl.to('#welcomeSub', {
-                y: 60,
-                opacity: 0,
-                ease: 'power1.in'
-            }, 0);
-
-            // Scroll hint: vanish quickly
-            tl.to('#scrollHint', {
-                opacity: 0,
-                y: 30,
-                duration: 0.25,
-                ease: 'power1.in'
-            }, 0);
+            tl.to('#welcomeSub', { y: 60, opacity: 0, ease: 'power1.in' }, 0);
+            tl.to('#scrollHint', { opacity: 0, y: 30, duration: 0.25, ease: 'power1.in' }, 0);
         })();
 
         /* ─────────────────────────────────────────────────────────
@@ -3144,10 +3124,23 @@
         });
 
         /* ─────────────────────────────────────────────────────────
-           9. Pause videos when off-screen (perf)
+           9. VIDEO AUTOPLAY — robust iOS Safari handling
            ───────────────────────────────────────────────────────── */
         (function lazyPlayback() {
             const vids = document.querySelectorAll('video');
+
+            // iOS sometimes ignores the `muted` attribute → enforce in JS
+            vids.forEach(v => {
+                v.muted = true;
+                v.defaultMuted = true;
+                v.playsInline = true;
+                v.setAttribute('playsinline', '');
+                v.setAttribute('webkit-playsinline', '');
+                // Try to start as soon as data is available
+                v.addEventListener('loadeddata', () => v.play().catch(() => {}), { once: true });
+            });
+
+            // Pause when off-screen, resume when visible
             const io = new IntersectionObserver(entries => {
                 entries.forEach(e => {
                     const v = e.target;
@@ -3157,10 +3150,18 @@
                         v.pause();
                     }
                 });
-            }, {
-                threshold: 0.05
-            });
+            }, { threshold: 0.05 });
             vids.forEach(v => io.observe(v));
+
+            // iOS workaround: first user interaction (tap, scroll, click) retries play
+            const kick = () => {
+                vids.forEach(v => {
+                    if (v.paused) v.play().catch(() => {});
+                });
+            };
+            ['touchstart', 'touchend', 'click', 'scroll'].forEach(evt => {
+                window.addEventListener(evt, kick, { once: true, passive: true });
+            });
         })();
 
         /* ─────────────────────────────────────────────────────────
