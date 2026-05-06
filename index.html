@@ -2272,8 +2272,19 @@
             .welcome-video-wrap {
                 width: 100%;
                 right: 0;
-                top: 56%;
-                height: 44vh;
+                left: 0;
+                top: 50%;
+                height: 62vh;
+                transform: translateY(-50%);
+                overflow: visible;
+            }
+            .welcome-video {
+                /* Scale the video up — the source has padding around the logo, this enlarges it */
+                width: 100%;
+                max-height: 62vh;
+                transform: scale(1.5);
+                transform-origin: center;
+                will-change: transform;
             }
             .welcome-sub {
                 bottom: 32px;
@@ -2348,7 +2359,8 @@
             .welcome-title { top: 22%; }
             .welcome-title h1 { font-size: clamp(36px, 12vw, 60px); }
             .welcome-sub { font-size: 13px; bottom: 24px; }
-            .welcome-video-wrap { top: 58%; height: 38vh; }
+            .welcome-video-wrap { top: 50%; height: 56vh; }
+            .welcome-video { transform: scale(1.55); max-height: 56vh; }
 
             .explosion,
             .premium,
@@ -3026,7 +3038,7 @@
             const isMobile = window.matchMedia('(max-width: 900px)').matches;
 
             // Lock GSAP onto the existing CSS centering so it doesn't get clobbered
-            gsap.set('#welcomeVidWrap', { yPercent: isMobile ? 0 : -50 });
+            gsap.set('#welcomeVidWrap', { yPercent: -50 });
 
             const tl = gsap.timeline({
                 scrollTrigger: {
