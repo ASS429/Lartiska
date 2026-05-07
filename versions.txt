@@ -1,0 +1,117 @@
+🚀 V1 → Capturer les clients + montrer le talent
+
+Le minimum vital pour que l’entreprise gagne immédiatement.
+
+Public :
+
+Accueil
+
+Services
+
+Réalisations
+
+Demande de devis
+
+Admin :
+
+login
+
+voir demandes
+
+changer statut
+
+gestion portfolio
+
+gestion services
+
+💥 Déjà énorme impact business.
+
+🚀 V2 → Organisation interne
+
+Quand ils sont à l’aise avec la plateforme.
+
+clients
+
+devis
+
+chantiers
+
+ouvriers
+
+paiements simples
+
+Là on entre dans la gestion professionnelle.
+
+🚀 V3 → Puissance maximale
+
+Quand l’entreprise a grandi.
+
+statistiques avancées
+
+photos par ouvriers
+
+étapes chantier
+
+automatisations
+
+exports
+
+notifications
+
+rôles complexes
+
+V1 = Impact immédiat
+
+Ton V1 est parfait car il répond au vrai problème urgent de Lartiska :
+
+montrer le talent
+
+capturer les demandes
+
+ne plus perdre les clients
+
+centraliser au moins les contacts
+
+Donc ROI rapide.
+
+V2 = Structuration interne
+
+Tu ajoutes la gestion (clients, devis, chantiers).
+Là tu transformes l’entreprise en machine organisée.
+
+V3 = entreprise “digitalisée”
+
+Statistiques, automatisation, exports, rôles, notifications…
+C’est la version “startup”.
+
+🔥 Petite amélioration que je te conseille
+
+Dans ton V1, ajoute un truc essentiel :
+
+✅ WhatsApp button + message pré-rempli
+Parce que c’est le canal le plus utilisé au Sénégal.
+
+Et aussi :
+✅ formulaire devis avec possibilité d’ajouter des photos
+
+Ça rend la plateforme extrêmement efficace dès le début.
+
+Focalisons nous sur prototype2.html et améliorons le. La vidéo Lartiska.mp4 est une animation 3D du logo de l'entreprise Lartiska, ajouter une première section avec la vidéo et du texte du genre "bienvenue sur lartiska" s'animant au scroll. puis avec effet parallax aboutir sur la deuxième section dans laquelle on va utiliser la vidéo V1.mp4 qui est une animation d'une explosion de couleurs. Puis continuant dans la même lancée utiliser la vidéo V5.mp4 comme background de la section "Service Premium" qui est elle aussi une animation explosive de couleurs. Ajouter une nouvelle section qui sera comme un portfolio "Quelques projets à travers le Sénégal" avec la vidéo V4.mp4 comme background. pour la dernière section qui servira à inciter l'utilisateur à parcourir le site et qui exposera tous les contacts et réseaux sociaux de l'entreprise, utiliser la vidéo V6.mp4 comme background. puis il y a aura un footer avec les logos des sponsors et toutes les entreprises avec lesquelles Lartiska travaille.  Je te laisse le champ libre animations ui/ux maintenant que tu as une large palette avec toutes les commandes qui ont été installées.
+Create layered scenes with foreground, midground, and backgroud for depth, Apply depth of field (sharp subject, blurred background), Add parallax so layers move at different speeds on scroll, Include image expansion and zoom tied to scroll position,Use shadows,blur and lighting to enhance realism, Make transitions smooth so scenes feel continuous, Overall style: cinematic, immersive, 3D-like depth, Add smooth Transitions + ambient motion for immersion, Fine-Tune timing (0.6-1.2s) for cinematic feel, create css keyframes for floating or bounce effects, generate hover effects like glow scale, rotate buttons, Animate text word by word, 
+
+
+https://www.figma.com/make/ZOs2BBZ4UfEFSh9SCWj6FJ/Flyer-page-mockups?t=esWIVuiNeBqCS8NU-1
+
+
+
+
+
+
+
+
+
+
+
+
+
+

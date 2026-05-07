@@ -1,0 +1,1378 @@
+<!doctype html>
+<html lang="fr" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lartiska - Art Mural Sénégalais Premium</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: '#D4AF37',
+            'gold-light': '#E8C547',
+            'gold-dark': '#B8960C',
+            terracotta: '#C45D3E',
+            ochre: '#CC7722',
+            sand: '#F5E6D3',
+            cream: '#FAF8F3',
+            charcoal: '#1A1A1A',
+            slate: '#2D2D2D',
+            warm: '#F9F5F0',
+            beige: '#E8E3DB'
+          },
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            body: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    .app-wrapper { height: 100%; overflow-y: auto; overflow-x: hidden; }
+    
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #F5E6D3; }
+    ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 4px; }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(212, 175, 55, 0.6); }
+    }
+    
+    .animate-fade-in { animation: fadeInUp 0.8s ease-out forwards; }
+    .animate-fade-in-delay-1 { animation: fadeInUp 0.8s ease-out 0.15s forwards; opacity: 0; }
+    .animate-fade-in-delay-2 { animation: fadeInUp 0.8s ease-out 0.3s forwards; opacity: 0; }
+    .animate-fade-in-delay-3 { animation: fadeInUp 0.8s ease-out 0.45s forwards; opacity: 0; }
+    .animate-slide-in { animation: slideInLeft 0.8s ease-out forwards; }
+    .float-animation { animation: float 3s ease-in-out infinite; }
+    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    
+    .nav-link {
+      position: relative;
+      font-weight: 500;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 2.5px;
+      background: linear-gradient(90deg, #D4AF37, #E8C547);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+    
+    .service-card {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(245,230,211,0.3) 100%);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    
+    .service-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 20px 60px rgba(212, 175, 55, 0.25);
+      background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(245,230,211,0.5) 100%);
+      border-color: rgba(212, 175, 55, 0.5);
+    }
+    
+    .stat-card {
+      background: linear-gradient(135deg, #FAF8F3 0%, #F5E6D3 100%);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    
+    .testimonial-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(245,230,211,0.5) 100%);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    }
+    
+    .testimonial-card:hover {
+      box-shadow: 0 20px 60px rgba(212, 175, 55, 0.15);
+    }
+    
+    .filter-btn {
+      transition: all 0.3s ease;
+    }
+    .filter-btn.active {
+      background: linear-gradient(135deg, #D4AF37 0%, #E8C547 100%);
+      color: white;
+      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+    }
+    
+    .portfolio-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      aspect-ratio: 1;
+    }
+    
+    .portfolio-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.8) 0%, rgba(196, 93, 62, 0.6) 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 10;
+    }
+    
+    .portfolio-item:hover::before {
+      opacity: 1;
+    }
+    
+    .portfolio-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px;
+      background: linear-gradient(180deg, transparent 0%, rgba(26,26,26,0.9) 100%);
+      transform: translateY(20px);
+      transition: transform 0.4s ease;
+      z-index: 20;
+    }
+    
+    .portfolio-item:hover .portfolio-info {
+      transform: translateY(0);
+    }
+    
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+    
+    .form-input {
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .form-input:focus {
+      background: rgba(255,255,255,0.9);
+      border-color: #D4AF37;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+    }
+    
+    .page { display: none; }
+    .page.active { display: block; }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #D4AF37 0%, #CC7722 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      animation: float 2s ease-in-out infinite;
+      box-shadow: 0 10px 40px rgba(34, 197, 94, 0.4);
+    }
+    
+    .whatsapp-float:hover {
+      box-shadow: 0 15px 50px rgba(34, 197, 94, 0.6);
+      transform: scale(1.1);
+    }
+    
+    .hero-image {
+      background: linear-gradient(135deg, #D4AF37 0%, #CC7722 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30L30 0z' fill='none' stroke='%23ffffff' stroke-width='0.5' opacity='0.1'/%3E%3C/svg%3E");
+      opacity: 0.3;
+    }
+    
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.3) 50%, transparent 100%);
+    }
+    
+    .cta-button {
+      background: linear-gradient(135deg, #D4AF37 0%, #E8C547 100%);
+      color: white;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 50px rgba(212, 175, 55, 0.4);
+    }
+    
+    .secondary-button {
+      background: rgba(255,255,255,0.9);
+      color: #1A1A1A;
+      font-weight: 600;
+      border: 2px solid #D4AF37;
+      transition: all 0.3s ease;
+    }
+    
+    .secondary-button:hover {
+      background: #D4AF37;
+      color: white;
+      transform: translateY(-3px);
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-cream text-slate font-body" style="background-color: #FAF8F3;">
+  <div class="app-wrapper"><!-- ==================== NAVIGATION ==================== -->
+   <nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-gold/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex items-center justify-between h-20"><!-- Logo --> <a href="#" onclick="navigateTo('home'); return false;" class="flex items-center space-x-3 group">
+       <div class="w-14 h-14 rounded-full bg-gradient-to-br from-gold to-ochre flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
+        <svg class="w-8 h-8 text-white" viewbox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.5L19 9l-7 3.5L5 9l7-4.5z" />
+        </svg>
+       </div><span class="font-display text-2xl font-bold gradient-text">Lartiska</span> </a> <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center space-x-1"><a href="#" onclick="navigateTo('home'); return false;" class="nav-link text-slate hover:text-gold px-3 py-2 active" data-page="home">Accueil</a> <a href="#" onclick="navigateTo('services'); return false;" class="nav-link text-slate hover:text-gold px-3 py-2" data-page="services">Services</a> <a href="#" onclick="navigateTo('portfolio'); return false;" class="nav-link text-slate hover:text-gold px-3 py-2" data-page="portfolio">Réalisations</a> <a href="#" onclick="navigateTo('about'); return false;" class="nav-link text-slate hover:text-gold px-3 py-2" data-page="about">À propos</a> <a href="#" onclick="navigateTo('contact'); return false;" class="nav-link text-slate hover:text-gold px-3 py-2" data-page="contact">Contact</a>
+      </div><!-- CTA Button -->
+      <div class="hidden md:block"><button onclick="navigateTo('contact'); return false;" id="nav-cta" class="cta-button px-6 py-2.5 rounded-full text-sm hover:text-white"> Demander un devis </button>
+      </div><!-- Mobile Menu Button --> <button onclick="toggleMobileMenu()" class="md:hidden text-slate p-2 hover:text-gold transition-colors">
+       <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+       </svg>
+       <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+       </svg></button>
+     </div>
+    </div><!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed top-20 right-0 bottom-0 w-80 bg-white backdrop-blur-lg md:hidden shadow-2xl">
+     <div class="flex flex-col p-6 space-y-4 pt-8"><a href="#" onclick="navigateTo('home'); toggleMobileMenu(); return false;" class="text-lg font-medium text-slate hover:text-gold transition-colors py-2">Accueil</a> <a href="#" onclick="navigateTo('services'); toggleMobileMenu(); return false;" class="text-lg font-medium text-slate hover:text-gold transition-colors py-2">Services</a> <a href="#" onclick="navigateTo('portfolio'); toggleMobileMenu(); return false;" class="text-lg font-medium text-slate hover:text-gold transition-colors py-2">Réalisations</a> <a href="#" onclick="navigateTo('about'); toggleMobileMenu(); return false;" class="text-lg font-medium text-slate hover:text-gold transition-colors py-2">À propos</a> <a href="#" onclick="navigateTo('contact'); toggleMobileMenu(); return false;" class="text-lg font-medium text-slate hover:text-gold transition-colors py-2">Contact</a>
+      <div class="section-divider my-2"></div><button onclick="navigateTo('contact'); toggleMobileMenu(); return false;" class="cta-button w-full px-6 py-3 rounded-full text-white">Devis gratuit</button>
+     </div>
+    </div>
+   </nav><!-- ==================== HOME PAGE ==================== -->
+   <div id="page-home" class="page active"><!-- HERO SECTION -->
+    <section class="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+     <div class="max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-12 items-center"><!-- Hero Content -->
+       <div>
+        <div class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-gold/20 to-ochre/20 rounded-full mb-8 animate-fade-in border border-gold/20"><span class="w-2.5 h-2.5 bg-gold rounded-full mr-2"></span> <span class="text-gold font-semibold text-sm">Transformation Artistique de Qualité</span>
+        </div>
+        <h1 id="hero-title" class="font-display text-5xl sm:text-6xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-in-delay-1 text-slate">Nous transformons vos <span class="gradient-text">murs</span> en <span class="gradient-text">œuvres d'art</span></h1>
+        <p class="text-lg text-slate/70 mb-8 leading-relaxed max-w-lg animate-fade-in-delay-2">De la peinture façade à la décoration murale personnalisée, créez des espaces qui vous ressemblent. Découvrez l'expertise artistique d'une équipe passionnée au service de vos projets.</p>
+        <div class="flex flex-col sm:flex-row gap-4 animate-fade-in-delay-3"><button onclick="navigateTo('contact'); return false;" id="hero-cta" class="cta-button px-8 py-4 rounded-full text-lg hover:text-white"> Demander un devis </button> <button onclick="navigateTo('portfolio'); return false;" class="secondary-button px-8 py-4 rounded-full text-lg"> Voir nos réalisations </button>
+        </div><!-- Trust indicators -->
+        <div class="mt-12 pt-8 border-t border-gold/20 flex items-center space-x-8 text-sm">
+         <div class="flex items-center space-x-2">
+          <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+          </svg><span class="text-slate/60">Projets professionnels</span>
+         </div>
+         <div class="flex items-center space-x-2">
+          <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+          </svg><span class="text-slate/60">Qualité garantie</span>
+         </div>
+        </div>
+       </div><!-- Hero Visual -->
+       <div class="relative hidden lg:block">
+        <div class="relative w-full aspect-square max-w-md mx-auto"><!-- Decorative frame -->
+         <div class="absolute inset-0 border-2 border-gold/40 rounded-3xl transform rotate-3"></div>
+         <div class="absolute inset-8 border border-gold/20 rounded-2xl transform -rotate-2"></div><!-- Main image -->
+         <div class="absolute inset-12 rounded-xl overflow-hidden hero-image shadow-2xl flex items-center justify-center">
+          <svg class="w-32 h-32 text-white/40" fill="currentColor" viewbox="0 0 24 24"><path d="M21 3H3C2 3 1 4 1 5v14c0 1.1.9 2 2 2h18c1 0 2-1 2-2V5c0-1-1-2-2-2zM5 17l3.5-4.5 2.5 3.01L14.5 11l4.5 6H5z" />
+          </svg>
+         </div><!-- Floating badges -->
+         <div class="absolute -top-6 -right-6 w-24 h-24 bg-gradient-to-br from-gold to-ochre rounded-full flex items-center justify-center shadow-lg float-animation">
+          <div class="text-center">
+           <div class="text-white font-display font-bold text-2xl">
+            250+
+           </div>
+           <div class="text-white/80 text-xs">
+            Projets
+           </div>
+          </div>
+         </div>
+         <div class="absolute -bottom-4 -left-4 w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-xl" style="animation-delay: 0.5s;">
+          <svg class="w-10 h-10 text-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- KEY STATS SECTION -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-slate to-charcoal text-white">
+     <div class="max-w-7xl mx-auto">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+       <div class="text-center">
+        <div class="flex justify-center mb-4">
+         <svg class="w-8 h-8 text-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
+         </svg>
+        </div>
+        <div class="font-display text-4xl font-bold text-gold mb-2" id="stat-projects">
+         250+
+        </div>
+        <p class="text-gray-300 text-sm">Projets réalisés</p>
+       </div>
+       <div class="text-center">
+        <div class="flex justify-center mb-4">
+         <svg class="w-8 h-8 text-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+         </svg>
+        </div>
+        <div class="font-display text-4xl font-bold text-gold mb-2" id="stat-years">
+         15+
+        </div>
+        <p class="text-gray-300 text-sm">Ans d'expérience</p>
+       </div>
+       <div class="text-center">
+        <div class="flex justify-center mb-4">
+         <svg class="w-8 h-8 text-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+         </svg>
+        </div>
+        <div class="font-display text-4xl font-bold text-gold mb-2">
+         12+
+        </div>
+        <p class="text-gray-300 text-sm">Régions couvertes</p>
+       </div>
+       <div class="text-center">
+        <div class="flex justify-center mb-4">
+         <svg class="w-8 h-8 text-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+         </svg>
+        </div>
+        <div class="font-display text-4xl font-bold text-gold mb-2">
+         100%
+        </div>
+        <p class="text-gray-300 text-sm">Clients satisfaits</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- SERVICES SECTION -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+     <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16"><span class="text-gold font-semibold tracking-wider uppercase text-sm">Notre Expertise</span>
+       <h2 class="font-display text-4xl sm:text-5xl font-bold mt-4 text-slate mb-4">Services <span class="gradient-text">Professionnels</span></h2>
+       <p class="text-lg text-slate/60 max-w-2xl mx-auto">Une gamme complète de services pour sublimer vos espaces</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-6"><!-- Service 1 -->
+       <div class="service-card rounded-2xl p-8 text-center cursor-pointer" onclick="navigateTo('services'); return false;">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-gold to-ochre flex items-center justify-center shadow-lg">
+         <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z" />
+         </svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-slate mb-3">Peinture Façade</h3>
+        <p class="text-slate/60 text-sm leading-relaxed">Finitions premium pour sublimer l'extérieur de vos bâtiments</p>
+       </div><!-- Service 2 -->
+       <div class="service-card rounded-2xl p-8 text-center cursor-pointer" onclick="navigateTo('services'); return false;">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-terracotta to-ochre flex items-center justify-center shadow-lg">
+         <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" />
+         </svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-slate mb-3">Peinture Intérieure</h3>
+        <p class="text-slate/60 text-sm leading-relaxed">Créez des ambiances personnalisées dans chaque pièce</p>
+       </div><!-- Service 3 -->
+       <div class="service-card rounded-2xl p-8 text-center cursor-pointer" onclick="navigateTo('services'); return false;">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-ochre to-gold flex items-center justify-center shadow-lg">
+         <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M20.71 4.63l-1.34-1.34c-.39-.39-1.02-.39-1.41 0L9 12.25 11.75 15l8.96-8.96c.39-.39.39-1.02 0-1.41z" />
+         </svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-slate mb-3">Décoration Murale</h3>
+        <p class="text-slate/60 text-sm leading-relaxed">Fresques artistiques et motifs africains authentiques</p>
+       </div><!-- Service 4 -->
+       <div class="service-card rounded-2xl p-8 text-center cursor-pointer" onclick="navigateTo('services'); return false;">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-gold to-terracotta flex items-center justify-center shadow-lg">
+         <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+         </svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-slate mb-3">Marbrage</h3>
+        <p class="text-slate/60 text-sm leading-relaxed">Reproduction expertisée d'effets marbre luxueux</p>
+       </div><!-- Service 5 -->
+       <div class="service-card rounded-2xl p-8 text-center cursor-pointer" onclick="navigateTo('services'); return false;">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-terracotta to-gold flex items-center justify-center shadow-lg">
+         <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M21 3H3C2 3 1 4 1 5v14c0 1.1.9 2 2 2h18c1 0 2-1 2-2V5c0-1-1-2-2-2z" />
+         </svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-slate mb-3">Tableaux</h3>
+        <p class="text-slate/60 text-sm leading-relaxed">Œuvres d'art personnalisées sur commande</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- BEFORE/AFTER SECTION -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-warm to-cream">
+     <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16"><span class="text-gold font-semibold tracking-wider uppercase text-sm">Transformations</span>
+       <h2 class="font-display text-4xl sm:text-5xl font-bold mt-4 text-slate mb-4">Avant / <span class="gradient-text">Après</span></h2>
+       <p class="text-lg text-slate/60 max-w-2xl mx-auto">Découvrez l'impact spectaculaire de nos transformations</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8"><!-- Comparison 1 -->
+       <div class="relative rounded-2xl overflow-hidden group shadow-xl">
+        <div class="aspect-video bg-gradient-to-r from-gray-400 to-gray-300 relative"><!-- Before -->
+         <div class="absolute inset-0 w-1/2 bg-gray-400 flex items-center justify-center">
+          <div class="text-center">
+           <svg class="w-12 h-12 text-gray-300 mx-auto mb-2" fill="currentColor" viewbox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" />
+           </svg><span class="text-gray-200 font-semibold text-sm">AVANT</span>
+          </div>
+         </div><!-- After -->
+         <div class="absolute inset-0 left-1/2 w-1/2 hero-image flex items-center justify-center">
+          <div class="text-center">
+           <svg class="w-12 h-12 text-white mx-auto mb-2" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+           </svg><span class="text-white font-semibold text-sm">APRÈS</span>
+          </div>
+         </div><!-- Slider -->
+         <div class="absolute top-0 bottom-0 left-1/2 w-1 bg-gold cursor-ew-resize flex items-center justify-center transform -translate-x-1/2 group-hover:w-2 transition-all">
+          <div class="w-10 h-10 bg-gold rounded-full flex items-center justify-center shadow-lg">
+           <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+           </svg>
+          </div>
+         </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+         <h4 class="font-display font-semibold text-gold">Villa Dakar - Façade</h4>
+         <p class="text-gray-200 text-sm">Rénovation complète avec finition premium</p>
+        </div>
+       </div><!-- Comparison 2 -->
+       <div class="relative rounded-2xl overflow-hidden group shadow-xl">
+        <div class="aspect-video bg-gradient-to-r from-gray-400 to-gray-300 relative">
+         <div class="absolute inset-0 w-1/2 bg-gray-400 flex items-center justify-center">
+          <div class="text-center">
+           <svg class="w-12 h-12 text-gray-300 mx-auto mb-2" fill="currentColor" viewbox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" />
+           </svg><span class="text-gray-200 font-semibold text-sm">AVANT</span>
+          </div>
+         </div>
+         <div class="absolute inset-0 left-1/2 w-1/2 hero-image flex items-center justify-center">
+          <div class="text-center">
+           <svg class="w-12 h-12 text-white mx-auto mb-2" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+           </svg><span class="text-white font-semibold text-sm">APRÈS</span>
+          </div>
+         </div>
+         <div class="absolute top-0 bottom-0 left-1/2 w-1 bg-gold cursor-ew-resize flex items-center justify-center transform -translate-x-1/2 group-hover:w-2 transition-all">
+          <div class="w-10 h-10 bg-gold rounded-full flex items-center justify-center shadow-lg">
+           <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+           </svg>
+          </div>
+         </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+         <h4 class="font-display font-semibold text-gold">Salon Moderne - Marbrage</h4>
+         <p class="text-gray-200 text-sm">Effet marbre luxueux sur murs et colonnes</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- WHY LARTISKA SECTION -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+     <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16"><span class="text-gold font-semibold tracking-wider uppercase text-sm">Avantages</span>
+       <h2 class="font-display text-4xl sm:text-5xl font-bold mt-4 text-slate mb-4">Pourquoi choisir <span class="gradient-text">Lartiska</span> ?</h2>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+       <div class="text-center p-8">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-gold/20 to-ochre/20 flex items-center justify-center border-2 border-gold/40">
+         <svg class="w-8 h-8 text-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S15.33 8 14.5 8 13 8.67 13 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S8.33 8 7.5 8 6 8.67 6 9.5 6.67 11 7.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
+         </svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-slate mb-3">Qualité Premium</h3>
+        <p class="text-slate/60 leading-relaxed">Matériaux haut de gamme et finitions impeccables pour des résultats durables</p>
+       </div>
+       <div class="text-center p-8">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-terracotta/20 to-gold/20 flex items-center justify-center border-2 border-terracotta/40">
+         <svg class="w-8 h-8 text-terracotta" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+         </svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-slate mb-3">Respect des Délais</h3>
+        <p class="text-slate/60 leading-relaxed">Planning clair et coordonnée professionnelle pour une exécution sans surprise</p>
+       </div>
+       <div class="text-center p-8">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-ochre/20 to-gold/20 flex items-center justify-center border-2 border-ochre/40">
+         <svg class="w-8 h-8 text-ochre" fill="currentColor" viewbox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+         </svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-slate mb-3">Équipe Expérimentée</h3>
+        <p class="text-slate/60 leading-relaxed">Professionnels qualifiés avec 15+ ans d'expérience et expertise confirmée</p>
+       </div>
+       <div class="text-center p-8">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-gold/20 to-terracotta/20 flex items-center justify-center border-2 border-gold/40">
+         <svg class="w-8 h-8 text-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+         </svg>
+        </div>
+        <h3 class="font-display text-xl font-semibold text-slate mb-3">Accompagnement Total</h3>
+        <p class="text-slate/60 leading-relaxed">Conseil personnalisé du projet initial jusqu'à la livraison finale</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- TESTIMONIALS SECTION -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-warm to-cream">
+     <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16"><span class="text-gold font-semibold tracking-wider uppercase text-sm">Témoignages</span>
+       <h2 class="font-display text-4xl sm:text-5xl font-bold mt-4 text-slate mb-4">Ce que disent nos <span class="gradient-text">clients</span></h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8"><!-- Testimonial 1 -->
+       <div class="testimonial-card rounded-2xl p-8">
+        <div class="flex items-center mb-6">
+         <div class="flex space-x-1">
+          <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+          <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+          <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+          <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+          <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+         </div>
+        </div>
+        <p class="text-slate leading-relaxed mb-6 italic">"Un travail exceptionnel ! L'équipe de Lartiska a transformé notre villa en une véritable œuvre d'art. Professionnalisme et créativité au rendez-vous."</p>
+        <div class="flex items-center">
+         <div class="w-12 h-12 rounded-full bg-gradient-to-br from-gold to-ochre flex items-center justify-center text-white font-bold text-sm">
+          AF
+         </div>
+         <div class="ml-4">
+          <h4 class="font-semibold text-slate">Amadou Fall</h4>
+          <p class="text-slate/60 text-sm">Propriétaire, Dakar</p>
+         </div>
+        </div>
+       </div><!-- Testimonial 2 -->
+       <div class="testimonial-card rounded-2xl p-8 border-2 border-gold/40">
+        <div class="flex items-center mb-6">
+         <div class="flex space-x-1">
+          <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+          <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+          <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+          <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+          <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+         </div>
+        </div>
+        <p class="text-slate leading-relaxed mb-6 italic">"Le marbrage réalisé dans notre hôtel est à couper le souffle. Nos clients ne cessent de complimenter le décor. Je recommande vivement !"</p>
+        <div class="flex items-center">
+         <div class="w-12 h-12 rounded-full bg-gradient-to-br from-terracotta to-ochre flex items-center justify-center text-white font-bold text-sm">
+          FN
+         </div>
+         <div class="ml-4">
+          <h4 class="font-semibold text-slate">Fatou Ndiaye</h4>
+          <p class="text-slate/60 text-sm">Directrice d'hôtel, Saint-Louis</p>
+         </div>
+        </div>
+       </div><!-- Testimonial 3 -->
+       <div class="testimonial-card rounded-2xl p-8">
+        <div class="flex items-center mb-6">
+         <div class="flex space-x-1">
+          <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+          <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+          <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+          <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+          <svg class="w-5 h-5 text-gold" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+          </svg>
+         </div>
+        </div>
+        <p class="text-slate leading-relaxed mb-6 italic">"Le tableau commandé pour notre salon est magnifique. L'artiste a parfaitement compris notre vision. Un vrai talent sénégalais !"</p>
+        <div class="flex items-center">
+         <div class="w-12 h-12 rounded-full bg-gradient-to-br from-ochre to-gold flex items-center justify-center text-white font-bold text-sm">
+          MD
+         </div>
+         <div class="ml-4">
+          <h4 class="font-semibold text-slate">Moussa Diop</h4>
+          <p class="text-slate/60 text-sm">Entrepreneur, Thiès</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- CTA SECTION -->
+    <section class="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-slate to-charcoal text-white">
+     <div class="max-w-4xl mx-auto text-center">
+      <h2 class="font-display text-4xl sm:text-5xl font-bold mb-6">Prêt à transformer <span class="text-gold">vos espaces</span> ?</h2>
+      <p class="text-xl text-gray-300 mb-12 leading-relaxed">Contactez-nous dès maintenant pour un devis gratuit et personnalisé. Notre équipe vous répond sous 24h.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center"><button onclick="navigateTo('contact'); return false;" class="cta-button px-10 py-4 rounded-full text-lg hover:text-white"> Demander un devis </button> <a href="#" id="cta-whatsapp" class="flex items-center justify-center px-10 py-4 bg-green-500 text-white font-semibold rounded-full hover:bg-green-400 transition-all transform hover:scale-105">
+        <svg class="w-6 h-6 mr-2" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg> Contacter WhatsApp </a>
+      </div>
+     </div>
+    </section>
+   </div><!-- ==================== SERVICES PAGE ==================== -->
+   <div id="page-services" class="page">
+    <section class="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+     <div class="max-w-7xl mx-auto">
+      <div class="mb-16"><a href="#" onclick="navigateTo('home'); return false;" class="inline-flex items-center text-gold hover:text-gold-light transition-colors mb-8">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg> Retour à l'accueil </a>
+       <h1 class="font-display text-5xl sm:text-6xl font-bold text-slate mb-6">Nos <span class="gradient-text">Services</span> Premium</h1>
+       <p class="text-xl text-slate/60 max-w-2xl">Une gamme complète de services artistiques et techniques pour sublimer vos espaces</p>
+      </div>
+      <div class="space-y-20"><!-- Service 1 -->
+       <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="aspect-video rounded-2xl hero-image shadow-xl flex items-center justify-center">
+         <svg class="w-32 h-32 text-white/40" fill="currentColor" viewbox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z" />
+         </svg>
+        </div>
+        <div>
+         <div class="inline-flex items-center px-4 py-2 bg-gold/20 rounded-full mb-6 border border-gold/40"><span class="text-gold font-semibold text-sm">Service Premium</span>
+         </div>
+         <h2 class="font-display text-4xl font-bold mb-6 text-slate">Peinture <span class="gradient-text">Façade</span></h2>
+         <p class="text-lg text-slate/60 mb-8 leading-relaxed">Transformez l'aspect extérieur de vos bâtiments avec nos finitions professionnelles. Nous utilisons des peintures haute qualité résistantes aux intempéries et au climat sénégalais.</p>
+         <ul class="space-y-4 mb-8">
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Préparation et traitement complet des surfaces</span></li>
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Peintures anti-moisissures et anti-fissures</span></li>
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Garantie durabilité 5 ans</span></li>
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Équipe certifiée avec assurance responsabilité civile</span></li>
+         </ul><button onclick="navigateTo('contact'); return false;" class="cta-button px-8 py-4 rounded-full font-semibold hover:text-white"> Demander un devis </button>
+        </div>
+       </div><!-- Service 2 -->
+       <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="order-2 lg:order-1">
+         <div class="inline-flex items-center px-4 py-2 bg-terracotta/20 rounded-full mb-6 border border-terracotta/40"><span class="text-terracotta font-semibold text-sm">Ambiances Créatives</span>
+         </div>
+         <h2 class="font-display text-4xl font-bold mb-6 text-slate">Peinture <span class="gradient-text">Intérieure</span></h2>
+         <p class="text-lg text-slate/60 mb-8 leading-relaxed">Créez des atmosphères personnalisées dans chaque pièce. Du classique au contemporain, nous maîtrisons toutes les techniques pour répondre à vos envies décoratives.</p>
+         <ul class="space-y-4 mb-8">
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-terracotta mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Conseil couleur personnalisé par designer</span></li>
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-terracotta mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Finitions mates, satinées, brillantes ou texturées</span></li>
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-terracotta mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Peintures écologiques et hypoallergéniques</span></li>
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-terracotta mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Préparation minutieuse et finition sans trace</span></li>
+         </ul><button onclick="navigateTo('contact'); return false;" class="cta-button px-8 py-4 rounded-full font-semibold hover:text-white"> Demander un devis </button>
+        </div>
+        <div class="order-1 lg:order-2 aspect-video rounded-2xl hero-image shadow-xl flex items-center justify-center">
+         <svg class="w-32 h-32 text-white/40" fill="currentColor" viewbox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" />
+         </svg>
+        </div>
+       </div><!-- Service 3 -->
+       <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="aspect-video rounded-2xl hero-image shadow-xl flex items-center justify-center">
+         <svg class="w-32 h-32 text-white/40" fill="currentColor" viewbox="0 0 24 24"><path d="M20.71 4.63l-1.34-1.34c-.39-.39-1.02-.39-1.41 0L9 12.25 11.75 15l8.96-8.96c.39-.39.39-1.02 0-1.41z" />
+         </svg>
+        </div>
+        <div>
+         <div class="inline-flex items-center px-4 py-2 bg-ochre/20 rounded-full mb-6 border border-ochre/40"><span class="text-ochre font-semibold text-sm">Art &amp; Créativité</span>
+         </div>
+         <h2 class="font-display text-4xl font-bold mb-6 text-slate">Décoration <span class="gradient-text">Murale</span></h2>
+         <p class="text-lg text-slate/60 mb-8 leading-relaxed">Fresques artistiques, trompe-l'œil, motifs géométriques africains... Transformez vos murs en véritables œuvres d'art uniques et personnalisées selon votre vision.</p>
+         <ul class="space-y-4 mb-8">
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-ochre mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Fresques murales sur mesure et personnalisées</span></li>
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-ochre mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Motifs traditionnels sénégalais authentiques</span></li>
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-ochre mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Trompe-l'œil 3D et effets visuels</span></li>
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-ochre mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Consultation créative gratuite incluse</span></li>
+         </ul><button onclick="navigateTo('contact'); return false;" class="cta-button px-8 py-4 rounded-full font-semibold hover:text-white"> Demander un devis </button>
+        </div>
+       </div><!-- Service 4 -->
+       <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="order-2 lg:order-1">
+         <div class="inline-flex items-center px-4 py-2 bg-gold/20 rounded-full mb-6 border border-gold/40"><span class="text-gold font-semibold text-sm">Luxe &amp; Élégance</span>
+         </div>
+         <h2 class="font-display text-4xl font-bold mb-6 text-slate"><span class="gradient-text">Marbrage</span> Premium</h2>
+         <p class="text-lg text-slate/60 mb-8 leading-relaxed">Reproduisez l'élégance naturelle du marbre sur vos murs, colonnes et plafonds. Une technique de maître pour un rendu luxueux et pérenne à un coût maîtrisé.</p>
+         <ul class="space-y-4 mb-8">
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Marbre blanc Carrare, noir et or, travertin</span></li>
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Veines et couleurs personnalisées selon design</span></li>
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Finish brillant ou mat au choix</span></li>
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Résistance à l'usure et aux rayures</span></li>
+         </ul><button onclick="navigateTo('contact'); return false;" class="cta-button px-8 py-4 rounded-full font-semibold hover:text-white"> Demander un devis </button>
+        </div>
+        <div class="order-1 lg:order-2 aspect-video rounded-2xl shadow-xl overflow-hidden">
+         <div class="w-full h-full bg-gradient-to-br from-gray-400 via-gray-300 to-gray-200 relative">
+          <svg class="w-full h-full absolute inset-0" viewbox="0 0 400 300" preserveaspectratio="xMidYMid slice"><defs>
+            <lineargradient id="marble-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+             <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.2" />
+             <stop offset="50%" style="stop-color:#D4AF37;stop-opacity:0.15" />
+             <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.2" />
+            </lineargradient>
+           </defs> <path d="M0 50 Q100 30 200 60 T400 50" stroke="url(#marble-grad)" stroke-width="3" fill="none" /> <path d="M0 100 Q150 80 250 120 T400 90" stroke="url(#marble-grad)" stroke-width="4" fill="none" /> <path d="M0 180 Q100 160 200 200 T400 170" stroke="url(#marble-grad)" stroke-width="2" fill="none" /> <path d="M0 250 Q80 230 180 260 T400 240" stroke="url(#marble-grad)" stroke-width="3" fill="none" />
+          </svg>
+         </div>
+        </div>
+       </div><!-- Service 5 -->
+       <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="aspect-video rounded-2xl hero-image shadow-xl flex items-center justify-center">
+         <svg class="w-32 h-32 text-white/40" fill="currentColor" viewbox="0 0 24 24"><path d="M21 3H3C2 3 1 4 1 5v14c0 1.1.9 2 2 2h18c1 0 2-1 2-2V5c0-1-1-2-2-2zM5 17l3.5-4.5 2.5 3.01L14.5 11l4.5 6H5z" />
+         </svg>
+        </div>
+        <div>
+         <div class="inline-flex items-center px-4 py-2 bg-terracotta/20 rounded-full mb-6 border border-terracotta/40"><span class="text-terracotta font-semibold text-sm">Œuvres Uniques</span>
+         </div>
+         <h2 class="font-display text-4xl font-bold mb-6 text-slate">Tableaux <span class="gradient-text">sur Commande</span></h2>
+         <p class="text-lg text-slate/60 mb-8 leading-relaxed">Des œuvres d'art originales créées spécialement pour vous. Portraits, paysages sénégalais, art abstrait contemporain... Exprimez votre personnalité unique.</p>
+         <ul class="space-y-4 mb-8">
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-terracotta mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Portraits en couleurs ou noir et blanc</span></li>
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-terracotta mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Art africain contemporain et traditionnel</span></li>
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-terracotta mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Toutes tailles et formats disponibles</span></li>
+          <li class="flex items-start">
+           <svg class="w-6 h-6 text-terracotta mr-3 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+           </svg><span class="text-slate">Encadrement et livraison incluse</span></li>
+         </ul><button onclick="navigateTo('contact'); return false;" class="cta-button px-8 py-4 rounded-full font-semibold hover:text-white"> Commander un tableau </button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- ==================== PORTFOLIO PAGE ==================== -->
+   <div id="page-portfolio" class="page">
+    <section class="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+     <div class="max-w-7xl mx-auto">
+      <div class="mb-16"><a href="#" onclick="navigateTo('home'); return false;" class="inline-flex items-center text-gold hover:text-gold-light transition-colors mb-8">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg> Retour à l'accueil </a>
+       <h1 class="font-display text-5xl sm:text-6xl font-bold text-slate mb-6">Nos <span class="gradient-text">Réalisations</span></h1>
+       <p class="text-xl text-slate/60 max-w-2xl">Découvrez nos projets à travers tout le Sénégal</p>
+      </div><!-- Filter -->
+      <div class="flex flex-wrap justify-center gap-3 mb-16"><button onclick="filterPortfolio('all')" class="filter-btn active px-6 py-2.5 rounded-full font-semibold transition-all" data-filter="all">Tous les projets</button> <button onclick="filterPortfolio('facade')" class="filter-btn px-6 py-2.5 rounded-full font-semibold transition-all" data-filter="facade">Façades</button> <button onclick="filterPortfolio('interieur')" class="filter-btn px-6 py-2.5 rounded-full font-semibold transition-all" data-filter="interieur">Intérieurs</button> <button onclick="filterPortfolio('decoration')" class="filter-btn px-6 py-2.5 rounded-full font-semibold transition-all" data-filter="decoration">Décorations</button> <button onclick="filterPortfolio('marbrage')" class="filter-btn px-6 py-2.5 rounded-full font-semibold transition-all" data-filter="marbrage">Marbrage</button> <button onclick="filterPortfolio('tableaux')" class="filter-btn px-6 py-2.5 rounded-full font-semibold transition-all" data-filter="tableaux">Tableaux</button>
+      </div><!-- Grid -->
+      <div id="portfolio-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"><!-- Project 1 -->
+       <div class="portfolio-item group relative cursor-pointer" data-category="facade" onclick="showProjectDetail(1)">
+        <div class="w-full h-full bg-gradient-to-br from-gold/50 to-ochre/40 flex items-center justify-center rounded-2xl">
+         <svg class="w-24 h-24 text-white/40" fill="currentColor" viewbox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" />
+         </svg>
+        </div>
+        <div class="portfolio-info rounded-b-2xl">
+         <h3 class="font-display text-lg font-semibold text-white mb-1">Villa Les Almadies</h3>
+         <p class="text-gray-300 text-sm">Façade extérieure • Dakar</p>
+        </div>
+       </div><!-- Project 2 -->
+       <div class="portfolio-item group relative cursor-pointer" data-category="marbrage" onclick="showProjectDetail(2)">
+        <div class="w-full h-full bg-gradient-to-br from-gray-400 to-gray-300 flex items-center justify-center rounded-2xl relative overflow-hidden">
+         <svg class="w-full h-full absolute" viewbox="0 0 200 200" preserveaspectratio="xMidYMid slice"><path d="M0 50 Q50 30 100 60 T200 50" stroke="#D4AF37" stroke-width="2" fill="none" opacity="0.4" /> <path d="M0 100 Q75 80 125 120 T200 90" stroke="#D4AF37" stroke-width="2" fill="none" opacity="0.3" />
+         </svg>
+        </div>
+        <div class="portfolio-info rounded-b-2xl">
+         <h3 class="font-display text-lg font-semibold text-white mb-1">Hôtel Teranga</h3>
+         <p class="text-gray-300 text-sm">Marbrage hall • Saint-Louis</p>
+        </div>
+       </div><!-- Project 3 -->
+       <div class="portfolio-item group relative cursor-pointer" data-category="decoration" onclick="showProjectDetail(3)">
+        <div class="w-full h-full bg-gradient-to-br from-ochre/50 to-terracotta/40 flex items-center justify-center rounded-2xl">
+         <svg class="w-24 h-24 text-white/40" fill="currentColor" viewbox="0 0 24 24"><path d="M20.71 4.63l-1.34-1.34c-.39-.39-1.02-.39-1.41 0L9 12.25 11.75 15l8.96-8.96z" />
+         </svg>
+        </div>
+        <div class="portfolio-info rounded-b-2xl">
+         <h3 class="font-display text-lg font-semibold text-white mb-1">Restaurant Le Lagon</h3>
+         <p class="text-gray-300 text-sm">Fresque murale • Saly</p>
+        </div>
+       </div><!-- Project 4 -->
+       <div class="portfolio-item group relative cursor-pointer" data-category="interieur" onclick="showProjectDetail(4)">
+        <div class="w-full h-full bg-gradient-to-br from-sand/50 to-ochre/40 flex items-center justify-center rounded-2xl">
+         <svg class="w-24 h-24 text-white/40" fill="currentColor" viewbox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" />
+         </svg>
+        </div>
+        <div class="portfolio-info rounded-b-2xl">
+         <h3 class="font-display text-lg font-semibold text-white mb-1">Appartement Mermoz</h3>
+         <p class="text-gray-300 text-sm">Peinture intérieure • Dakar</p>
+        </div>
+       </div><!-- Project 5 -->
+       <div class="portfolio-item group relative cursor-pointer" data-category="tableaux" onclick="showProjectDetail(5)">
+        <div class="w-full h-full bg-gradient-to-br from-terracotta/50 to-gold/40 flex items-center justify-center rounded-2xl">
+         <svg class="w-24 h-24 text-white/40" fill="currentColor" viewbox="0 0 24 24"><path d="M21 3H3C2 3 1 4 1 5v14c0 1.1.9 2 2 2h18c1 0 2-1 2-2V5c0-1-1-2-2-2z" />
+         </svg>
+        </div>
+        <div class="portfolio-info rounded-b-2xl">
+         <h3 class="font-display text-lg font-semibold text-white mb-1">Collection Teranga</h3>
+         <p class="text-gray-300 text-sm">Tableaux • Commande privée</p>
+        </div>
+       </div><!-- Project 6 -->
+       <div class="portfolio-item group relative cursor-pointer" data-category="facade" onclick="showProjectDetail(6)">
+        <div class="w-full h-full bg-gradient-to-br from-gold/40 to-ochre/50 flex items-center justify-center rounded-2xl">
+         <svg class="w-24 h-24 text-white/40" fill="currentColor" viewbox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" />
+         </svg>
+        </div>
+        <div class="portfolio-info rounded-b-2xl">
+         <h3 class="font-display text-lg font-semibold text-white mb-1">Immeuble Plateau</h3>
+         <p class="text-gray-300 text-sm">Façade commerciale • Dakar</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- ==================== PROJECT DETAIL PAGE ==================== -->
+   <div id="page-project" class="page">
+    <section class="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+     <div class="max-w-5xl mx-auto"><a href="#" onclick="navigateTo('portfolio'); return false;" class="inline-flex items-center text-gold hover:text-gold-light transition-colors mb-12">
+       <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+       </svg> Retour aux réalisations </a> <!-- Image -->
+      <div id="project-slider" class="w-full aspect-video rounded-2xl hero-image shadow-2xl mb-12 flex items-center justify-center">
+       <svg class="w-32 h-32 text-white/40" fill="currentColor" viewbox="0 0 24 24"><path d="M21 3H3C2 3 1 4 1 5v14c0 1.1.9 2 2 2h18c1 0 2-1 2-2V5c0-1-1-2-2-2z" />
+       </svg>
+      </div><!-- Info Grid -->
+      <div class="grid lg:grid-cols-3 gap-12">
+       <div class="lg:col-span-2">
+        <h1 id="project-title" class="font-display text-4xl sm:text-5xl font-bold text-slate mb-6">Villa Les Almadies</h1>
+        <p id="project-description" class="text-lg text-slate/60 leading-relaxed mb-8">Rénovation complète de la façade de cette magnifique villa située dans le quartier prisé des Almadies à Dakar. Le projet comprenait le traitement des fissures, l'application d'un enduit décoratif et une finition en peinture acrylique haut de gamme résistante aux UV et à l'humidité.</p>
+        <p class="text-slate leading-relaxed">Notre équipe a travaillé pendant 3 semaines pour transformer cette propriété, en collaboration étroite avec les propriétaires pour choisir les teintes parfaites qui mettent en valeur l'architecture moderne de la villa.</p>
+       </div>
+       <div class="lg:col-span-1">
+        <div class="bg-gradient-to-br from-warm to-cream rounded-2xl p-8 border border-gold/20 sticky top-32">
+         <h3 class="font-display text-xl font-semibold text-slate mb-6">Détails du projet</h3>
+         <div class="space-y-6">
+          <div class="pb-6 border-b border-gold/20"><span class="text-slate/60 text-sm font-semibold uppercase tracking-wide">Type de service</span>
+           <p id="project-service" class="text-slate font-semibold mt-2">Peinture Façade</p>
+          </div>
+          <div class="pb-6 border-b border-gold/20"><span class="text-slate/60 text-sm font-semibold uppercase tracking-wide">Localisation</span>
+           <p id="project-location" class="text-slate font-semibold mt-2">Les Almadies, Dakar</p>
+          </div>
+          <div class="pb-6 border-b border-gold/20"><span class="text-slate/60 text-sm font-semibold uppercase tracking-wide">Durée</span>
+           <p class="text-slate font-semibold mt-2">3 semaines</p>
+          </div>
+          <div><span class="text-slate/60 text-sm font-semibold uppercase tracking-wide">Année</span>
+           <p class="text-slate font-semibold mt-2">2024</p>
+          </div>
+         </div><button onclick="navigateTo('contact'); return false;" class="w-full cta-button px-6 py-4 rounded-full font-semibold mt-8 hover:text-white"> Projet similaire ? </button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- ==================== ABOUT PAGE ==================== -->
+   <div id="page-about" class="page">
+    <section class="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+     <div class="max-w-7xl mx-auto">
+      <div class="mb-16"><a href="#" onclick="navigateTo('home'); return false;" class="inline-flex items-center text-gold hover:text-gold-light transition-colors mb-8">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg> Retour à l'accueil </a>
+       <h1 class="font-display text-5xl sm:text-6xl font-bold text-slate mb-6">Notre <span class="gradient-text">Histoire</span></h1>
+       <p class="text-xl text-slate/60 max-w-2xl">L'art au cœur de notre engagement envers vous</p>
+      </div><!-- Artist Section -->
+      <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
+       <div class="relative">
+        <div class="w-full max-w-md mx-auto">
+         <div class="relative">
+          <div class="aspect-square rounded-2xl hero-image shadow-2xl flex items-center justify-center">
+           <svg class="w-40 h-40 text-white/40" fill="currentColor" viewbox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+           </svg>
+          </div>
+          <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-gold to-ochre rounded-full flex items-center justify-center shadow-xl text-white font-display font-bold text-2xl">
+           <div id="artist-initials">
+            MD
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div>
+        <div class="inline-flex items-center px-4 py-2 bg-gold/20 rounded-full mb-6 border border-gold/40"><span class="text-gold font-semibold text-sm">Fondateur &amp; Artiste</span>
+        </div>
+        <h2 class="font-display text-3xl font-bold text-slate mb-2" id="artist-name-display">Mamadou Diallo</h2>
+        <p class="text-gold font-semibold mb-8">Artiste &amp; Directeur Créatif</p>
+        <p class="text-lg text-slate/60 leading-relaxed mb-6">Passionné d'art depuis mon enfance à Saint-Louis, j'ai développé mes compétences à travers les écoles d'art de Dakar et des formations en Europe. Après 15 ans d'expérience dans l'industrie de la décoration et de la peinture artistique, j'ai fondé Lartiska avec une mission claire.</p>
+        <p class="text-lg text-slate/60 leading-relaxed mb-8">Chaque projet est pour moi une nouvelle toile, une opportunité de créer quelque chose d'unique qui reflète la personnalité de mes clients tout en honorant notre riche patrimoine artistique africain.</p>
+        <div class="flex flex-wrap gap-3">
+         <div class="px-4 py-3 bg-gold/10 rounded-full text-sm font-semibold text-slate border border-gold/20">
+          ✓ Artiste certifié
+         </div>
+         <div class="px-4 py-3 bg-gold/10 rounded-full text-sm font-semibold text-slate border border-gold/20">
+          🏆 Prix Excellence 2023
+         </div>
+         <div class="px-4 py-3 bg-gold/10 rounded-full text-sm font-semibold text-slate border border-gold/20">
+          ★ 15+ ans d'expérience
+         </div>
+        </div>
+       </div>
+      </div><!-- Team Section -->
+      <div class="mb-20">
+       <div class="text-center mb-16">
+        <h2 class="font-display text-4xl sm:text-5xl font-bold text-slate mb-4">Notre <span class="gradient-text">Équipe</span></h2>
+        <p class="text-lg text-slate/60">Des professionnels passionnés et expérimentés au service de vos projets</p>
+       </div>
+       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="text-center group">
+         <div class="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-gold to-ochre flex items-center justify-center mb-6 shadow-xl group-hover:shadow-2xl transition-shadow"><span class="font-display text-4xl font-bold text-white">OS</span>
+         </div>
+         <h3 class="font-display text-lg font-semibold text-slate mb-2">Ousmane Sow</h3>
+         <p class="text-slate/60 text-sm mb-3">Chef d'équipe Façades</p>
+         <p class="text-slate/50 text-xs">12 ans d'expérience</p>
+        </div>
+        <div class="text-center group">
+         <div class="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-terracotta to-ochre flex items-center justify-center mb-6 shadow-xl group-hover:shadow-2xl transition-shadow"><span class="font-display text-4xl font-bold text-white">AB</span>
+         </div>
+         <h3 class="font-display text-lg font-semibold text-slate mb-2">Awa Ba</h3>
+         <p class="text-slate/60 text-sm mb-3">Spécialiste Décoration</p>
+         <p class="text-slate/50 text-xs">10 ans d'expérience</p>
+        </div>
+        <div class="text-center group">
+         <div class="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-ochre to-gold flex items-center justify-center mb-6 shadow-xl group-hover:shadow-2xl transition-shadow"><span class="font-display text-4xl font-bold text-white">ID</span>
+         </div>
+         <h3 class="font-display text-lg font-semibold text-slate mb-2">Ibrahima Diop</h3>
+         <p class="text-slate/60 text-sm mb-3">Expert Marbrage</p>
+         <p class="text-slate/50 text-xs">8 ans d'expérience</p>
+        </div>
+        <div class="text-center group">
+         <div class="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-gold to-terracotta flex items-center justify-center mb-6 shadow-xl group-hover:shadow-2xl transition-shadow"><span class="font-display text-4xl font-bold text-white">KN</span>
+         </div>
+         <h3 class="font-display text-lg font-semibold text-slate mb-2">Khady Niang</h3>
+         <p class="text-slate/60 text-sm mb-3">Coordinatrice Projets</p>
+         <p class="text-slate/50 text-xs">6 ans d'expérience</p>
+        </div>
+       </div>
+      </div><!-- Values -->
+      <div class="grid md:grid-cols-4 gap-6">
+       <div class="p-8 bg-gradient-to-br from-warm to-cream rounded-2xl border border-gold/20 text-center">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-gold to-ochre flex items-center justify-center shadow-lg">
+         <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+         </svg>
+        </div>
+        <h3 class="font-display font-semibold text-slate mb-2">Excellence</h3>
+        <p class="text-slate/60 text-sm">Perfection dans chaque détail de nos réalisations</p>
+       </div>
+       <div class="p-8 bg-gradient-to-br from-warm to-cream rounded-2xl border border-gold/20 text-center">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-terracotta to-ochre flex items-center justify-center shadow-lg">
+         <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+         </svg>
+        </div>
+        <h3 class="font-display font-semibold text-slate mb-2">Intégrité</h3>
+        <p class="text-slate/60 text-sm">Transparence dans toutes nos relations</p>
+       </div>
+       <div class="p-8 bg-gradient-to-br from-warm to-cream rounded-2xl border border-gold/20 text-center">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-ochre to-gold flex items-center justify-center shadow-lg">
+         <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M20.71 4.63l-1.34-1.34c-.39-.39-1.02-.39-1.41 0L9 12.25 11.75 15l8.96-8.96c.39-.39.39-1.02 0-1.41z" />
+         </svg>
+        </div>
+        <h3 class="font-display font-semibold text-slate mb-2">Créativité</h3>
+        <p class="text-slate/60 text-sm">Innovation et originalité au cœur</p>
+       </div>
+       <div class="p-8 bg-gradient-to-br from-warm to-cream rounded-2xl border border-gold/20 text-center">
+        <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-gold to-terracotta flex items-center justify-center shadow-lg">
+         <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M11 15H6v3h5v-3zm0-4H1v3h10v-3zm0-4H4v3h7V7zm13 7v-4l-5-5V3h-3v4l-5 5v4h3v6h3v-6h6v6h3v-6h3z" />
+         </svg>
+        </div>
+        <h3 class="font-display font-semibold text-slate mb-2">Partage</h3>
+        <p class="text-slate/60 text-sm">Collaboration authentique avec vous</p>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- ==================== CONTACT PAGE ==================== -->
+   <div id="page-contact" class="page">
+    <section class="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+     <div class="max-w-7xl mx-auto">
+      <div class="mb-16"><a href="#" onclick="navigateTo('home'); return false;" class="inline-flex items-center text-gold hover:text-gold-light transition-colors mb-8">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg> Retour à l'accueil </a>
+       <h1 class="font-display text-5xl sm:text-6xl font-bold text-slate mb-6">Demandez votre <span class="gradient-text">devis</span></h1>
+       <p class="text-xl text-slate/60 max-w-2xl">Remplissez le formulaire ci-dessous et nous vous répondons sous 24h</p>
+      </div>
+      <div class="grid lg:grid-cols-5 gap-12"><!-- Form -->
+       <div class="lg:col-span-3">
+        <form id="contact-form" class="space-y-6" onsubmit="handleFormSubmit(event)">
+         <div class="grid sm:grid-cols-2 gap-6">
+          <div><label for="name" class="block text-slate font-semibold mb-3">Nom complet *</label> <input type="text" id="name" name="name" required class="form-input w-full px-5 py-3 rounded-xl focus:outline-none text-slate placeholder-slate/40" placeholder="Votre nom">
+          </div>
+          <div><label for="phone" class="block text-slate font-semibold mb-3">Téléphone *</label> <input type="tel" id="phone" name="phone" required class="form-input w-full px-5 py-3 rounded-xl focus:outline-none text-slate placeholder-slate/40" placeholder="+221 77 XXX XX XX">
+          </div>
+         </div>
+         <div class="grid sm:grid-cols-2 gap-6">
+          <div><label for="city" class="block text-slate font-semibold mb-3">Ville *</label> <select id="city" name="city" required class="form-input w-full px-5 py-3 rounded-xl focus:outline-none text-slate"> <option value="">Sélectionnez votre ville</option> <option value="dakar">Dakar</option> <option value="thies">Thiès</option> <option value="saint-louis">Saint-Louis</option> <option value="mbour">Mbour / Saly</option> <option value="autre">Autre</option> </select>
+          </div>
+          <div><label for="service" class="block text-slate font-semibold mb-3">Type de service *</label> <select id="service" name="service" required class="form-input w-full px-5 py-3 rounded-xl focus:outline-none text-slate"> <option value="">Sélectionnez un service</option> <option value="facade">Peinture Façade</option> <option value="interieur">Peinture Intérieure</option> <option value="decoration">Décoration Murale</option> <option value="marbrage">Marbrage</option> <option value="tableau">Tableau sur Commande</option> <option value="autre">Autre</option> </select>
+          </div>
+         </div>
+         <div><label for="description" class="block text-slate font-semibold mb-3">Description du projet *</label> <textarea id="description" name="description" rows="5" required class="form-input w-full px-5 py-3 rounded-xl focus:outline-none text-slate placeholder-slate/40 resize-none" placeholder="Décrivez votre projet (surface, style souhaité, délais...)"></textarea>
+         </div>
+         <div><label class="block text-slate font-semibold mb-3">Photo du chantier (optionnel)</label>
+          <div class="border-2 border-dashed border-gold/30 rounded-xl p-8 text-center hover:border-gold/60 transition-colors cursor-pointer bg-gold/5" onclick="document.getElementById('file-upload').click()"><input type="file" id="file-upload" name="photo" accept="image/*" class="hidden" onchange="handleFileSelect(event)">
+           <svg class="w-12 h-12 mx-auto text-gold/40 mb-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+           </svg>
+           <p id="file-name" class="text-slate/60 font-semibold">Cliquez pour ajouter une photo</p>
+          </div>
+         </div><button type="submit" class="w-full cta-button px-8 py-4 rounded-full text-lg font-semibold hover:text-white"> Envoyer ma demande de devis </button> <!-- Success -->
+         <div id="form-success" class="hidden p-6 bg-green-50 border-2 border-green-500 rounded-xl text-center">
+          <svg class="w-12 h-12 mx-auto text-green-500 mb-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <h3 class="font-display text-xl font-semibold text-green-600 mb-2">Demande envoyée !</h3>
+          <p class="text-green-600">Nous vous contacterons dans les 24h.</p>
+         </div>
+        </form>
+       </div><!-- Contact Info -->
+       <div class="lg:col-span-2 space-y-6"><!-- WhatsApp -->
+        <div class="bg-green-50 border-2 border-green-500 rounded-2xl p-8">
+         <h3 class="font-display text-xl font-semibold text-slate mb-4 flex items-center">
+          <svg class="w-6 h-6 mr-2 text-green-500" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+          </svg> Message rapide</h3>
+         <p class="text-slate/60 mb-6">Contactez-nous directement sur WhatsApp pour une réponse immédiate.</p><a href="#" id="contact-whatsapp" class="inline-flex items-center px-6 py-3 bg-green-500 text-white font-semibold rounded-full hover:bg-green-600 transition-all">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+          </svg><span id="whatsapp-number">+221 77 123 45 67</span> </a>
+        </div><!-- Info Cards -->
+        <div class="space-y-4">
+         <div class="bg-white rounded-2xl p-6 border border-gold/20">
+          <div class="flex items-start">
+           <div class="w-12 h-12 rounded-full bg-gradient-to-br from-gold to-ochre flex items-center justify-center flex-shrink-0 shadow-lg">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            </svg>
+           </div>
+           <div class="ml-4">
+            <h4 class="font-semibold text-slate">Localisation</h4>
+            <p class="text-slate/60 text-sm mt-1">Dakar, Sénégal<br>
+             Couverture : Tout le Sénégal</p>
+           </div>
+          </div>
+         </div>
+         <div class="bg-white rounded-2xl p-6 border border-gold/20">
+          <div class="flex items-start">
+           <div class="w-12 h-12 rounded-full bg-gradient-to-br from-terracotta to-ochre flex items-center justify-center flex-shrink-0 shadow-lg">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+           </div>
+           <div class="ml-4">
+            <h4 class="font-semibold text-slate">Horaires</h4>
+            <p class="text-slate/60 text-sm mt-1">Lun - Sam : 8h - 18h<br>
+             Dimanche : Sur RDV</p>
+           </div>
+          </div>
+         </div>
+         <div class="bg-white rounded-2xl p-6 border border-gold/20">
+          <div class="flex items-start">
+           <div class="w-12 h-12 rounded-full bg-gradient-to-br from-ochre to-gold flex items-center justify-center flex-shrink-0 shadow-lg">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+           </div>
+           <div class="ml-4">
+            <h4 class="font-semibold text-slate">Email</h4>
+            <p class="text-slate/60 text-sm mt-1">contact@lartiska.sn</p>
+           </div>
+          </div>
+         </div>
+        </div><!-- Social -->
+        <div class="flex justify-center gap-3 pt-4"><a href="#" class="w-12 h-12 bg-slate/10 hover:bg-gold rounded-full flex items-center justify-center transition-all transform hover:scale-110">
+          <svg class="w-5 h-5 text-gold hover:text-white" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+          </svg></a> <a href="#" class="w-12 h-12 bg-slate/10 hover:bg-gold rounded-full flex items-center justify-center transition-all transform hover:scale-110">
+          <svg class="w-5 h-5 text-gold hover:text-white" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+          </svg></a> <a href="#" class="w-12 h-12 bg-slate/10 hover:bg-gold rounded-full flex items-center justify-center transition-all transform hover:scale-110">
+          <svg class="w-5 h-5 text-gold hover:text-white" fill="currentColor" viewbox="0 0 24 24">
+           <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z" />
+          </svg></a>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </div><!-- ==================== FOOTER ==================== -->
+   <footer class="bg-slate text-white pt-16 pb-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto mb-12">
+     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12 pb-12 border-b border-white/10">
+      <div class="sm:col-span-2">
+       <div class="flex items-center space-x-3 mb-6">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-ochre flex items-center justify-center">
+         <svg class="w-6 h-6 text-white" viewbox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7v10l10 5 10-5V7L12 2z" />
+         </svg>
+        </div><span class="font-display text-xl font-bold text-gold">Lartiska</span>
+       </div>
+       <p class="text-gray-400 text-sm mb-6 leading-relaxed">L'art mural d'excellence au Sénégal. Transformons vos espaces en œuvres d'art avec passion et expertise.</p>
+      </div>
+      <div>
+       <h4 class="font-display font-semibold mb-6 text-gold">Navigation</h4>
+       <ul class="space-y-3 text-sm text-gray-400">
+        <li><a href="#" onclick="navigateTo('home'); return false;" class="hover:text-gold transition-colors">Accueil</a></li>
+        <li><a href="#" onclick="navigateTo('services'); return false;" class="hover:text-gold transition-colors">Services</a></li>
+        <li><a href="#" onclick="navigateTo('portfolio'); return false;" class="hover:text-gold transition-colors">Réalisations</a></li>
+        <li><a href="#" onclick="navigateTo('about'); return false;" class="hover:text-gold transition-colors">À propos</a></li>
+        <li><a href="#" onclick="navigateTo('contact'); return false;" class="hover:text-gold transition-colors">Contact</a></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="font-display font-semibold mb-6 text-gold">Services</h4>
+       <ul class="space-y-3 text-sm text-gray-400">
+        <li>Peinture Façade</li>
+        <li>Peinture Intérieure</li>
+        <li>Décoration Murale</li>
+        <li>Marbrage</li>
+        <li>Tableaux sur Commande</li>
+       </ul>
+      </div>
+     </div>
+     <div class="flex flex-col sm:flex-row justify-between items-center text-sm text-gray-400">
+      <p>© 2024 Lartiska. Tous droits réservés.</p>
+      <p class="mt-4 sm:mt-0">Fait avec ❤️ au Sénégal</p>
+     </div>
+    </div>
+   </footer><!-- WhatsApp Floating Button --> <a href="#" id="whatsapp-float" class="whatsapp-float w-16 h-16 bg-green-500 rounded-full flex items-center justify-center shadow-2xl text-white hover:bg-green-600 transition-all">
+    <svg class="w-8 h-8" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg></a>
+  </div>
+  <script>
+    // Default config
+    const defaultConfig = {
+      hero_title: 'Nous transformons vos murs en œuvres d\'art',
+      cta_primary: 'Demander un devis',
+      company_phone: '+221 77 123 45 67',
+      artist_name: 'Mamadou Diallo',
+      projects_count: '250',
+      years_experience: '15'
+    };
+
+    let config = { ...defaultConfig };
+    let currentPage = 'home';
+    let mobileMenuOpen = false;
+
+    // Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = { ...defaultConfig, ...newConfig };
+          applyConfig();
+        },
+        mapToCapabilities: () => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['hero_title', cfg.hero_title || defaultConfig.hero_title],
+          ['cta_primary', cfg.cta_primary || defaultConfig.cta_primary],
+          ['company_phone', cfg.company_phone || defaultConfig.company_phone],
+          ['artist_name', cfg.artist_name || defaultConfig.artist_name],
+          ['projects_count', cfg.projects_count || defaultConfig.projects_count],
+          ['years_experience', cfg.years_experience || defaultConfig.years_experience]
+        ])
+      });
+    }
+
+    function applyConfig() {
+      const heroTitle = config.hero_title || defaultConfig.hero_title;
+      const ctaPrimary = config.cta_primary || defaultConfig.cta_primary;
+      const companyPhone = config.company_phone || defaultConfig.company_phone;
+      const artistName = config.artist_name || defaultConfig.artist_name;
+      const projectsCount = config.projects_count || defaultConfig.projects_count;
+      const yearsExp = config.years_experience || defaultConfig.years_experience;
+
+      // Apply text
+      const heroTitleEl = document.getElementById('hero-title');
+      if (heroTitleEl) {
+        heroTitleEl.innerHTML = heroTitle.replace('murs', '<span class="gradient-text">murs</span>').replace('art', '<span class="gradient-text">art</span>');
+      }
+
+      const heroCta = document.getElementById('hero-cta');
+      if (heroCta) heroCta.textContent = ctaPrimary;
+
+      const navCta = document.getElementById('nav-cta');
+      if (navCta) navCta.textContent = ctaPrimary;
+
+      const ctaWhatsapp = document.getElementById('cta-whatsapp');
+      if (ctaWhatsapp) ctaWhatsapp.href = `https://wa.me/${companyPhone.replace(/\D/g, '')}?text=Bonjour Lartiska`;
+
+      const contactWhatsapp = document.getElementById('contact-whatsapp');
+      if (contactWhatsapp) {
+        contactWhatsapp.href = `https://wa.me/${companyPhone.replace(/\D/g, '')}?text=Bonjour Lartiska`;
+        document.getElementById('whatsapp-number').textContent = companyPhone;
+      }
+
+      const whatsappFloat = document.getElementById('whatsapp-float');
+      if (whatsappFloat) whatsappFloat.href = `https://wa.me/${companyPhone.replace(/\D/g, '')}?text=Bonjour Lartiska`;
+
+      const artistNameDisplay = document.getElementById('artist-name-display');
+      if (artistNameDisplay) artistNameDisplay.textContent = artistName;
+
+      const artistInitials = document.getElementById('artist-initials');
+      if (artistInitials) {
+        const names = artistName.split(' ');
+        artistInitials.textContent = names.map(n => n[0]).join('').toUpperCase().slice(0, 2);
+      }
+
+      const statProjects = document.getElementById('stat-projects');
+      if (statProjects) statProjects.textContent = projectsCount + '+';
+
+      const statYears = document.getElementById('stat-years');
+      if (statYears) statYears.textContent = yearsExp + '+';
+    }
+
+    // Navigation
+    function navigateTo(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(`page-${page}`).classList.add('active');
+      
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.dataset.page === page) link.classList.add('active');
+      });
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Mobile menu
+    function toggleMobileMenu() {
+      mobileMenuOpen = !mobileMenuOpen;
+      const menu = document.getElementById('mobile-menu');
+      const menuIcon = document.getElementById('menu-icon');
+      const closeIcon = document.getElementById('close-icon');
+      
+      menu.classList.toggle('open');
+      menuIcon.classList.toggle('hidden');
+      closeIcon.classList.toggle('hidden');
+    }
+
+    // Portfolio
+    function filterPortfolio(category) {
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      document.querySelector(`[data-filter="${category}"]`).classList.add('active');
+      
+      document.querySelectorAll('.portfolio-item').forEach(item => {
+        if (category === 'all' || item.dataset.category === category) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    // Project detail
+    const projects = {
+      1: { title: 'Villa Les Almadies', service: 'Peinture Façade', location: 'Les Almadies, Dakar' },
+      2: { title: 'Hôtel Teranga', service: 'Marbrage', location: 'Saint-Louis' },
+      3: { title: 'Restaurant Le Lagon', service: 'Décoration Murale', location: 'Saly' },
+      4: { title: 'Appartement Mermoz', service: 'Peinture Intérieure', location: 'Mermoz, Dakar' },
+      5: { title: 'Collection Teranga', service: 'Tableaux sur Commande', location: 'Commande privée' },
+      6: { title: 'Immeuble Plateau', service: 'Peinture Façade', location: 'Plateau, Dakar' }
+    };
+
+    function showProjectDetail(id) {
+      const project = projects[id];
+      document.getElementById('project-title').textContent = project.title;
+      document.getElementById('project-service').textContent = project.service;
+      document.getElementById('project-location').textContent = project.location;
+      navigateTo('project');
+    }
+
+    // Form
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const form = document.getElementById('contact-form');
+      const success = document.getElementById('form-success');
+      
+      form.style.display = 'none';
+      success.classList.remove('hidden');
+    }
+
+    function handleFileSelect(event) {
+      const file = event.target.files[0];
+      if (file) {
+        document.getElementById('file-name').textContent = file.name;
+      }
+    }
+
+    // Navbar scroll
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('main-nav');
+      if (window.scrollY > 50) {
+        nav.classList.add('shadow-lg');
+      } else {
+        nav.classList.remove('shadow-lg');
+      }
+    });
+
+    // Init
+    applyConfig();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cde8f1c0576c7a0',t:'MTc3MTA5MzAxMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
