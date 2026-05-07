@@ -65,20 +65,20 @@
         }
         
         [data-theme="light"] {
-            --gold: #8F6510;
-            --gold-soft: #B68522;
-            --gold-deep: #5A3F08;
-            --ink: #1A130A;
-            --ink-soft: #2A2018;
+            --gold: #7A5408;
+            --gold-soft: #9F6E15;
+            --gold-deep: #4A3204;
+            --ink: #0A0805;
+            --ink-soft: #1A130A;
             --cream: #FFFCF2;
             --sand: #B89968;
-            --rust: #9C3A1F;
+            --rust: #8A2D17;
             --bg: #F5EDD6;
             --bg-rgb: 245, 237, 214;
-            --fg: #14100B;
-            --fg-rgb: 20, 16, 11;
-            --muted: rgba(20, 16, 11, 0.82);
-            --line: rgba(143, 101, 16, 0.32);
+            --fg: #06040A;
+            --fg-rgb: 6, 4, 10;
+            --muted: rgba(6, 4, 10, 0.92);
+            --line: rgba(122, 84, 8, 0.42);
             --surface-card: rgba(255, 252, 241, 0.82);
             --surface-tile: rgba(255, 252, 241, 0.72);
             --surface-soft: rgba(255, 252, 241, 0.55);
@@ -1581,6 +1581,113 @@
             margin-bottom: -120px;
         }
         /* ─────────────────────────────────────────────────────────
+           TYPOGRAPHY DENSITY BOOST — both modes
+           ───────────────────────────────────────────────────────── */
+
+        body { font-size: 17px; }
+        p { font-size: 16px; }
+
+        .eyebrow {
+            font-size: 12.5px;
+            font-weight: 600;
+            letter-spacing: 4.5px;
+        }
+
+        .welcome-title .tagline {
+            font-size: clamp(13px, 1.05vw, 17px);
+            font-weight: 500;
+            letter-spacing: 3.5px;
+        }
+
+        .welcome-sub { font-weight: 400; }
+
+        .explosion p,
+        .premium-head p,
+        .portfolio-head p,
+        .contact-content > p.lead {
+            font-size: clamp(16px, 1.2vw, 20px);
+            font-weight: 400;
+            line-height: 1.7;
+        }
+
+        .premium-card h3 { font-size: 27px; font-weight: 400; }
+        .premium-card p { font-size: 15.5px; line-height: 1.7; font-weight: 400; }
+
+        .project-meta .city { font-size: 11px; letter-spacing: 4px; font-weight: 600; }
+        .project-meta h3 { font-size: 30px; font-weight: 400; }
+
+        .tile-text .label {
+            font-size: 10.5px;
+            letter-spacing: 3px;
+            font-weight: 600;
+        }
+        .tile-text .value { font-size: 21px; font-weight: 500; }
+
+        .form-label {
+            font-size: 11.5px;
+            letter-spacing: 2.8px;
+            font-weight: 600;
+        }
+        .contact-form input,
+        .contact-form select,
+        .contact-form textarea {
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .partner { font-size: 24px; font-weight: 500; }
+        .copyright { font-size: 11px; letter-spacing: 2.5px; font-weight: 500; }
+
+        .nav-links a { font-size: 12px; font-weight: 500; }
+        .nav-cta { font-size: 12px; font-weight: 600; }
+
+        /* ─────────────────────────────────────────────────────────
+           WHATSAPP BUTTON — branded green, bold, with icon
+           ───────────────────────────────────────────────────────── */
+
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            border-radius: 100px;
+            font-size: 12px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: none;
+            transition: all .55s var(--ease-out);
+            background: rgba(37, 211, 102, 0.12);
+            border: 1.5px solid #25D366;
+            color: #25D366;
+            backdrop-filter: blur(10px);
+        }
+        .btn-whatsapp svg { flex-shrink: 0; }
+        .btn-whatsapp strong { font-weight: 700; letter-spacing: 2.5px; }
+        .btn-whatsapp:hover {
+            background: #25D366;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45);
+        }
+        .btn-whatsapp .arrow { background: currentColor; }
+        .btn-whatsapp .arrow::before,
+        .btn-whatsapp .arrow::after { background: currentColor; }
+        .btn-whatsapp:hover .arrow { width: 24px; transform: translateX(4px); }
+
+        [data-theme="light"] .btn-whatsapp {
+            background: rgba(37, 211, 102, 0.18);
+            color: #128C3F;
+            border-color: #128C3F;
+        }
+        [data-theme="light"] .btn-whatsapp:hover {
+            background: #128C3F;
+            color: #fff;
+            border-color: #128C3F;
+        }
+
+        /* ─────────────────────────────────────────────────────────
            LIGHT MODE — readability hardening
            Cards, partners, text-shadows, decorative overlays.
            ───────────────────────────────────────────────────────── */
@@ -1615,40 +1722,54 @@
                 transparent 100%);
         }
 
-        /* Partners: more contrast in light mode */
+        /* Partners: dense, readable in light mode */
         [data-theme="light"] .partner {
-            color: rgba(20, 16, 11, .78);
-            font-weight: 500;
+            color: #1A130A;
+            font-weight: 600;
         }
-        [data-theme="light"] .partner:hover { color: var(--gold); font-weight: 600; }
+        [data-theme="light"] .partner:hover { color: var(--gold); font-weight: 700; }
 
         /* Welcome title shadow becomes a soft light halo in light mode */
         [data-theme="light"] .welcome-title h1 {
-            text-shadow: 0 2px 18px rgba(245, 237, 214, .85), 0 0 40px rgba(245, 237, 214, .55);
+            color: #04030A;
+            font-weight: 400;
+            text-shadow: 0 2px 22px rgba(245, 237, 214, .9), 0 0 50px rgba(245, 237, 214, .65);
         }
         [data-theme="light"] .welcome-sub {
-            text-shadow: 0 2px 14px rgba(245, 237, 214, .75);
-            color: rgba(20, 16, 11, .92);
+            text-shadow: 0 2px 14px rgba(245, 237, 214, .85);
+            color: #1A130A;
+            font-weight: 400;
         }
         [data-theme="light"] .welcome-title .tagline {
-            color: rgba(20, 16, 11, .9);
+            color: #1A130A;
+            font-weight: 600;
         }
 
-        /* Body copy in sections with video bg — boost opacity in light mode */
+        /* Body copy in sections with video bg — full density in light mode */
         [data-theme="light"] .explosion p,
         [data-theme="light"] .contact-content > p.lead {
-            color: rgba(20, 16, 11, .92);
+            color: #0A0805;
+            font-weight: 500;
         }
         [data-theme="light"] .premium-head p,
         [data-theme="light"] .portfolio-head p {
-            color: rgba(20, 16, 11, .85);
+            color: #14100B;
+            font-weight: 500;
         }
 
-        /* Premium / contact card text boost */
+        /* Card text boost in light mode */
+        [data-theme="light"] .premium-card h3 {
+            color: #06040A;
+            font-weight: 500;
+        }
         [data-theme="light"] .premium-card p,
         [data-theme="light"] .tile-text .label,
         [data-theme="light"] .form-label {
-            color: rgba(20, 16, 11, .8);
+            color: #1A130A;
+            font-weight: 600;
+        }
+        [data-theme="light"] .tile-text .value {
+            color: #06040A;
             font-weight: 500;
         }
 
@@ -1667,23 +1788,24 @@
 
         /* Copyright + footer brand more readable */
         [data-theme="light"] .copyright {
-            color: rgba(20, 16, 11, .75);
-            font-weight: 500;
+            color: #14100B;
+            font-weight: 600;
         }
         [data-theme="light"] .footer-socials a {
-            color: rgba(20, 16, 11, .72);
+            color: #1A130A;
         }
 
         /* Form inputs: stronger border + clearer placeholder in light mode */
         [data-theme="light"] .contact-form input,
         [data-theme="light"] .contact-form select,
         [data-theme="light"] .contact-form textarea {
-            border-color: rgba(143, 101, 16, .42);
-            color: var(--fg);
+            border-color: rgba(122, 84, 8, .55);
+            color: #06040A;
+            font-weight: 500;
         }
         [data-theme="light"] .contact-form input::placeholder,
         [data-theme="light"] .contact-form textarea::placeholder {
-            color: rgba(20, 16, 11, .55);
+            color: rgba(20, 16, 11, .65);
         }
 
         /* Nav links contrast */
@@ -2767,8 +2889,12 @@
                             <button type="submit" class="btn btn-gold pulse">
                             Envoyer la demande<span class="arrow" aria-hidden="true"></span>
                         </button>
-                            <a href="https://wa.me/221785446363" class="btn btn-ghost" target="_blank" rel="noopener">
-                            WhatsApp direct<span class="arrow" aria-hidden="true"></span>
+                            <a href="https://wa.me/221785446363" class="btn btn-whatsapp" target="_blank" rel="noopener" aria-label="Contacter Lartiska via WhatsApp">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413"/>
+                            </svg>
+                            <strong>WhatsApp direct</strong>
+                            <span class="arrow" aria-hidden="true"></span>
                         </a>
                         </div>
                         <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
