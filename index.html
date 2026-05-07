@@ -928,27 +928,31 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 6px 12px;
-            background: rgba(7, 6, 10, .65);
-            backdrop-filter: blur(6px);
+            padding: 7px 14px;
+            background: rgba(7, 6, 10, .78);
+            backdrop-filter: blur(8px);
             border-radius: 100px;
-            border: 1px solid rgba(212, 175, 55, .35);
+            border: 1px solid rgba(232, 197, 71, .55);
             z-index: 2;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, .35);
         }
-        
+
+        /* Caption sits on top of photos — always bright gold regardless of theme */
         .art-caption-line {
             display: inline-block;
             width: 18px;
             height: 1px;
-            background: var(--gold);
+            background: #E8C547;
         }
-        
+
         .art-caption-text {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
-            font-size: 12px;
-            color: var(--gold);
+            font-size: 13px;
+            font-weight: 500;
+            color: #E8C547;
             letter-spacing: 1px;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, .45);
         }
         /* Wide variant — used in premium section (16:10 for landscape photos) */
         
