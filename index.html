@@ -107,7 +107,6 @@
             font-weight: 300;
             line-height: 1.6;
             overflow-x: hidden;
-            cursor: none;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -121,31 +120,11 @@
            ───────────────────────────────────────────────────────── */
         
         #cur-dot {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 6px;
-            height: 6px;
-            background: var(--gold);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99999;
-            transform: translate(-50%, -50%);
-            transition: transform .15s var(--ease-out), opacity .3s;
+            display: none;
         }
         
         #cur-ring {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 42px;
-            height: 42px;
-            border: 1px solid rgba(212, 175, 55, 0.55);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 99998;
-            transform: translate(-50%, -50%);
-            transition: transform .35s var(--ease-out), width .3s, height .3s, border-color .3s;
+            display: none;
         }
         
         body.cur-hover #cur-ring {
@@ -302,7 +281,7 @@
             border: 1px solid rgba(var(--fg-rgb), 0.32);
             background: rgba(var(--fg-rgb), 0.04);
             color: var(--fg);
-            cursor: none;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -565,7 +544,7 @@
             text-transform: uppercase;
             font-weight: 500;
             text-decoration: none;
-            cursor: none;
+            cursor: pointer;
             transition: all .55s var(--ease-out);
             position: relative;
             overflow: hidden;
@@ -1044,7 +1023,7 @@
             backdrop-filter: blur(20px) saturate(130%);
             transition: all .85s var(--ease-out);
             overflow: hidden;
-            cursor: none;
+            cursor: pointer;
         }
         
         .premium-card::before {
@@ -1169,7 +1148,7 @@
             position: relative;
             border-radius: 12px;
             overflow: hidden;
-            cursor: none;
+            cursor: pointer;
             border: 1px solid rgba(var(--fg-rgb), .08);
             background: var(--ink);
             /* reset button defaults */
@@ -1359,7 +1338,7 @@
             color: var(--fg);
             text-align: left;
             transition: all .7s var(--ease-out);
-            cursor: none;
+            cursor: pointer;
         }
         
         .contact-tile:hover {
@@ -1436,7 +1415,7 @@
             color: var(--fg);
             backdrop-filter: blur(10px);
             transition: all .6s var(--ease-out);
-            cursor: none;
+            cursor: pointer;
         }
         
         .social:hover {
@@ -1493,7 +1472,7 @@
             color: rgba(var(--fg-rgb), .55);
             text-align: center;
             transition: all .55s var(--ease-out);
-            cursor: none;
+            cursor: pointer;
             letter-spacing: 1px;
         }
         
@@ -1656,7 +1635,7 @@
             text-transform: uppercase;
             font-weight: 700;
             text-decoration: none;
-            cursor: none;
+            cursor: pointer;
             transition: all .55s var(--ease-out);
             background: rgba(37, 211, 102, 0.12);
             border: 1.5px solid #25D366;
@@ -1891,7 +1870,7 @@
             background: rgba(var(--fg-rgb), 0.04);
             color: var(--fg);
             backdrop-filter: blur(12px);
-            cursor: none;
+            cursor: pointer;
             align-items: center;
             justify-content: center;
             position: relative;
@@ -2225,7 +2204,7 @@
             border: 1px solid rgba(255, 255, 255, .35);
             background: rgba(0, 0, 0, .45);
             color: #fff;
-            cursor: none;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -2287,7 +2266,7 @@
             border: 1px solid var(--line);
             background: transparent;
             color: var(--fg);
-            cursor: none;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
