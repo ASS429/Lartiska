@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-bg text-fg font-sans antialiased;
+    background-image: var(--welcome-bg, none);
+    min-height: 100vh;
+  }
+
+  html:not(.dark) body {
+    @apply bg-cream text-ink;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-serif tracking-tight;
+  }
+
+  ::selection {
+    @apply bg-gold/30 text-fg;
+  }
+}
+
+@layer components {
+  .container-art {
+    @apply mx-auto w-full max-w-[1240px] px-6 md:px-10;
+  }
+
+  .eyebrow {
+    @apply uppercase tracking-[0.32em] text-[11px] md:text-xs font-medium text-gold;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-gold-gradient text-ink font-semibold text-sm tracking-wide transition-all duration-500 ease-cinema hover:scale-[1.03] hover:shadow-[0_15px_45px_-15px_rgba(212,175,55,0.55)];
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-line text-fg font-medium text-sm tracking-wide transition-all duration-500 ease-cinema hover:border-gold hover:text-gold;
+  }
+
+  .surface-card {
+    @apply backdrop-blur-md bg-ink/60 border border-line rounded-3xl;
+  }
+
+  .lartiska-input {
+    @apply w-full px-4 py-3 rounded-xl bg-ink/50 border border-line text-fg placeholder:text-fg/35 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300;
+  }
+
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+  }
+}
+
+@layer utilities {
+  .text-shadow-soft {
+    text-shadow: 0 2px 30px rgba(0, 0, 0, 0.45);
+  }
+
+  .border-line {
+    border-color: rgba(212, 175, 55, 0.18);
+  }
+}
