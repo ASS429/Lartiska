@@ -17,6 +17,8 @@ return [
 
     'allowed_origins_patterns' => [
         '#^https://.*\.lartiska\.com$#',
+        '#^https://.*\.onrender\.com$#',  // Vitrine React sur Render
+        '#^https://.*\.railway\.app$#',   // Backend Railway (au cas où)
     ],
 
     'allowed_headers' => ['*'],

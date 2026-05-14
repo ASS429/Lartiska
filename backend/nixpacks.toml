@@ -1,0 +1,25 @@
+# Configuration Nixpacks pour Railway
+# Détecte automatiquement Laravel 11 + PHP 8.3 et installe les bonnes extensions.
+
+[phases.setup]
+nixPkgs = ["php83", "php83Packages.composer", "nodejs_20"]
+nixLibs = ["openssl"]
+
+[phases.install]
+cmds = ["composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist"]
+
+[phases.build]
+cmds = [
+  "php artisan config:cache",
+  "php artisan route:cache",
+  "php artisan view:cache",
+  "php artisan event:cache"
+]
+
+[start]
+cmd = "sh ./railway-start.sh"
+
+[variables]
+PHP_VERSION = "8.3"
+APP_ENV = "production"
+LOG_CHANNEL = "stderr"
