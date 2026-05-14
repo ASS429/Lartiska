@@ -25,7 +25,7 @@ class ProjectController extends Controller
             ->orderByDesc('featured')
             ->orderByDesc('completed_at')
             ->orderByDesc('id')
-            ->paginate($request->integer('per_page', 12));
+            ->paginate(min($request->integer('per_page', 12), 50));
 
         return ProjectResource::collection($projects);
     }

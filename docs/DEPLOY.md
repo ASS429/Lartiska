@@ -112,9 +112,17 @@ R2_REGION=auto
 R2_ENDPOINT=https://<account_id>.r2.cloudflarestorage.com
 R2_PUBLIC_URL=https://pub-XXXXXXXX.r2.dev
 
-# CORS + Sanctum (autoriser le frontend Render)
+# CORS + Sanctum — allow-list stricte
 FRONTEND_URL=https://lartiska.onrender.com
+FRONTEND_EXTRA_ORIGINS=       # vide ; ajouter "https://staging.lartiska.com" si besoin
 SANCTUM_STATEFUL_DOMAINS=lartiska.onrender.com
+
+# Admin initial (lu par UserSeeder au 1er deploy)
+# OBLIGATOIRE en prod — sinon un mot de passe aléatoire est généré et loggé.
+ADMIN_DEFAULT_EMAIL=tounkara@lartiska.com
+ADMIN_DEFAULT_NAME=Tounkara
+ADMIN_DEFAULT_PHONE=+221785446363
+ADMIN_DEFAULT_PASSWORD=                # ⚠ générer une chaîne forte (32+ chars)
 
 # Mail — Resend (free : 3000 emails/mois). À faire après si on veut les notifs
 MAIL_MAILER=log

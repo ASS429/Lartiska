@@ -18,7 +18,7 @@ class SocialController extends Controller
             $query->where('platform', $platform);
         }
 
-        $posts = $query->limit($request->integer('limit', 12))->get();
+        $posts = $query->limit(min($request->integer('limit', 12), 30))->get();
 
         return response()->json(['data' => $posts]);
     }

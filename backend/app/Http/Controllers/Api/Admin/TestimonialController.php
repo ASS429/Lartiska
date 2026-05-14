@@ -20,7 +20,7 @@ class TestimonialController extends Controller
             $query->published();
         }
 
-        return TestimonialResource::collection($query->paginate($request->integer('per_page', 30)));
+        return TestimonialResource::collection($query->paginate(min($request->integer('per_page', 30), 100)));
     }
 
     public function show(Testimonial $testimonial): JsonResponse

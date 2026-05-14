@@ -17,10 +17,12 @@ class QuoteController extends Controller
         $data = $request->validated();
         $data['user_id'] = $request->user()?->id;
 
+        // Pieces jointes : disque PRIVÉ (jamais expose publiquement les photos
+        // d'intérieur / adresses / contrats des clients)
         $attachments = [];
         if ($request->hasFile('attachments')) {
             foreach ($request->file('attachments') as $file) {
-                $attachments[] = $file->store('quotes/uploads', 'public');
+                $attachments[] = $file->store('quotes/' . now()->format('Y/m'), 'local');
             }
         }
         $data['attachments'] = $attachments ?: null;
@@ -35,21 +37,42 @@ class QuoteController extends Controller
 
     public function show(Request $request, Quote $quote): JsonResponse
     {
-        if ($request->user()?->id !== $quote->user_id && !$request->user()?->isAdmin()) {
-            abort(403);
-        }
+        $this->authorizeAccess($request, $quote);
 
         return response()->json([
             'data' => new QuoteResource($quote->load(['service', 'items'])),
         ]);
     }
 
-    public function downloadPdf(Quote $quote)
+    public function downloadPdf(Request $request, Quote $quote)
     {
+        $this->authorizeAccess($request, $quote);
+
         if (!$quote->pdf_path || !Storage::disk('local')->exists($quote->pdf_path)) {
             abort(404);
         }
 
         return Storage::disk('local')->download($quote->pdf_path, "{$quote->reference}.pdf");
+    }
+
+    /**
+     * Un devis n'est lisible que par son propriétaire (user_id) ou par un admin.
+     * Les devis créés en invité (user_id null) ne sont accessibles que par les admins.
+     */
+    private function authorizeAccess(Request $request, Quote $quote): void
+    {
+        $user = $request->user();
+
+        if (!$user) {
+            abort(401);
+        }
+
+        if ($user->isAdmin()) {
+            return;
+        }
+
+        if ($quote->user_id === null || $quote->user_id !== $user->id) {
+            abort(403, 'Vous n\'avez pas accès à ce devis.');
+        }
     }
 }

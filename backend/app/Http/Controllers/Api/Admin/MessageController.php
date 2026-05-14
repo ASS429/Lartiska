@@ -21,7 +21,7 @@ class MessageController extends Controller
             $query->where('source', $source);
         }
 
-        $messages = $query->paginate($request->integer('per_page', 20));
+        $messages = $query->paginate(min($request->integer('per_page', 20), 100));
 
         return response()->json($messages);
     }

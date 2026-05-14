@@ -14,7 +14,7 @@ class TestimonialController extends Controller
         $testimonials = Testimonial::published()
             ->with('project:id,title,slug')
             ->orderBy('order')
-            ->limit($request->integer('limit', 12))
+            ->limit(min($request->integer('limit', 12), 30))
             ->get();
 
         return TestimonialResource::collection($testimonials);

@@ -25,7 +25,7 @@ class ServiceController extends Controller
             $query->where('title', 'like', "%{$search}%");
         }
 
-        return ServiceResource::collection($query->paginate($request->integer('per_page', 30)));
+        return ServiceResource::collection($query->paginate(min($request->integer('per_page', 30), 100)));
     }
 
     public function show(Service $service): JsonResponse

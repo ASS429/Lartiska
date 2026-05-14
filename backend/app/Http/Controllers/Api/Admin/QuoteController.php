@@ -28,7 +28,7 @@ class QuoteController extends Controller
             });
         }
 
-        $quotes = $query->paginate($request->integer('per_page', 20));
+        $quotes = $query->paginate(min($request->integer('per_page', 20), 100));
 
         return QuoteResource::collection($quotes);
     }

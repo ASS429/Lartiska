@@ -36,7 +36,7 @@ class ProjectController extends Controller
         }
 
         return ProjectResource::collection(
-            $query->paginate($request->integer('per_page', 20))
+            $query->paginate(min($request->integer('per_page', 20), 100))
         );
     }
 
