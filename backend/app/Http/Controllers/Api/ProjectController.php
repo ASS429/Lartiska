@@ -11,7 +11,7 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Project::published()->with('category');
+        $query = Project::published()->with(['category', 'images']);
 
         if ($category = $request->string('category')->toString()) {
             $query->whereHas('category', fn ($q) => $q->where('slug', $category));
@@ -25,7 +25,7 @@ class ProjectController extends Controller
             ->orderByDesc('featured')
             ->orderByDesc('completed_at')
             ->orderByDesc('id')
-            ->paginate(12);
+            ->paginate($request->integer('per_page', 12));
 
         return ProjectResource::collection($projects);
     }

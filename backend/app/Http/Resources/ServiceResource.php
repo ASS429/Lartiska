@@ -18,6 +18,8 @@ class ServiceResource extends JsonResource
             'price_to' => $this->price_to ? (float) $this->price_to : null,
             'unit' => $this->unit,
             'icon' => $this->icon,
+            'is_active' => (bool) $this->is_active,
+            'order' => $this->order ?? 0,
             'category' => new CategoryResource($this->whenLoaded('category')),
         ];
     }

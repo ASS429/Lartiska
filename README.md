@@ -2,7 +2,7 @@
 
 Monorepo de la plateforme **Lartiska** (artiste Tounkara) : site vitrine, application mobile et API.
 
-🌍 **Site live (vitrine v0)** : <https://lartiska.onrender.com>
+🌍 **Site live** : <https://lartiska.onrender.com>
 📁 **Repo GitHub** : <https://github.com/ASS429/Lartiska>
 
 ---
@@ -12,16 +12,50 @@ Monorepo de la plateforme **Lartiska** (artiste Tounkara) : site vitrine, applic
 ```
 lartiska/
 ├── backend/      → Laravel 11 + Sanctum (API REST + admin)
-├── web/          → React 19 + Vite + Tailwind (futur site vitrine)
+├── web/          → React 19 + Vite + Tailwind (site vitrine à déployer)
 ├── mobile/       → React Native + Expo (app iOS/Android)
 ├── shared/       → Types TypeScript et utilitaires partagés
 ├── docs/         → Wireframes, contrats, documentation
 ├── .github/      → Workflows CI/CD
-├── index.html    → Site vitrine v0 actuel (servi par Render)
+├── index.html    → Ancienne vitrine statique / prototype
 └── villes/       → Médias des chantiers
 ```
 
-Tant que la nouvelle vitrine React n'est pas prête, **`index.html` à la racine reste la version en production** sur Render. La refonte vivra dans `web/`.
+La vitrine React prête pour Render vit dans **`web/`**. L'ancien `index.html` à la racine reste utile comme archive/prototype, mais la production doit maintenant pointer vers le build React.
+
+---
+
+## 🚀 Démarrage rapide — Web (React + Vite)
+
+```bash
+cd web
+npm ci
+npm run dev       # http://127.0.0.1:5173
+npm run build     # génère web/dist
+```
+
+En local, Vite proxifie `/api` et `/storage` vers `http://127.0.0.1:8000`.
+En production, définir `VITE_API_BASE_URL` vers l'API Laravel, par exemple :
+
+```bash
+VITE_API_BASE_URL=https://votre-backend.onrender.com/api
+```
+
+---
+
+## 🚀 Déploiement Render — Web
+
+Le fichier `render.yaml` définit un site statique Render pour `web/` :
+
+| Champ | Valeur |
+|-------|--------|
+| Root Directory | `web` |
+| Build Command | `npm ci && npm run build` |
+| Publish Directory | `dist` |
+| Node | `22.17.1` |
+| Rewrite SPA | `/*` → `/index.html` |
+
+Si vous configurez Render manuellement, reproduisez les mêmes valeurs et ajoutez la règle de rewrite pour React Router.
 
 ---
 

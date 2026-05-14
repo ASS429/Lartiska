@@ -22,6 +22,11 @@ import AdminDashboard from '@/pages/admin/Dashboard';
 import AdminQuotes from '@/pages/admin/Quotes';
 import AdminQuoteDetail from '@/pages/admin/QuoteDetail';
 import AdminMessages from '@/pages/admin/Messages';
+import AdminProjects from '@/pages/admin/Projects';
+import AdminProjectForm from '@/pages/admin/ProjectForm';
+import AdminServices from '@/pages/admin/Services';
+import AdminTestimonials from '@/pages/admin/Testimonials';
+import AdminSettings from '@/pages/admin/Settings';
 
 export default function App() {
   const { status, hydrate } = useAuthStore();
@@ -32,7 +37,6 @@ export default function App() {
 
   return (
     <Routes>
-      {/* Public routes */}
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="services" element={<Services />} />
@@ -44,7 +48,6 @@ export default function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
 
-        {/* Client account (auth required) */}
         <Route element={<RequireAuth role="client" />}>
           <Route path="account" element={<Account />} />
         </Route>
@@ -52,13 +55,18 @@ export default function App() {
         <Route path="*" element={<NotFound />} />
       </Route>
 
-      {/* Admin (auth + role=admin) */}
       <Route element={<RequireAuth role="admin" />}>
         <Route path="admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
+          <Route path="projects" element={<AdminProjects />} />
+          <Route path="projects/new" element={<AdminProjectForm />} />
+          <Route path="projects/:id" element={<AdminProjectForm />} />
+          <Route path="services" element={<AdminServices />} />
+          <Route path="testimonials" element={<AdminTestimonials />} />
           <Route path="quotes" element={<AdminQuotes />} />
           <Route path="quotes/:id" element={<AdminQuoteDetail />} />
           <Route path="messages" element={<AdminMessages />} />
+          <Route path="settings" element={<AdminSettings />} />
         </Route>
       </Route>
     </Routes>

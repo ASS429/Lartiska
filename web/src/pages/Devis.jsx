@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { useServices, useCategories } from '@/hooks/useApi';
+import { useServices } from '@/hooks/useApi';
 import { submitQuote } from '@/api/endpoints';
 import clsx from 'clsx';
 
@@ -20,7 +20,6 @@ export default function Devis() {
     site_address: '',
   });
   const { data: services } = useServices();
-  const { data: categories } = useCategories();
 
   const mutation = useMutation({
     mutationFn: () => submitQuote({

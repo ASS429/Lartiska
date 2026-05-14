@@ -5,6 +5,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Tokens fixes — palette gold/sand/rust
         gold: {
           DEFAULT: '#D4AF37',
           soft: '#E8C547',
@@ -17,15 +18,12 @@ export default {
         cream: '#F5EDD6',
         sand: '#C4A882',
         rust: '#B84A2A',
-        bg: {
-          DEFAULT: '#07060A',
-          light: '#F5EDD6',
-        },
-        fg: {
-          DEFAULT: '#F4ECD8',
-          dark: '#06040A',
-        },
-        line: 'rgba(212, 175, 55, 0.18)',
+
+        // Tokens DYNAMIQUES — basculent automatiquement light/dark
+        // (CSS vars définies dans index.css : html.dark + html:not(.dark))
+        bg: 'rgb(var(--bg-rgb) / <alpha-value>)',
+        fg: 'rgb(var(--fg-rgb) / <alpha-value>)',
+        line: 'rgb(var(--line-rgb) / <alpha-value>)',
       },
       fontFamily: {
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],

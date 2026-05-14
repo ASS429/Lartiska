@@ -13,6 +13,8 @@ class ProjectImageResource extends JsonResource
         return [
             'id' => $this->id,
             'url' => Storage::url($this->path),
+            'type' => $this->type ?? 'image',
+            'thumbnail' => $this->thumbnail ? Storage::url($this->thumbnail) : null,
             'caption' => $this->caption,
             'order' => $this->order,
             'is_cover' => $this->is_cover,

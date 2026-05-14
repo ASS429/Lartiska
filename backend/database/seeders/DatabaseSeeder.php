@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             ServiceSeeder::class,
             SettingSeeder::class,
+            ProjectSeeder::class,
+            TestimonialSeeder::class,
         ]);
     }
 }

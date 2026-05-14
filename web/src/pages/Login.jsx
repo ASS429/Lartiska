@@ -20,7 +20,7 @@ export default function Login() {
     e.preventDefault();
     try {
       await login(form);
-    } catch (_err) { /* error handled in store */ }
+    } catch { /* error handled in store */ }
   };
 
   return (

@@ -2,35 +2,36 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ProjectImage extends Model
+class Testimonial extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
+        'client_name',
+        'client_role',
+        'city',
         'project_id',
-        'path',
-        'type',
-        'thumbnail',
-        'caption',
+        'content',
+        'rating',
+        'avatar',
+        'is_published',
         'order',
-        'is_cover',
-        'width',
-        'height',
     ];
 
     protected $casts = [
-        'is_cover' => 'boolean',
+        'is_published' => 'boolean',
+        'rating' => 'integer',
         'order' => 'integer',
-        'width' => 'integer',
-        'height' => 'integer',
     ];
 
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('is_published', true);
     }
 }

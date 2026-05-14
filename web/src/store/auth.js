@@ -34,7 +34,7 @@ export const useAuthStore = create(
           if (get().token) {
             await auth.logout();
           }
-        } catch (_e) { /* ignore */ }
+        } catch { /* ignore */ }
         localStorage.removeItem(TOKEN_KEY);
         set({ user: null, token: null, status: 'idle', error: null });
       },
@@ -49,7 +49,7 @@ export const useAuthStore = create(
         try {
           const user = await auth.fetchMe();
           set({ user, status: 'authenticated' });
-        } catch (_e) {
+        } catch {
           localStorage.removeItem(TOKEN_KEY);
           set({ user: null, token: null, status: 'idle' });
         }
