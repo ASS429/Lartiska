@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchAdminQuote, updateAdminQuote } from '@/api/admin';
+import { fetchAdminQuote, updateAdminQuote, generateQuotePdf, sendQuoteToClient } from '@/api/admin';
+import { apiClient } from '@/api/client';
 import { formatPriceXOF } from '@/utils/format';
 
 const STATUS_OPTIONS = [
@@ -47,6 +48,38 @@ export default function AdminQuoteDetail() {
       queryClient.invalidateQueries({ queryKey: ['admin-dashboard'] });
     },
   });
+
+  const generatePdfMutation = useMutation({
+    mutationFn: () => generateQuotePdf(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-quote', id] });
+    },
+  });
+
+  const sendMutation = useMutation({
+    mutationFn: () => sendQuoteToClient(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-quote', id] });
+      queryClient.invalidateQueries({ queryKey: ['admin-quotes'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-dashboard'] });
+    },
+  });
+
+  /**
+   * Télécharge le PDF en gardant l'auth Bearer (l'URL retournée par l'API est
+   * une route protégée, donc on ne peut pas la mettre en href direct).
+   */
+  const downloadPdf = async () => {
+    const response = await apiClient.get(`/quotes/${id}/pdf`, { responseType: 'blob' });
+    const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${quote.reference}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  };
 
   if (isLoading) return <p className="text-fg/55">Chargement…</p>;
   if (!quote) return <p className="text-fg/55">Devis introuvable.</p>;
@@ -159,6 +192,74 @@ export default function AdminQuoteDetail() {
               {mutation.isPending ? 'Enregistrement…' : 'Enregistrer'}
             </button>
           </form>
+
+          {/* Bloc actions PDF + envoi client */}
+          <div className="surface-card p-6 space-y-3">
+            <h2 className="font-serif text-xl mb-1">Document & envoi</h2>
+
+            {quote.has_pdf ? (
+              <div className="flex items-center justify-between gap-3 p-3 rounded-xl border border-gold/30 bg-gold/5">
+                <div className="min-w-0">
+                  <p className="text-xs uppercase tracking-widest text-gold">PDF prêt</p>
+                  <p className="text-sm truncate">{quote.reference}.pdf</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={downloadPdf}
+                  className="text-xs uppercase tracking-widest text-gold hover:underline"
+                >
+                  Télécharger →
+                </button>
+              </div>
+            ) : (
+              <p className="text-xs text-fg/55">Aucun PDF généré pour ce devis.</p>
+            )}
+
+            <button
+              type="button"
+              onClick={() => generatePdfMutation.mutate()}
+              disabled={generatePdfMutation.isPending}
+              className="btn-ghost w-full !py-2.5 text-xs disabled:opacity-50"
+            >
+              {generatePdfMutation.isPending
+                ? 'Génération…'
+                : quote.has_pdf ? 'Régénérer le PDF' : 'Générer le PDF'}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                if (confirm(`Envoyer le devis ${quote.reference} à ${quote.client_email} ?`)) {
+                  sendMutation.mutate();
+                }
+              }}
+              disabled={sendMutation.isPending}
+              className="btn-gold w-full !py-2.5 text-xs disabled:opacity-50"
+            >
+              {sendMutation.isPending ? 'Envoi…' : '✉ Envoyer au client'}
+            </button>
+
+            {sendMutation.isSuccess && (
+              <p className="text-emerald-300 text-xs text-center">✓ Email envoyé · statut → "envoyé"</p>
+            )}
+            {sendMutation.isError && (
+              <p className="text-rust text-xs">
+                {sendMutation.error?.response?.data?.message || 'Erreur d\'envoi du mail.'}
+              </p>
+            )}
+
+            {quote.sent_at && (
+              <p className="text-xs text-fg/55 text-center border-t border-line pt-3">
+                Envoyé le {new Date(quote.sent_at).toLocaleString('fr-FR')}
+              </p>
+            )}
+
+            {quote.attachments_count > 0 && (
+              <p className="text-xs text-fg/65 border-t border-line pt-3">
+                📎 {quote.attachments_count} pièce{quote.attachments_count > 1 ? 's' : ''} jointe{quote.attachments_count > 1 ? 's' : ''} par le client
+              </p>
+            )}
+          </div>
 
           {quote.client_phone && (
             <a

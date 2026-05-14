@@ -6,6 +6,10 @@ import clsx from 'clsx';
 
 const STEPS = ['Service', 'Détails', 'Coordonnées', 'Récapitulatif'];
 
+const MAX_ATTACHMENTS = 5;
+const MAX_FILE_SIZE_MB = 10;
+const ACCEPTED_MIMES = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
+
 export default function Devis() {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState({
@@ -19,6 +23,8 @@ export default function Devis() {
     client_city: '',
     site_address: '',
   });
+  const [attachments, setAttachments] = useState([]); // File[]
+  const [fileError, setFileError] = useState(null);
   const { data: services } = useServices();
 
   const mutation = useMutation({
@@ -27,10 +33,42 @@ export default function Devis() {
       service_id: form.service_id || null,
       surface_m2: form.surface_m2 ? Number(form.surface_m2) : null,
       estimated_budget: form.estimated_budget ? Number(form.estimated_budget) : null,
+      attachments,
     }),
   });
 
   const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
+
+  const onFiles = (e) => {
+    setFileError(null);
+    const incoming = Array.from(e.target.files || []);
+    const merged = [...attachments];
+
+    for (const f of incoming) {
+      if (merged.length >= MAX_ATTACHMENTS) {
+        setFileError(`Maximum ${MAX_ATTACHMENTS} fichiers.`);
+        break;
+      }
+      if (!ACCEPTED_MIMES.includes(f.type)) {
+        setFileError(`Format refusé : ${f.name} (autorisé : JPG, PNG, WebP, PDF).`);
+        continue;
+      }
+      if (f.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+        setFileError(`${f.name} dépasse ${MAX_FILE_SIZE_MB} Mo.`);
+        continue;
+      }
+      // Pas de doublon
+      if (!merged.some((m) => m.name === f.name && m.size === f.size)) {
+        merged.push(f);
+      }
+    }
+    setAttachments(merged);
+    e.target.value = ''; // reset input pour ré-uploader le même fichier si besoin
+  };
+
+  const removeAttachment = (idx) => {
+    setAttachments((arr) => arr.filter((_, i) => i !== idx));
+  };
 
   const next = () => setStep((s) => Math.min(STEPS.length - 1, s + 1));
   const prev = () => setStep((s) => Math.max(0, s - 1));
@@ -144,6 +182,50 @@ export default function Devis() {
                 />
               </Field>
             </div>
+
+            {/* Upload photos & plans */}
+            <Field label={`Photos ou plans (optionnel, max ${MAX_ATTACHMENTS})`}>
+              <div className="rounded-xl border border-dashed border-line p-5 bg-ink/30">
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,application/pdf"
+                  multiple
+                  onChange={onFiles}
+                  disabled={attachments.length >= MAX_ATTACHMENTS}
+                  className="block w-full text-xs text-fg/70 file:mr-3 file:px-4 file:py-2.5 file:rounded-full file:border-0 file:bg-gold/15 file:text-gold file:cursor-pointer file:uppercase file:tracking-widest hover:file:bg-gold/25 cursor-pointer disabled:opacity-40"
+                />
+                <p className="text-[11px] text-fg/55 mt-2">
+                  JPG, PNG, WebP ou PDF — max {MAX_FILE_SIZE_MB} Mo par fichier.
+                  Ces fichiers restent privés et ne sont visibles que par Tounkara.
+                </p>
+
+                {fileError && (
+                  <p className="text-rust text-sm mt-2">{fileError}</p>
+                )}
+
+                {attachments.length > 0 && (
+                  <ul className="mt-4 space-y-2">
+                    {attachments.map((f, i) => (
+                      <li key={`${f.name}-${i}`} className="flex items-center gap-3 p-2.5 rounded-lg bg-ink/40 border border-line">
+                        <FilePreview file={f} />
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm truncate">{f.name}</p>
+                          <p className="text-[11px] text-fg/55">{(f.size / 1024 / 1024).toFixed(2)} Mo · {f.type.split('/')[1].toUpperCase()}</p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removeAttachment(i)}
+                          className="text-fg/45 hover:text-rust text-xs px-2 py-1 rounded-full border border-line hover:border-rust transition-all"
+                          aria-label="Retirer"
+                        >
+                          ✕
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </Field>
           </div>
         )}
 
@@ -179,6 +261,7 @@ export default function Devis() {
             <Recap label="Description" value={form.description || '—'} />
             <Recap label="Surface" value={form.surface_m2 ? `${form.surface_m2} m²` : '—'} />
             <Recap label="Budget" value={form.estimated_budget ? `${Number(form.estimated_budget).toLocaleString('fr-FR')} FCFA` : '—'} />
+            <Recap label="Pièces jointes" value={attachments.length > 0 ? `${attachments.length} fichier${attachments.length > 1 ? 's' : ''}` : 'Aucune'} />
             <Recap label="Client" value={`${form.client_name} · ${form.client_email} · ${form.client_phone}`} />
             <Recap label="Adresse" value={[form.client_city, form.site_address].filter(Boolean).join(' — ') || '—'} />
 
@@ -238,5 +321,19 @@ function Recap({ label, value }) {
       <span className="text-xs uppercase tracking-widest text-gold/80 sm:w-32 shrink-0">{label}</span>
       <span className="text-fg/85 break-words">{value}</span>
     </div>
+  );
+}
+
+function FilePreview({ file }) {
+  const isImage = file.type.startsWith('image/');
+  const url = isImage ? URL.createObjectURL(file) : null;
+  // L'URL est libérée par le navigateur quand le composant disparaît ;
+  // suffisant pour notre cas d'usage (5 fichiers max, formulaire court).
+  return isImage ? (
+    <img src={url} alt={file.name} className="w-10 h-10 rounded-md object-cover shrink-0" />
+  ) : (
+    <span className="w-10 h-10 rounded-md grid place-items-center bg-rust/15 text-rust text-[10px] uppercase tracking-widest shrink-0">
+      PDF
+    </span>
   );
 }

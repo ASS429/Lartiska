@@ -12,6 +12,12 @@ export const fetchAdminQuote = (id) =>
 export const updateAdminQuote = (id, payload) =>
   apiClient.patch(`/admin/quotes/${id}`, payload).then((r) => r.data);
 
+export const generateQuotePdf = (id) =>
+  apiClient.post(`/admin/quotes/${id}/generate-pdf`).then((r) => r.data);
+
+export const sendQuoteToClient = (id) =>
+  apiClient.post(`/admin/quotes/${id}/send-to-client`).then((r) => r.data);
+
 // ─── Messages ──────────────────────────────────────────────
 export const fetchAdminMessages = (params = {}) =>
   apiClient.get('/admin/messages', { params }).then((r) => r.data);

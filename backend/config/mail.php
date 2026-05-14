@@ -113,4 +113,16 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Admin notification email
+    |--------------------------------------------------------------------------
+    |
+    | Adresse qui reçoit les notifications "nouvelle demande de devis".
+    | Typiquement l'email personnel de Tounkara.
+    |
+    */
+
+    'admin_notify' => env('MAIL_ADMIN_NOTIFY'),
+
 ];

@@ -59,7 +59,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
 
     Route::get('/quotes/{quote}', [QuoteController::class, 'show']);
-    Route::get('/quotes/{quote}/pdf', [QuoteController::class, 'downloadPdf']);
+    Route::get('/quotes/{quote}/pdf', [QuoteController::class, 'downloadPdf'])->name('quotes.pdf');
 
     /*
     | Espace client : /api/account/*
@@ -78,6 +78,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/quotes', [AdminQuoteController::class, 'index']);
         Route::get('/quotes/{quote}', [AdminQuoteController::class, 'show']);
         Route::patch('/quotes/{quote}', [AdminQuoteController::class, 'update']);
+        Route::post('/quotes/{quote}/generate-pdf', [AdminQuoteController::class, 'generatePdf']);
+        Route::post('/quotes/{quote}/send-to-client', [AdminQuoteController::class, 'sendToClient']);
 
         // Messages
         Route::get('/messages', [AdminMessageController::class, 'index']);

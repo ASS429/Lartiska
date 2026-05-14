@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreQuoteRequest;
 use App\Http\Resources\QuoteResource;
+use App\Mail\NewQuoteAdminMail;
 use App\Models\Quote;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class QuoteController extends Controller
@@ -28,6 +31,19 @@ class QuoteController extends Controller
         $data['attachments'] = $attachments ?: null;
 
         $quote = Quote::create($data);
+
+        // Notification email à l'admin (Tounkara) — non bloquante
+        $adminEmail = config('mail.admin_notify') ?: env('MAIL_ADMIN_NOTIFY');
+        if ($adminEmail) {
+            try {
+                Mail::to($adminEmail)->send(new NewQuoteAdminMail($quote->fresh('service')));
+            } catch (\Throwable $e) {
+                Log::warning('Admin notification email failed', [
+                    'quote_id' => $quote->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
 
         return response()->json([
             'data' => new QuoteResource($quote->load('service')),

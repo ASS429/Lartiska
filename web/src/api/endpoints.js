@@ -23,8 +23,28 @@ export const fetchSocialFeed = (params = {}) =>
 export const submitContact = (payload) =>
   apiClient.post('/contact', payload).then((r) => r.data);
 
-export const submitQuote = (payload) =>
-  apiClient.post('/quotes', payload).then((r) => r.data);
+export const submitQuote = (payload) => {
+  const files = Array.isArray(payload.attachments) ? payload.attachments : [];
+
+  // Si pas de fichiers, envoi JSON classique (plus rapide, plus simple)
+  if (files.length === 0) {
+    const { attachments: _omit, ...rest } = payload;
+    return apiClient.post('/quotes', rest).then((r) => r.data);
+  }
+
+  // Avec fichiers : multipart/form-data
+  const form = new FormData();
+  Object.entries(payload).forEach(([key, value]) => {
+    if (key === 'attachments') return;
+    if (value === null || value === undefined || value === '') return;
+    form.append(key, value);
+  });
+  files.forEach((file) => form.append('attachments[]', file));
+
+  return apiClient.post('/quotes', form, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }).then((r) => r.data);
+};
 
 export const login = (payload) =>
   apiClient.post('/auth/login', payload).then((r) => r.data);

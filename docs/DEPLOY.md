@@ -124,8 +124,17 @@ ADMIN_DEFAULT_NAME=Tounkara
 ADMIN_DEFAULT_PHONE=+221785446363
 ADMIN_DEFAULT_PASSWORD=                # ⚠ générer une chaîne forte (32+ chars)
 
-# Mail — Resend (free : 3000 emails/mois). À faire après si on veut les notifs
-MAIL_MAILER=log
+# Mail — Resend SMTP (free : 3 000 emails/mois). Pas de paquet Composer supplémentaire.
+# resend.com → API Keys → créer → coller la clé dans MAIL_PASSWORD
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.resend.com
+MAIL_PORT=465
+MAIL_USERNAME=resend
+MAIL_PASSWORD=re_xxxxxxxxxxxxxxxxx
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=contact@lartiska.com
+MAIL_FROM_NAME=Lartiska
+MAIL_ADMIN_NOTIFY=tounkara@lartiska.com   # qui reçoit les notifs nouveau devis
 
 # Log
 LOG_CHANNEL=stderr
