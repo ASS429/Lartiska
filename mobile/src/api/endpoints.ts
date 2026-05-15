@@ -73,3 +73,22 @@ export const fetchMyQuote = (id: number | string) =>
 
 export const respondToQuote = (id: number | string, action: 'accept' | 'reject' | 'request_changes', comment?: string) =>
   apiClient.post(`/account/quotes/${id}/respond`, { action, comment }).then((r) => r.data);
+
+// ─── Admin ─────────────────────────────────────────────────
+export const fetchAdminDashboard = () =>
+  apiClient.get('/admin/dashboard').then((r) => r.data.data);
+
+export const fetchAdminQuotes = (params: Record<string, unknown> = {}) =>
+  apiClient.get<{ data: Quote[]; meta: any }>('/admin/quotes', { params }).then((r) => r.data);
+
+export const fetchAdminQuote = (id: number | string) =>
+  apiClient.get<{ data: Quote }>(`/admin/quotes/${id}`).then((r) => r.data.data);
+
+export const updateAdminQuote = (id: number | string, payload: Record<string, unknown>) =>
+  apiClient.patch(`/admin/quotes/${id}`, payload).then((r) => r.data);
+
+export const sendQuoteToClient = (id: number | string) =>
+  apiClient.post(`/admin/quotes/${id}/send-to-client`).then((r) => r.data);
+
+export const generateQuotePdf = (id: number | string) =>
+  apiClient.post(`/admin/quotes/${id}/generate-pdf`).then((r) => r.data);

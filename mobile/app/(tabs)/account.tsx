@@ -1,20 +1,22 @@
-import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Pressable, Text, View } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { fetchMyQuotes } from '@/src/api/endpoints';
 import { useAuthStore } from '@/src/store/auth';
-import { colors, spacing, fontSize, radius } from '@/constants/theme';
-
-const STATUS_LABELS: Record<string, { label: string; color: string }> = {
-  pending: { label: 'En attente', color: colors.pending },
-  processing: { label: 'En cours d\'étude', color: colors.processing },
-  sent: { label: 'Devis envoyé', color: colors.sent },
-  accepted: { label: 'Accepté', color: colors.accepted },
-  rejected: { label: 'Refusé', color: colors.rejected },
-};
+import { spacing, fontSize, radius, type ThemeColors } from '@/constants/theme';
+import { useStyles } from '@/src/hooks/useStyles';
 
 export default function AccountScreen() {
+  const { styles, c } = useStyles(makeStyles);
   const { user, status, logout } = useAuthStore();
+
+  const STATUS_LABELS: Record<string, { label: string; color: string }> = {
+    pending: { label: 'En attente', color: c.pending },
+    processing: { label: 'En cours d\'étude', color: c.processing },
+    sent: { label: 'Devis envoyé', color: c.sent },
+    accepted: { label: 'Accepté', color: c.accepted },
+    rejected: { label: 'Refusé', color: c.rejected },
+  };
 
   const { data: quotes = [], isLoading } = useQuery({
     queryKey: ['my-quotes'],
@@ -69,13 +71,13 @@ export default function AccountScreen() {
         }
         ListEmptyComponent={
           <View style={{ padding: spacing.xl, alignItems: 'center' }}>
-            <Text style={{ color: colors.fgMuted, fontFamily: 'serif', fontSize: fontSize.lg }}>
+            <Text style={{ color: c.fgMuted, fontFamily: 'serif', fontSize: fontSize.lg }}>
               Aucune demande pour l'instant
             </Text>
           </View>
         }
         renderItem={({ item }) => {
-          const status = STATUS_LABELS[item.status] || { label: item.status, color: colors.fgDim };
+          const s = STATUS_LABELS[item.status] || { label: item.status, color: c.fgDim };
           return (
             <Pressable
               style={styles.quoteCard}
@@ -89,8 +91,8 @@ export default function AccountScreen() {
                   {item.has_pdf ? '  ·  PDF' : ''}
                 </Text>
               </View>
-              <View style={[styles.statusBadge, { borderColor: status.color }]}>
-                <Text style={[styles.statusText, { color: status.color }]}>{status.label}</Text>
+              <View style={[styles.statusBadge, { borderColor: s.color }]}>
+                <Text style={[styles.statusText, { color: s.color }]}>{s.label}</Text>
               </View>
             </Pressable>
           );
@@ -101,30 +103,30 @@ export default function AccountScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.bg },
-  centerContent: { paddingHorizontal: spacing.xl, justifyContent: 'center' },
-  header: { paddingTop: 60, paddingHorizontal: spacing.lg, paddingBottom: spacing.md, borderBottomWidth: 1, borderBottomColor: colors.line },
-  eyebrow: { color: colors.gold, fontSize: fontSize.caption, letterSpacing: 3, textTransform: 'uppercase' },
-  eyebrowDeco: { color: colors.gold, fontSize: fontSize.caption, letterSpacing: 3, textTransform: 'uppercase', textAlign: 'center' },
-  title: { color: colors.fg, fontFamily: 'serif', fontSize: fontSize.hero, fontWeight: '300', marginTop: spacing.xs },
-  emailSmall: { color: colors.fgMuted, fontSize: fontSize.small, marginTop: 2 },
-  lead: { color: colors.fgMuted, fontSize: fontSize.body, lineHeight: 22, textAlign: 'center', marginVertical: spacing.lg },
+const makeStyles = (c: ThemeColors) => ({
+  screen: { flex: 1, backgroundColor: c.bg },
+  centerContent: { paddingHorizontal: spacing.xl, justifyContent: 'center' as const },
+  header: { paddingTop: 60, paddingHorizontal: spacing.lg, paddingBottom: spacing.md, borderBottomWidth: 1, borderBottomColor: c.line },
+  eyebrow: { color: c.goldText, fontSize: fontSize.caption, letterSpacing: 3, textTransform: 'uppercase' as const, fontWeight: '600' as const },
+  eyebrowDeco: { color: c.goldText, fontSize: fontSize.caption, letterSpacing: 3, textTransform: 'uppercase' as const, textAlign: 'center' as const, fontWeight: '600' as const },
+  title: { color: c.fg, fontFamily: 'serif', fontSize: fontSize.hero, fontWeight: '300' as const, marginTop: spacing.xs },
+  emailSmall: { color: c.fgMuted, fontSize: fontSize.small, marginTop: 2 },
+  lead: { color: c.fgMuted, fontSize: fontSize.body, lineHeight: 24, textAlign: 'center' as const, marginVertical: spacing.lg },
   list: { padding: spacing.lg, paddingBottom: spacing.xxl },
-  listHeader: { color: colors.fg, fontFamily: 'serif', fontSize: fontSize.xl, marginBottom: spacing.md },
-  quoteCard: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.line, borderWidth: 1, borderRadius: radius.md, padding: spacing.md, marginBottom: spacing.sm, gap: spacing.sm },
-  quoteRef: { color: colors.gold, fontSize: fontSize.caption, fontFamily: 'monospace' },
-  quoteTitle: { color: colors.fg, fontFamily: 'serif', fontSize: fontSize.lg, marginTop: 2 },
-  quoteDate: { color: colors.fgMuted, fontSize: fontSize.caption, marginTop: 4 },
+  listHeader: { color: c.fg, fontFamily: 'serif', fontSize: fontSize.xl, marginBottom: spacing.md },
+  quoteCard: { flexDirection: 'row' as const, alignItems: 'center' as const, backgroundColor: c.surface, borderColor: c.line, borderWidth: 1, borderRadius: radius.md, padding: spacing.md, marginBottom: spacing.sm, gap: spacing.sm },
+  quoteRef: { color: c.goldText, fontSize: fontSize.caption, fontFamily: 'monospace', fontWeight: '600' as const },
+  quoteTitle: { color: c.fg, fontFamily: 'serif', fontSize: fontSize.lg, marginTop: 2 },
+  quoteDate: { color: c.fgMuted, fontSize: fontSize.caption, marginTop: 4 },
   statusBadge: { borderWidth: 1, paddingHorizontal: spacing.sm, paddingVertical: 6, borderRadius: radius.pill },
-  statusText: { fontSize: 10, letterSpacing: 1.5, textTransform: 'uppercase' },
+  statusText: { fontSize: 11, letterSpacing: 1.2, textTransform: 'uppercase' as const, fontWeight: '600' as const },
 
-  btnGold: { backgroundColor: colors.gold, paddingHorizontal: spacing.xl, paddingVertical: 14, borderRadius: radius.pill, alignItems: 'center' },
-  btnGoldText: { color: colors.ink, fontSize: fontSize.body, fontWeight: '600' },
-  btnGoldSmall: { backgroundColor: colors.gold, paddingHorizontal: spacing.md, paddingVertical: 8, borderRadius: radius.pill },
-  btnGoldSmallText: { color: colors.ink, fontSize: 11, fontWeight: '600', letterSpacing: 0.5, textTransform: 'uppercase' },
-  btnGhost: { borderWidth: 1, borderColor: colors.line, paddingHorizontal: spacing.xl, paddingVertical: 12, borderRadius: radius.pill, alignItems: 'center' },
-  btnGhostText: { color: colors.fg, fontSize: fontSize.body },
-  btnGhostSmall: { borderWidth: 1, borderColor: colors.line, paddingHorizontal: spacing.md, paddingVertical: 8, borderRadius: radius.pill },
-  btnGhostSmallText: { color: colors.fgMuted, fontSize: 11, letterSpacing: 0.5, textTransform: 'uppercase' },
+  btnGold: { backgroundColor: c.gold, paddingHorizontal: spacing.xl, paddingVertical: 14, borderRadius: radius.pill, alignItems: 'center' as const },
+  btnGoldText: { color: c.ink, fontSize: fontSize.body, fontWeight: '600' as const },
+  btnGoldSmall: { backgroundColor: c.gold, paddingHorizontal: spacing.md, paddingVertical: 9, borderRadius: radius.pill },
+  btnGoldSmallText: { color: c.ink, fontSize: 12, fontWeight: '600' as const, letterSpacing: 0.5, textTransform: 'uppercase' as const },
+  btnGhost: { borderWidth: 1, borderColor: c.line, paddingHorizontal: spacing.xl, paddingVertical: 12, borderRadius: radius.pill, alignItems: 'center' as const },
+  btnGhostText: { color: c.fg, fontSize: fontSize.body },
+  btnGhostSmall: { borderWidth: 1, borderColor: c.line, paddingHorizontal: spacing.md, paddingVertical: 9, borderRadius: radius.pill },
+  btnGhostSmallText: { color: c.fgMuted, fontSize: 12, letterSpacing: 0.5, textTransform: 'uppercase' as const, fontWeight: '500' as const },
 });

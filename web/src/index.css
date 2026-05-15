@@ -32,6 +32,12 @@
   /* ─── Body : grand canvas radial qui flotte derrière tout le site ─── */
   body {
     @apply bg-bg text-fg font-sans antialiased;
+    font-size: 16px;
+    line-height: 1.6;
+    /* Lisibilité renforcée : font-feature-settings active les ligatures et la rendu net */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
     background:
       radial-gradient(ellipse at 80% 0%,  rgba(212, 175, 55, .07) 0%, transparent 45%),
       radial-gradient(ellipse at 20% 30%, rgba(184, 74, 42, .05) 0%, transparent 50%),
@@ -71,6 +77,26 @@
 
   h1, h2, h3, h4 { @apply font-serif tracking-tight; }
   ::selection { @apply bg-gold/30; }
+
+  /* ─── Lisibilité renforcée en LIGHT mode ─── */
+  /* Les variantes opacités basses (/45 /55 /65) deviennent illisibles sur fond crème.
+     On force des valeurs plus contrastées sur le foreground en light. */
+  html:not(.dark) .text-fg\/45 { color: rgba(6, 4, 10, 0.65); }
+  html:not(.dark) .text-fg\/50 { color: rgba(6, 4, 10, 0.70); }
+  html:not(.dark) .text-fg\/55 { color: rgba(6, 4, 10, 0.72); }
+  html:not(.dark) .text-fg\/60 { color: rgba(6, 4, 10, 0.75); }
+  html:not(.dark) .text-fg\/65 { color: rgba(6, 4, 10, 0.78); }
+  html:not(.dark) .text-fg\/70 { color: rgba(6, 4, 10, 0.82); }
+  html:not(.dark) .text-fg\/75 { color: rgba(6, 4, 10, 0.85); }
+  html:not(.dark) .text-fg\/80 { color: rgba(6, 4, 10, 0.88); }
+  html:not(.dark) .text-fg\/85 { color: rgba(6, 4, 10, 0.92); }
+
+  /* Idem en dark : remonter un peu pour confort de lecture */
+  html.dark .text-fg\/55 { color: rgba(244, 236, 216, 0.70); }
+  html.dark .text-fg\/65 { color: rgba(244, 236, 216, 0.78); }
+
+  /* Body texts : line-height + taille plus généreux */
+  p { line-height: 1.65; }
 }
 
 @layer components {
@@ -112,6 +138,33 @@
     background-color: rgba(255, 252, 241, 0.78);
     color: #06040A;
     border-color: rgba(122, 84, 8, 0.30);
+  }
+
+  /* ─── HERO video — comportement adapté light / dark ─── */
+  .hero-video__media {
+    opacity: 0.55;
+    mix-blend-mode: screen;
+    filter: brightness(1) saturate(1.1);
+  }
+  html:not(.dark) .hero-video__media {
+    /* En light mode, plus de "screen" qui blanchit tout :
+       on garde la vidéo en mode normal, plus opaque, plus contrastée,
+       et on assombrit légèrement pour que les écritures restent lisibles. */
+    opacity: 0.78;
+    mix-blend-mode: multiply;
+    filter: brightness(0.92) saturate(1.18) contrast(1.05);
+  }
+  .hero-video__overlay {
+    background: linear-gradient(to bottom,
+      rgba(7, 6, 10, 0.35) 0%,
+      rgba(7, 6, 10, 0.55) 60%,
+      rgb(var(--bg-rgb)) 100%);
+  }
+  html:not(.dark) .hero-video__overlay {
+    background: linear-gradient(to bottom,
+      rgba(70, 50, 20, 0.22) 0%,
+      rgba(70, 50, 20, 0.45) 55%,
+      rgb(var(--bg-rgb)) 100%);
   }
 
   /* ─── Caption "art-frame" comme dans index.html ─── */

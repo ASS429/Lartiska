@@ -1,14 +1,16 @@
-import { ScrollView, StyleSheet, Text, View, Pressable, Image, Linking } from 'react-native';
+import { ScrollView, Text, View, Pressable, Image, Linking } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { fetchProjects, fetchCategories, fetchPublicSettings } from '@/src/api/endpoints';
-import { colors, spacing, fontSize, radius } from '@/constants/theme';
+import { spacing, fontSize, radius, type ThemeColors } from '@/constants/theme';
+import { useStyles } from '@/src/hooks/useStyles';
 
 // Wrap fetchProjects pour featured only
 const fetchFeatured = () => fetchProjects({ featured: 1, per_page: 6 });
 
 export default function HomeScreen() {
+  const { styles, c } = useStyles(makeStyles);
   const { data: featured } = useQuery({ queryKey: ['featured'], queryFn: fetchFeatured });
   const { data: categories } = useQuery({ queryKey: ['categories'], queryFn: fetchCategories });
   const { data: settings } = useQuery({ queryKey: ['settings'], queryFn: fetchPublicSettings });
@@ -24,7 +26,7 @@ export default function HomeScreen() {
         <Text style={styles.eyebrow}>— Lartiska · Sénégal · Gambie · Mauritanie</Text>
         <Text style={styles.heroTitle}>
           L'art qui transforme{'\n'}
-          <Text style={{ color: colors.gold, fontStyle: 'italic' }}>vos espaces.</Text>
+          <Text style={{ color: c.gold, fontStyle: 'italic' }}>vos espaces.</Text>
         </Text>
         <Text style={styles.heroLead}>
           Peinture, plafonnage, carrelage et décoration d'intérieur réunis dans une démarche artistique sur-mesure.
@@ -44,13 +46,13 @@ export default function HomeScreen() {
         <Text style={styles.eyebrowDeco}>✦ Nos services ✦</Text>
         <Text style={styles.sectionTitle}>L'excellence dans chaque finition.</Text>
         <View style={styles.servicesGrid}>
-          {(categories ?? []).slice(0, 4).map((c) => (
-            <View key={c.id} style={styles.serviceCard}>
+          {(categories ?? []).slice(0, 4).map((cat) => (
+            <View key={cat.id} style={styles.serviceCard}>
               <View style={styles.serviceIcon}>
-                <Ionicons name="brush-outline" size={20} color={colors.gold} />
+                <Ionicons name="brush-outline" size={20} color={c.gold} />
               </View>
-              <Text style={styles.serviceTitle}>{c.name}</Text>
-              {c.description && <Text style={styles.serviceDesc} numberOfLines={2}>{c.description}</Text>}
+              <Text style={styles.serviceTitle}>{cat.name}</Text>
+              {cat.description && <Text style={styles.serviceDesc} numberOfLines={2}>{cat.description}</Text>}
             </View>
           ))}
         </View>
@@ -90,50 +92,50 @@ export default function HomeScreen() {
           style={styles.whatsappCard}
           onPress={() => Linking.openURL(`https://wa.me/${primaryWhatsapp}`)}
         >
-          <Ionicons name="logo-whatsapp" size={28} color={colors.whatsapp} />
+          <Ionicons name="logo-whatsapp" size={28} color={c.whatsapp} />
           <View style={{ flex: 1, marginLeft: spacing.md }}>
             <Text style={styles.whatsappTitle}>WhatsApp direct</Text>
             <Text style={styles.whatsappLead}>Discutons de votre projet en quelques messages.</Text>
           </View>
-          <Ionicons name="chevron-forward" size={20} color={colors.fgMuted} />
+          <Ionicons name="chevron-forward" size={20} color={c.fgMuted} />
         </Pressable>
       </View>
     </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.bg },
+const makeStyles = (c: ThemeColors) => ({
+  screen: { flex: 1, backgroundColor: c.bg },
   content: { paddingTop: 60, paddingBottom: 40 },
   hero: { paddingHorizontal: spacing.lg, marginBottom: spacing.xxl },
-  eyebrow: { color: colors.gold, fontSize: fontSize.caption, letterSpacing: 3, textTransform: 'uppercase', marginBottom: spacing.md },
-  eyebrowDeco: { color: colors.gold, fontSize: fontSize.caption, letterSpacing: 3, textTransform: 'uppercase', textAlign: 'center', marginBottom: spacing.md },
-  heroTitle: { color: colors.fg, fontSize: fontSize.hero, fontFamily: 'serif', lineHeight: 44, fontWeight: '300' },
-  heroLead: { color: colors.fgMuted, fontSize: fontSize.body, lineHeight: 22, marginTop: spacing.lg },
-  heroCtas: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.xl, flexWrap: 'wrap' },
-  btnGold: { backgroundColor: colors.gold, paddingHorizontal: spacing.lg, paddingVertical: spacing.md, borderRadius: radius.pill },
-  btnGoldText: { color: colors.ink, fontSize: fontSize.small, fontWeight: '600', letterSpacing: 0.5 },
-  btnGhost: { borderWidth: 1, borderColor: colors.line, paddingHorizontal: spacing.lg, paddingVertical: spacing.md, borderRadius: radius.pill },
-  btnGhostText: { color: colors.fg, fontSize: fontSize.small, fontWeight: '500' },
+  eyebrow: { color: c.goldText, fontSize: fontSize.caption, letterSpacing: 3, textTransform: 'uppercase' as const, marginBottom: spacing.md },
+  eyebrowDeco: { color: c.goldText, fontSize: fontSize.caption, letterSpacing: 3, textTransform: 'uppercase' as const, textAlign: 'center' as const, marginBottom: spacing.md },
+  heroTitle: { color: c.fg, fontSize: fontSize.hero, fontFamily: 'serif', lineHeight: 46, fontWeight: '300' as const },
+  heroLead: { color: c.fgMuted, fontSize: fontSize.body, lineHeight: 24, marginTop: spacing.lg },
+  heroCtas: { flexDirection: 'row' as const, gap: spacing.sm, marginTop: spacing.xl, flexWrap: 'wrap' as const },
+  btnGold: { backgroundColor: c.gold, paddingHorizontal: spacing.lg, paddingVertical: spacing.md, borderRadius: radius.pill },
+  btnGoldText: { color: c.ink, fontSize: fontSize.small, fontWeight: '600' as const, letterSpacing: 0.5 },
+  btnGhost: { borderWidth: 1, borderColor: c.line, paddingHorizontal: spacing.lg, paddingVertical: spacing.md, borderRadius: radius.pill },
+  btnGhostText: { color: c.fg, fontSize: fontSize.small, fontWeight: '500' as const },
 
   section: { paddingHorizontal: spacing.lg, marginBottom: spacing.xxl },
-  sectionHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  sectionTitle: { color: colors.fg, fontFamily: 'serif', fontSize: fontSize.xxl, lineHeight: 34, fontWeight: '300', marginTop: spacing.xs },
-  linkSmall: { color: colors.gold, fontSize: fontSize.caption, letterSpacing: 2, textTransform: 'uppercase' },
+  sectionHead: { flexDirection: 'row' as const, justifyContent: 'space-between' as const, alignItems: 'center' as const },
+  sectionTitle: { color: c.fg, fontFamily: 'serif', fontSize: fontSize.xxl, lineHeight: 36, fontWeight: '300' as const, marginTop: spacing.xs },
+  linkSmall: { color: c.goldText, fontSize: fontSize.caption, letterSpacing: 2, textTransform: 'uppercase' as const, fontWeight: '600' as const },
 
-  servicesGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, marginTop: spacing.lg },
-  serviceCard: { width: '48%', backgroundColor: colors.surface, borderColor: colors.line, borderWidth: 1, borderRadius: radius.md, padding: spacing.md },
-  serviceIcon: { width: 36, height: 36, borderRadius: 18, backgroundColor: 'rgba(212,175,55,0.15)', justifyContent: 'center', alignItems: 'center', marginBottom: spacing.sm },
-  serviceTitle: { color: colors.fg, fontSize: fontSize.body, fontFamily: 'serif', marginBottom: spacing.xs },
-  serviceDesc: { color: colors.fgMuted, fontSize: fontSize.caption, lineHeight: 16 },
+  servicesGrid: { flexDirection: 'row' as const, flexWrap: 'wrap' as const, gap: spacing.sm, marginTop: spacing.lg },
+  serviceCard: { width: '48%' as const, backgroundColor: c.surface, borderColor: c.line, borderWidth: 1, borderRadius: radius.md, padding: spacing.md },
+  serviceIcon: { width: 38, height: 38, borderRadius: 19, backgroundColor: 'rgba(212,175,55,0.15)', justifyContent: 'center' as const, alignItems: 'center' as const, marginBottom: spacing.sm },
+  serviceTitle: { color: c.fg, fontSize: fontSize.body, fontFamily: 'serif', marginBottom: spacing.xs },
+  serviceDesc: { color: c.fgMuted, fontSize: fontSize.caption, lineHeight: 18 },
 
-  projectCard: { width: 220, height: 280, marginRight: spacing.md, borderRadius: radius.md, overflow: 'hidden', backgroundColor: colors.ink, borderColor: colors.line, borderWidth: 1 },
-  projectImg: { width: '100%', height: '100%', position: 'absolute' },
-  projectMeta: { position: 'absolute', bottom: 0, left: 0, right: 0, padding: spacing.md, backgroundColor: 'rgba(7,6,10,0.85)' },
-  projectCity: { color: colors.gold, fontSize: 10, letterSpacing: 3, textTransform: 'uppercase' },
-  projectTitle: { color: colors.fg, fontFamily: 'serif', fontSize: fontSize.lg, marginTop: spacing.xs, lineHeight: 22 },
+  projectCard: { width: 220, height: 280, marginRight: spacing.md, borderRadius: radius.md, overflow: 'hidden' as const, backgroundColor: c.inkSoft, borderColor: c.line, borderWidth: 1 },
+  projectImg: { width: '100%' as const, height: '100%' as const, position: 'absolute' as const },
+  projectMeta: { position: 'absolute' as const, bottom: 0, left: 0, right: 0, padding: spacing.md, backgroundColor: 'rgba(7,6,10,0.88)' },
+  projectCity: { color: c.gold, fontSize: 11, letterSpacing: 3, textTransform: 'uppercase' as const, fontWeight: '600' as const },
+  projectTitle: { color: '#F4ECD8', fontFamily: 'serif', fontSize: fontSize.lg, marginTop: spacing.xs, lineHeight: 24 },
 
-  whatsappCard: { flexDirection: 'row', alignItems: 'center', padding: spacing.md, borderRadius: radius.md, borderWidth: 1, borderColor: 'rgba(37,211,102,0.3)', backgroundColor: 'rgba(37,211,102,0.08)' },
-  whatsappTitle: { color: colors.fg, fontSize: fontSize.body, fontWeight: '600' },
-  whatsappLead: { color: colors.fgMuted, fontSize: fontSize.small, marginTop: 2 },
+  whatsappCard: { flexDirection: 'row' as const, alignItems: 'center' as const, padding: spacing.md, borderRadius: radius.md, borderWidth: 1, borderColor: 'rgba(37,211,102,0.3)', backgroundColor: 'rgba(37,211,102,0.08)' },
+  whatsappTitle: { color: c.fg, fontSize: fontSize.body, fontWeight: '600' as const },
+  whatsappLead: { color: c.fgMuted, fontSize: fontSize.small, marginTop: 2 },
 });

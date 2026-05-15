@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Support\MediaUrl;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Storage;
 
 class ProjectImageResource extends JsonResource
 {
@@ -12,10 +12,10 @@ class ProjectImageResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'url' => Storage::url($this->path),
+            'url' => MediaUrl::absolute($this->path),
             'type' => $this->type ?? 'image',
             'before_after' => $this->before_after ?? 'none',
-            'thumbnail' => $this->thumbnail ? Storage::url($this->thumbnail) : null,
+            'thumbnail' => MediaUrl::absolute($this->thumbnail),
             'caption' => $this->caption,
             'order' => $this->order,
             'is_cover' => $this->is_cover,

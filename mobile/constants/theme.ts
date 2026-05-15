@@ -1,43 +1,87 @@
 /**
- * Tokens design Lartiska — mêmes valeurs que web/tailwind.config.js
+ * Tokens design Lartiska — light + dark.
+ * Utiliser useTheme() (hook) pour récupérer la palette active.
  */
-import { Platform } from 'react-native';
+import { Platform, useColorScheme } from 'react-native';
 
-export const colors = {
-  // Palette signature
+const palette = {
   gold: '#D4AF37',
   goldSoft: '#E8C547',
   goldDeep: '#B8941F',
+  goldReadableLight: '#7A5408',
+  cream: '#F5EDD6',
+  ivory: '#FFFCF2',
+  sand: '#C4A882',
+  rust: '#B84A2A',
+  ink: '#06040A',
+  inkSoft: '#1A130A',
+  whatsapp: '#25D366',
+  emerald: '#34D399',
+};
 
-  // Surfaces (dark only — mobile en dark mode par défaut)
+const dark = {
+  ...palette,
   bg: '#07060A',
   ink: '#0A0806',
   inkSoft: '#14100B',
   surface: 'rgba(20, 16, 11, 0.7)',
+  surfaceSolid: '#14100B',
 
-  // Texte
   fg: '#F4ECD8',
-  fgMuted: 'rgba(244, 236, 216, 0.65)',
-  fgDim: 'rgba(244, 236, 216, 0.45)',
+  fgMuted: 'rgba(244, 236, 216, 0.78)',
+  fgDim: 'rgba(244, 236, 216, 0.55)',
 
-  cream: '#F5EDD6',
-  sand: '#C4A882',
-  rust: '#B84A2A',
+  line: 'rgba(212, 175, 55, 0.22)',
+  lineSoft: 'rgba(212, 175, 55, 0.12)',
 
-  // Lines / borders
-  line: 'rgba(212, 175, 55, 0.18)',
-  lineSoft: 'rgba(212, 175, 55, 0.10)',
+  // Gold readable on dark surfaces
+  goldText: palette.gold,
 
-  // Statuts devis
-  pending: '#C4A882',
-  processing: '#D4AF37',
-  sent: '#E8C547',
-  accepted: '#34D399',
-  rejected: '#B84A2A',
-
-  // WhatsApp
-  whatsapp: '#25D366',
+  pending: palette.sand,
+  processing: palette.gold,
+  sent: palette.goldSoft,
+  accepted: palette.emerald,
+  rejected: palette.rust,
 };
+
+const light = {
+  ...palette,
+  bg: '#FBF5E5',
+  ink: '#FFFCF2',
+  inkSoft: '#F5EDD6',
+  surface: 'rgba(255, 252, 241, 0.92)',
+  surfaceSolid: '#FFFCF2',
+
+  fg: palette.ink,
+  fgMuted: 'rgba(6, 4, 10, 0.78)',
+  fgDim: 'rgba(6, 4, 10, 0.55)',
+
+  line: 'rgba(122, 84, 8, 0.30)',
+  lineSoft: 'rgba(122, 84, 8, 0.18)',
+
+  // Le gold pur D4AF37 est illisible sur fond crème — on utilise un brun doré profond
+  goldText: palette.goldReadableLight,
+
+  pending: '#9A7B3A',
+  processing: palette.goldReadableLight,
+  sent: '#7C6620',
+  accepted: '#10884F',
+  rejected: '#8A2D17',
+};
+
+export type ThemeColors = typeof dark;
+
+/** Hook qui retourne la palette en fonction du mode système. */
+export function useThemeColors(): ThemeColors {
+  const scheme = useColorScheme();
+  return scheme === 'light' ? light : dark;
+}
+
+/** Accès statique pour les fichiers qui ne peuvent pas appeler le hook. */
+export const colors = dark; // legacy — préférer useThemeColors()
+
+export const lightColors = light;
+export const darkColors = dark;
 
 export const spacing = {
   xs: 4,
@@ -49,13 +93,13 @@ export const spacing = {
 };
 
 export const fontSize = {
-  caption: 11,
-  small: 13,
-  body: 15,
-  lg: 18,
-  xl: 22,
-  xxl: 28,
-  hero: 38,
+  caption: 12,
+  small: 14,
+  body: 16,
+  lg: 19,
+  xl: 23,
+  xxl: 30,
+  hero: 40,
 };
 
 export const radius = {
@@ -70,24 +114,10 @@ export const fonts = Platform.select({
   default: { sans: 'normal', serif: 'serif', mono: 'monospace' },
 })!;
 
-// Compat avec le template Expo par défaut (utilisé par expo-router)
+// Compat expo-router
 export const Colors = {
-  light: {
-    text: colors.fg,
-    background: colors.bg,
-    tint: colors.gold,
-    icon: colors.fgMuted,
-    tabIconDefault: colors.fgDim,
-    tabIconSelected: colors.gold,
-  },
-  dark: {
-    text: colors.fg,
-    background: colors.bg,
-    tint: colors.gold,
-    icon: colors.fgMuted,
-    tabIconDefault: colors.fgDim,
-    tabIconSelected: colors.gold,
-  },
+  light: { text: light.fg, background: light.bg, tint: light.goldText, icon: light.fgMuted, tabIconDefault: light.fgDim, tabIconSelected: light.goldText },
+  dark: { text: dark.fg, background: dark.bg, tint: dark.goldText, icon: dark.fgMuted, tabIconDefault: dark.fgDim, tabIconSelected: dark.goldText },
 };
 
 export const Fonts = fonts;

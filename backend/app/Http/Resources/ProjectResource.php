@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Support\MediaUrl;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Storage;
 
 class ProjectResource extends JsonResource
 {
@@ -15,9 +15,7 @@ class ProjectResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'description' => $this->description,
-            'cover_image' => $this->cover_image
-                ? Storage::url($this->cover_image)
-                : null,
+            'cover_image' => MediaUrl::absolute($this->cover_image),
             'city' => $this->city,
             'client_name' => $this->client_name,
             'materials' => $this->materials,

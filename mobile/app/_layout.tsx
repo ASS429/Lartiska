@@ -45,6 +45,8 @@ export default function RootLayout() {
           <Stack.Screen name="auth/register" options={{ presentation: 'modal', headerShown: true, title: 'Créer un compte' }} />
           <Stack.Screen name="project/[slug]" options={{ headerShown: true, title: '', headerBackTitle: 'Portfolio' }} />
           <Stack.Screen name="quote/[id]" options={{ headerShown: true, title: 'Mon devis' }} />
+          <Stack.Screen name="admin/quotes/index" options={{ headerShown: true, title: 'Devis (admin)' }} />
+          <Stack.Screen name="admin/quotes/[id]" options={{ headerShown: true, title: '', headerBackTitle: 'Devis' }} />
         </Stack>
         <StatusBar style="light" />
       </ThemeProvider>

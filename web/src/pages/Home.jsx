@@ -25,18 +25,18 @@ export default function Home() {
   return (
     <>
       {/* ─── HERO — section conservée (validée par le user) ─── */}
-      <section className="relative min-h-[88vh] grid place-items-center overflow-hidden">
+      <section className="hero-video relative min-h-[88vh] grid place-items-center overflow-hidden">
         <video
           autoPlay
           muted
           loop
           playsInline
           poster="/1.jpg"
-          className="absolute inset-0 w-full h-full object-cover opacity-55 mix-blend-screen dark:opacity-55"
+          className="hero-video__media absolute inset-0 w-full h-full object-cover"
         >
           <source src="/Lartiska.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-bg/40 via-bg/55 to-bg pointer-events-none" />
+        <div className="hero-video__overlay absolute inset-0 pointer-events-none" />
 
         <div className="container-art relative z-10 text-center py-20">
           <p className="eyebrow-deco mb-6">
@@ -48,7 +48,7 @@ export default function Home() {
             L'art qui transforme<br />
             <span className="italic text-gold">vos espaces.</span>
           </h1>
-          <p className="mt-8 max-w-2xl mx-auto text-fg/80 text-base md:text-lg leading-relaxed">
+          <p className="mt-8 max-w-2xl mx-auto text-fg/85 text-base md:text-lg leading-relaxed">
             Peinture, plafonnage, carrelage et décoration d'intérieur réunis dans une démarche artistique sur-mesure. Chaque chantier devient une œuvre.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
