@@ -66,6 +66,8 @@ Route::middleware('auth:sanctum')->group(function () {
     */
     Route::prefix('account')->group(function () {
         Route::get('/quotes', [AccountQuoteController::class, 'index']);
+        Route::get('/quotes/{quote}', [AccountQuoteController::class, 'show']);
+        Route::post('/quotes/{quote}/respond', [AccountQuoteController::class, 'respond']);
     });
 
     /*
@@ -75,6 +77,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index']);
 
         // Devis
+        Route::get('/quotes/export', [AdminQuoteController::class, 'export']); // avant /{quote}
         Route::get('/quotes', [AdminQuoteController::class, 'index']);
         Route::get('/quotes/{quote}', [AdminQuoteController::class, 'show']);
         Route::patch('/quotes/{quote}', [AdminQuoteController::class, 'update']);

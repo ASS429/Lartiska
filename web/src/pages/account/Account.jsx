@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, Link } from 'react-router-dom';
 import clsx from 'clsx';
@@ -19,6 +19,15 @@ export default function Account() {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
   const [page, setPage] = useState(1);
+  const [claimMessage, setClaimMessage] = useState(() => sessionStorage.getItem('lartiska_claim_message'));
+
+  useEffect(() => {
+    if (claimMessage) {
+      sessionStorage.removeItem('lartiska_claim_message');
+      const t = setTimeout(() => setClaimMessage(null), 6000);
+      return () => clearTimeout(t);
+    }
+  }, [claimMessage]);
 
   const { data, isLoading } = useQuery({
     queryKey: ['account-quotes', page],
@@ -47,6 +56,14 @@ export default function Account() {
         </div>
       </header>
 
+      {claimMessage && (
+        <div className="surface-card border-gold/40 bg-gold/5 p-4 mb-6 flex items-center gap-3">
+          <span className="text-gold text-xl">✦</span>
+          <p className="text-sm">{claimMessage}</p>
+          <button onClick={() => setClaimMessage(null)} className="ml-auto text-fg/45 hover:text-fg text-sm">✕</button>
+        </div>
+      )}
+
       <section>
         <h2 className="font-serif text-2xl mb-5">Mes demandes de devis</h2>
 
@@ -63,19 +80,28 @@ export default function Account() {
             {quotes.map((q) => {
               const status = STATUS_LABELS[q.status] || { label: q.status, color: 'border-line text-fg/55' };
               return (
-                <li key={q.id} className="surface-card p-5 flex flex-wrap items-center gap-4 justify-between">
-                  <div className="min-w-0">
-                    <p className="font-mono text-xs text-gold">{q.reference}</p>
-                    <p className="font-serif text-lg mt-1">{q.service?.title || 'Demande générale'}</p>
-                    <p className="text-xs text-fg/55 mt-1">
-                      Créé le {new Date(q.created_at).toLocaleDateString('fr-FR')}
-                      {q.surface_m2 && <> · {q.surface_m2} m²</>}
-                      {q.total_amount && <> · {formatPriceXOF(q.total_amount)}</>}
-                    </p>
-                  </div>
-                  <span className={clsx('text-xs px-3 py-1.5 rounded-full border', status.color)}>
-                    {status.label}
-                  </span>
+                <li key={q.id}>
+                  <Link
+                    to={`/account/quotes/${q.id}`}
+                    className="surface-card p-5 flex flex-wrap items-center gap-4 justify-between hover:border-gold/40 transition-colors block"
+                  >
+                    <div className="min-w-0">
+                      <p className="font-mono text-xs text-gold">{q.reference}</p>
+                      <p className="font-serif text-lg mt-1">{q.service?.title || 'Demande générale'}</p>
+                      <p className="text-xs text-fg/55 mt-1">
+                        Créé le {new Date(q.created_at).toLocaleDateString('fr-FR')}
+                        {q.surface_m2 && <> · {q.surface_m2} m²</>}
+                        {q.total_amount && <> · {formatPriceXOF(q.total_amount)}</>}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className={clsx('text-xs px-3 py-1.5 rounded-full border', status.color)}>
+                        {status.label}
+                      </span>
+                      {q.has_pdf && <span className="text-xs text-gold">PDF</span>}
+                      <span className="text-fg/40">→</span>
+                    </div>
+                  </Link>
                 </li>
               );
             })}

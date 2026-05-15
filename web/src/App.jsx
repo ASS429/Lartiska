@@ -17,6 +17,7 @@ import Register from '@/pages/Register';
 import NotFound from '@/pages/NotFound';
 
 import Account from '@/pages/account/Account';
+import AccountQuoteDetail from '@/pages/account/QuoteDetail';
 
 import AdminDashboard from '@/pages/admin/Dashboard';
 import AdminQuotes from '@/pages/admin/Quotes';
@@ -50,6 +51,7 @@ export default function App() {
 
         <Route element={<RequireAuth role="client" />}>
           <Route path="account" element={<Account />} />
+          <Route path="account/quotes/:id" element={<AccountQuoteDetail />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

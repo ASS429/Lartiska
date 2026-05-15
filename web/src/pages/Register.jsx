@@ -17,9 +17,14 @@ export default function Register() {
 
   const mutation = useMutation({
     mutationFn: (payload) => apiClient.post('/auth/register', payload).then((r) => r.data),
-    onSuccess: ({ token }) => {
+    onSuccess: ({ token, claimed_quotes }) => {
       localStorage.setItem('lartiska_token', token);
       hydrate();
+      // Affiche un toast simple si on a récupéré des devis invités
+      if (claimed_quotes > 0) {
+        sessionStorage.setItem('lartiska_claim_message',
+          `${claimed_quotes} demande${claimed_quotes > 1 ? 's' : ''} récupérée${claimed_quotes > 1 ? 's' : ''} sous votre compte.`);
+      }
       navigate('/account', { replace: true });
     },
   });

@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { fetchAdminQuotes } from '@/api/admin';
+import { apiClient } from '@/api/client';
 
 const STATUSES = [
   { value: '', label: 'Tous' },
@@ -36,6 +37,21 @@ export default function AdminQuotes() {
   const quotes = data?.data || [];
   const meta = data?.meta;
 
+  const exportCsv = async (params) => {
+    const response = await apiClient.get('/admin/quotes/export', {
+      params,
+      responseType: 'blob',
+    });
+    const url = window.URL.createObjectURL(new Blob([response.data], { type: 'text/csv;charset=utf-8' }));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `devis-lartiska-${new Date().toISOString().slice(0, 10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="space-y-6">
       <header className="flex flex-wrap items-end justify-between gap-4">
@@ -43,13 +59,23 @@ export default function AdminQuotes() {
           <p className="eyebrow mb-2">Devis</p>
           <h1 className="font-serif text-3xl md:text-4xl font-light">Toutes les demandes</h1>
         </div>
-        <input
-          type="search"
-          placeholder="Rechercher (référence, nom, email…)"
-          value={search}
-          onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-          className="lartiska-input max-w-xs"
-        />
+        <div className="flex items-center gap-3">
+          <input
+            type="search"
+            placeholder="Rechercher (référence, nom, email…)"
+            value={search}
+            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+            className="lartiska-input max-w-xs"
+          />
+          <button
+            type="button"
+            onClick={() => exportCsv({ status, search })}
+            className="btn-ghost !py-2.5 !px-4 text-xs whitespace-nowrap"
+            title="Télécharger un CSV des devis filtrés"
+          >
+            ⤓ Export CSV
+          </button>
+        </div>
       </header>
 
       <div className="flex flex-wrap gap-2">
