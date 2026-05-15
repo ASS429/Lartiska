@@ -1,25 +1,67 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { useCategories, useProjects } from '@/hooks/useApi';
+import { useCategories } from '@/hooks/useApi';
+import { fetchProjects, fetchProjectCities } from '@/api/endpoints';
+import { BeforeAfterSlider } from '@/components/portfolio/BeforeAfterSlider';
+
+const PER_PAGE = 12;
 
 export default function Portfolio() {
-  const [active, setActive] = useState('all');
-  const [lightbox, setLightbox] = useState(null); // { project, index }
-  const { data: categories } = useCategories();
-  const { data, isLoading } = useProjects(active === 'all' ? { per_page: 30 } : { category: active, per_page: 30 });
-  const projects = data?.data || [];
+  const [category, setCategory] = useState('all');
+  const [city, setCity] = useState('all');
+  const [page, setPage] = useState(1);
+  const [lightbox, setLightbox] = useState(null);
 
-  // Close lightbox on Escape
+  const { data: categories } = useCategories();
+  const { data: cities } = useQuery({
+    queryKey: ['project-cities'],
+    queryFn: fetchProjectCities,
+  });
+
+  const { data, isLoading, isFetching } = useQuery({
+    queryKey: ['public-projects', { category, city, page }],
+    queryFn: () => fetchProjects({
+      ...(category !== 'all' ? { category } : {}),
+      ...(city !== 'all' ? { city } : {}),
+      page,
+      per_page: PER_PAGE,
+    }),
+    keepPreviousData: true,
+  });
+
+  // Accumulation des projets quand on clique "Voir plus"
+  const [accumulated, setAccumulated] = useState([]);
+  useEffect(() => {
+    if (!data?.data) return;
+    if (page === 1) {
+      setAccumulated(data.data);
+    } else {
+      setAccumulated((prev) => {
+        const seen = new Set(prev.map((p) => p.id));
+        return [...prev, ...data.data.filter((p) => !seen.has(p.id))];
+      });
+    }
+  }, [data, page]);
+
+  // Reset à la page 1 quand on change un filtre
+  useEffect(() => {
+    setPage(1);
+  }, [category, city]);
+
+  const hasMore = data?.meta && data.meta.current_page < data.meta.last_page;
+
+  // Lightbox keyboard nav
   useEffect(() => {
     if (!lightbox) return;
     const onKey = (e) => {
       if (e.key === 'Escape') setLightbox(null);
-      if (e.key === 'ArrowRight' && lightbox.project.images?.length) {
-        setLightbox((l) => ({ ...l, index: (l.index + 1) % l.project.images.length }));
+      if (e.key === 'ArrowRight' && lightbox.images?.length) {
+        setLightbox((l) => ({ ...l, index: (l.index + 1) % l.images.length }));
       }
-      if (e.key === 'ArrowLeft' && lightbox.project.images?.length) {
-        setLightbox((l) => ({ ...l, index: (l.index - 1 + l.project.images.length) % l.project.images.length }));
+      if (e.key === 'ArrowLeft' && lightbox.images?.length) {
+        setLightbox((l) => ({ ...l, index: (l.index - 1 + l.images.length) % l.images.length }));
       }
     };
     document.addEventListener('keydown', onKey);
@@ -28,7 +70,7 @@ export default function Portfolio() {
 
   return (
     <div className="container-art py-16 md:py-24">
-      <header className="max-w-3xl mb-12 md:mb-14">
+      <header className="max-w-3xl mb-10 md:mb-14">
         <p className="eyebrow mb-4">— Portfolio</p>
         <h1 className="font-serif text-5xl md:text-7xl font-light leading-[1.04]">
           Nos <em className="text-gold not-italic">réalisations</em><br />
@@ -39,48 +81,83 @@ export default function Portfolio() {
         </p>
       </header>
 
-      <div className="flex flex-wrap gap-2 mb-10">
-        <FilterPill active={active === 'all'} onClick={() => setActive('all')}>Toutes</FilterPill>
-        {(categories || []).map((c) => (
-          <FilterPill key={c.id} active={active === c.slug} onClick={() => setActive(c.slug)}>
-            {c.name}
-          </FilterPill>
-        ))}
+      {/* Filtres : catégories */}
+      <div className="space-y-3 mb-8">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-[11px] uppercase tracking-widest text-fg/55 mr-2">Catégorie :</span>
+          <FilterPill active={category === 'all'} onClick={() => setCategory('all')}>Toutes</FilterPill>
+          {(categories || []).map((c) => (
+            <FilterPill key={c.id} active={category === c.slug} onClick={() => setCategory(c.slug)}>
+              {c.name}
+            </FilterPill>
+          ))}
+        </div>
+
+        {/* Filtres : villes */}
+        {(cities || []).length > 0 && (
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-[11px] uppercase tracking-widest text-fg/55 mr-2">Ville :</span>
+            <FilterPill active={city === 'all'} onClick={() => setCity('all')}>Toutes</FilterPill>
+            {(cities || []).map((c) => (
+              <FilterPill key={c} active={city === c} onClick={() => setCity(c)}>
+                {c}
+              </FilterPill>
+            ))}
+          </div>
+        )}
       </div>
 
-      {isLoading ? (
-        <p className="text-fg/55">Chargement des réalisations…</p>
-      ) : projects.length === 0 ? (
+      {isLoading && accumulated.length === 0 ? (
+        <p className="text-fg/55">Chargement…</p>
+      ) : accumulated.length === 0 ? (
         <div className="surface-card p-12 text-center">
-          <p className="font-serif text-2xl mb-3 text-gold">Bientôt</p>
+          <p className="font-serif text-2xl mb-3 text-gold">Aucun projet</p>
           <p className="text-fg/70 max-w-md mx-auto">
-            Aucun projet ne correspond à ce filtre pour le moment. En attendant, suis Lartiska sur Instagram pour les dernières créations.
+            Aucune réalisation ne correspond à ces filtres pour le moment.
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
-          {projects.map((p, idx) => (
-            <button
-              key={p.id}
-              type="button"
-              onClick={() => setLightbox({ project: p, index: 0 })}
-              className="project-card text-left"
-              style={{ animationDelay: `${idx * 40}ms` }}
-            >
-              {p.cover_image && (
-                <div className="project-img" style={{ backgroundImage: `url('${p.cover_image}')` }} />
-              )}
-              <div className="project-ring" />
-              <div className="project-meta">
-                <p className="city">{p.city || p.category?.name}</p>
-                <h3>{p.title}</h3>
-                <p className="mt-2 text-[11px] tracking-widest uppercase text-gold/85 inline-flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  Voir la galerie →
-                </p>
-              </div>
-            </button>
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
+            {accumulated.map((p, idx) => (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() => setLightbox({ project: p, images: p.images || [], index: 0 })}
+                className="project-card group text-left"
+                style={{ animationDelay: `${(idx % PER_PAGE) * 40}ms` }}
+              >
+                {p.cover_image && (
+                  <div className="project-img" style={{ backgroundImage: `url('${p.cover_image}')` }} />
+                )}
+                <div className="project-ring" />
+                <div className="project-meta">
+                  <p className="city">{p.city || p.category?.name}</p>
+                  <h3>{p.title}</h3>
+                  <p className="mt-2 text-[11px] tracking-widest uppercase text-gold/85 inline-flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    Voir la galerie →
+                  </p>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {hasMore && (
+            <div className="text-center mt-12">
+              <button
+                type="button"
+                onClick={() => setPage((p) => p + 1)}
+                disabled={isFetching}
+                className="btn-ghost disabled:opacity-50"
+              >
+                {isFetching ? 'Chargement…' : 'Voir plus de réalisations →'}
+              </button>
+              <p className="text-xs text-fg/45 mt-3">
+                {accumulated.length} sur {data?.meta?.total ?? '…'} réalisations
+              </p>
+            </div>
+          )}
+        </>
       )}
 
       {lightbox && <Lightbox lightbox={lightbox} setLightbox={setLightbox} />}
@@ -94,7 +171,7 @@ function FilterPill({ active, onClick, children }) {
       type="button"
       onClick={onClick}
       className={clsx(
-        'px-4 py-2 rounded-full text-xs uppercase tracking-widest border transition-all duration-300',
+        'px-3.5 py-1.5 rounded-full text-xs uppercase tracking-widest border transition-all duration-300',
         active ? 'border-gold bg-gold/10 text-gold' : 'border-line text-fg/70 hover:text-gold',
       )}
     >
@@ -104,18 +181,28 @@ function FilterPill({ active, onClick, children }) {
 }
 
 function Lightbox({ lightbox, setLightbox }) {
-  const { project, index } = lightbox;
-  const images = project.images || [];
+  const { project, images, index } = lightbox;
   const current = images[index];
 
-  // Prevent body scroll
+  // Si current = 'before', on regarde si la suivante est 'after' pour faire un slider
+  const next = images[index + 1];
+  const isPair = current?.before_after === 'before' && next?.before_after === 'after';
+
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
   }, []);
 
-  const next = () => images.length && setLightbox((l) => ({ ...l, index: (l.index + 1) % images.length }));
-  const prev = () => images.length && setLightbox((l) => ({ ...l, index: (l.index - 1 + images.length) % images.length }));
+  const goNext = () => images.length && setLightbox((l) => ({ ...l, index: (l.index + (isPair ? 2 : 1)) % images.length }));
+  const goPrev = () => images.length && setLightbox((l) => ({ ...l, index: (l.index - 1 + images.length) % images.length }));
+
+  const whatsappShare = () => {
+    const text = `J'ai vu cette réalisation Lartiska : « ${project.title} »${project.city ? ` à ${project.city}` : ''}. ` +
+                 `${window.location.origin}/portfolio/${project.slug}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+  };
+
+  const wantSimilar = `/devis${project.category?.id ? `?service_id=${project.category.id}` : ''}`;
 
   return (
     <div
@@ -139,28 +226,35 @@ function Lightbox({ lightbox, setLightbox }) {
         </button>
       </header>
 
-      <div className="flex-1 grid md:grid-cols-[1fr_320px] overflow-hidden">
-        <div className="relative overflow-hidden bg-ink">
-          {current ? (
+      <div className="flex-1 grid md:grid-cols-[1fr_340px] overflow-hidden">
+        <div className="relative overflow-hidden bg-ink p-4 md:p-8 flex items-center justify-center">
+          {isPair ? (
+            <div className="w-full max-w-3xl">
+              <BeforeAfterSlider before={current.url} after={next.url} alt={project.title} />
+              <p className="text-center text-xs uppercase tracking-widest text-fg/55 mt-3">
+                Glisser pour comparer
+              </p>
+            </div>
+          ) : current ? (
             current.type === 'video' ? (
-              <video src={current.url} controls autoPlay className="w-full h-full object-contain" />
+              <video src={current.url} controls autoPlay className="max-w-full max-h-full object-contain" />
             ) : (
-              <img src={current.url} alt={current.caption || project.title} className="w-full h-full object-contain" />
+              <img src={current.url} alt={current.caption || project.title} className="max-w-full max-h-full object-contain" />
             )
           ) : (
-            <div className="grid place-items-center h-full text-fg/55">Pas d'image disponible</div>
+            <div className="text-fg/55">Pas d'image disponible</div>
           )}
 
           {images.length > 1 && (
             <>
-              <button onClick={prev} className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-bg/70 backdrop-blur-md border border-line text-fg hover:text-gold hover:border-gold grid place-items-center transition-all" aria-label="Précédent">←</button>
-              <button onClick={next} className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-bg/70 backdrop-blur-md border border-line text-fg hover:text-gold hover:border-gold grid place-items-center transition-all" aria-label="Suivant">→</button>
+              <button onClick={goPrev} className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-bg/70 backdrop-blur-md border border-line text-fg hover:text-gold hover:border-gold grid place-items-center transition-all" aria-label="Précédent">←</button>
+              <button onClick={goNext} className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-bg/70 backdrop-blur-md border border-line text-fg hover:text-gold hover:border-gold grid place-items-center transition-all" aria-label="Suivant">→</button>
             </>
           )}
 
           {images.length > 0 && (
             <span className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-bg/70 backdrop-blur-md border border-line text-xs text-fg/85">
-              {index + 1} / {images.length}
+              {index + 1}{isPair ? '–' + (index + 2) : ''} / {images.length}
             </span>
           )}
         </div>
@@ -183,21 +277,35 @@ function Lightbox({ lightbox, setLightbox }) {
                 <button
                   key={img.id}
                   type="button"
-                  onClick={() => setLightbox({ project, index: i })}
+                  onClick={() => setLightbox({ project, images, index: i })}
                   className={clsx(
-                    'aspect-square rounded-md overflow-hidden border-2 transition-all',
+                    'aspect-square rounded-md overflow-hidden border-2 transition-all relative',
                     i === index ? 'border-gold' : 'border-transparent opacity-65 hover:opacity-100',
                   )}
                 >
                   <img src={img.thumbnail || img.url} alt="" className="w-full h-full object-cover" loading="lazy" />
+                  {img.before_after === 'before' && (
+                    <span className="absolute bottom-0.5 left-0.5 text-[8px] uppercase tracking-widest bg-bg/80 px-1 rounded">Av</span>
+                  )}
+                  {img.before_after === 'after' && (
+                    <span className="absolute bottom-0.5 right-0.5 text-[8px] uppercase tracking-widest bg-gold/80 text-bg px-1 rounded">Ap</span>
+                  )}
                 </button>
               ))}
             </div>
           )}
 
-          <Link to={`/portfolio/${project.slug}`} className="btn-ghost w-full text-xs">
-            Page dédiée du projet →
-          </Link>
+          <div className="space-y-2 pt-3 border-t border-line">
+            <Link to={wantSimilar} className="btn-gold w-full !py-2.5 text-xs">
+              ✦ Je veux pareil →
+            </Link>
+            <button onClick={whatsappShare} className="btn-ghost w-full !py-2.5 text-xs">
+              Partager sur WhatsApp
+            </button>
+            <Link to={`/portfolio/${project.slug}`} className="block text-center text-xs uppercase tracking-widest text-fg/55 hover:text-gold pt-2">
+              Page dédiée du projet →
+            </Link>
+          </div>
         </aside>
       </div>
     </div>

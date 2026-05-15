@@ -51,6 +51,9 @@ export const uploadProjectImages = (id, files) => {
 };
 export const setProjectCover = (projectId, imageId) =>
   apiClient.patch(`/admin/projects/${projectId}/images/${imageId}/cover`).then((r) => r.data);
+
+export const setImageBeforeAfter = (projectId, imageId, value) =>
+  apiClient.patch(`/admin/projects/${projectId}/images/${imageId}/before-after`, { before_after: value }).then((r) => r.data);
 export const deleteProjectImage = (projectId, imageId) =>
   apiClient.delete(`/admin/projects/${projectId}/images/${imageId}`).then((r) => r.data);
 export const reorderProjectImages = (projectId, imageIds) =>

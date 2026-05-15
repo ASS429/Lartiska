@@ -14,6 +14,7 @@ class ProjectImage extends Model
         'project_id',
         'path',
         'type',
+        'before_after',
         'thumbnail',
         'caption',
         'order',

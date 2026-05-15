@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import { useSearchParams } from 'react-router-dom';
 import { useServices } from '@/hooks/useApi';
 import { submitQuote } from '@/api/endpoints';
 import clsx from 'clsx';
@@ -11,9 +12,11 @@ const MAX_FILE_SIZE_MB = 10;
 const ACCEPTED_MIMES = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
 
 export default function Devis() {
-  const [step, setStep] = useState(0);
+  const [searchParams] = useSearchParams();
+  const presetServiceId = searchParams.get('service_id') || '';
+  const [step, setStep] = useState(presetServiceId ? 1 : 0); // skip step 0 si préselection
   const [form, setForm] = useState({
-    service_id: '',
+    service_id: presetServiceId,
     description: '',
     surface_m2: '',
     estimated_budget: '',

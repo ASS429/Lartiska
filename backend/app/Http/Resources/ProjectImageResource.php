@@ -14,6 +14,7 @@ class ProjectImageResource extends JsonResource
             'id' => $this->id,
             'url' => Storage::url($this->path),
             'type' => $this->type ?? 'image',
+            'before_after' => $this->before_after ?? 'none',
             'thumbnail' => $this->thumbnail ? Storage::url($this->thumbnail) : null,
             'caption' => $this->caption,
             'order' => $this->order,

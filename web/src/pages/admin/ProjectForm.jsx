@@ -9,6 +9,7 @@ import {
   uploadProjectImages,
   setProjectCover,
   deleteProjectImage,
+  setImageBeforeAfter,
 } from '@/api/admin';
 
 const EMPTY = {
@@ -105,6 +106,11 @@ export default function AdminProjectForm() {
 
   const deleteImageMutation = useMutation({
     mutationFn: (imageId) => deleteProjectImage(id, imageId),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['admin-project', id] }),
+  });
+
+  const beforeAfterMutation = useMutation({
+    mutationFn: ({ imageId, value }) => setImageBeforeAfter(id, imageId, value),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['admin-project', id] }),
   });
 
@@ -240,25 +246,43 @@ export default function AdminProjectForm() {
                         {img.is_cover && (
                           <span className="absolute top-1 left-1 text-[10px] uppercase tracking-widest bg-gold/90 text-bg px-1.5 py-0.5 rounded-full">★</span>
                         )}
-                        <div className="absolute inset-0 bg-bg/80 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-2 text-xs">
-                          {!img.is_cover && (
+                        {img.before_after === 'before' && (
+                          <span className="absolute bottom-1 left-1 text-[9px] uppercase tracking-widest bg-bg/85 text-fg border border-line px-1.5 py-0.5 rounded">Avant</span>
+                        )}
+                        {img.before_after === 'after' && (
+                          <span className="absolute bottom-1 right-1 text-[9px] uppercase tracking-widest bg-gold/85 text-bg px-1.5 py-0.5 rounded">Après</span>
+                        )}
+                        <div className="absolute inset-0 bg-bg/85 opacity-0 group-hover:opacity-100 transition flex flex-col items-center justify-center gap-1.5 text-xs p-2">
+                          <div className="flex gap-1.5">
+                            {!img.is_cover && (
+                              <button
+                                type="button"
+                                onClick={() => setCoverMutation.mutate(img.id)}
+                                className="px-2 py-1 rounded-full bg-gold/15 text-gold border border-gold/30 text-[10px] uppercase tracking-widest"
+                              >
+                                Cover
+                              </button>
+                            )}
                             <button
                               type="button"
-                              onClick={() => setCoverMutation.mutate(img.id)}
-                              className="px-2 py-1 rounded-full bg-gold/15 text-gold border border-gold/30"
+                              onClick={() => {
+                                if (confirm('Supprimer cette image ?')) deleteImageMutation.mutate(img.id);
+                              }}
+                              className="px-2 py-1 rounded-full bg-rust/15 text-rust border border-rust/30"
                             >
-                              Cover
+                              ✕
                             </button>
-                          )}
-                          <button
-                            type="button"
-                            onClick={() => {
-                              if (confirm('Supprimer cette image ?')) deleteImageMutation.mutate(img.id);
-                            }}
-                            className="px-2 py-1 rounded-full bg-rust/15 text-rust border border-rust/30"
+                          </div>
+                          <select
+                            value={img.before_after || 'none'}
+                            onChange={(e) => beforeAfterMutation.mutate({ imageId: img.id, value: e.target.value })}
+                            className="w-full text-[10px] uppercase tracking-widest bg-ink border border-line rounded px-1.5 py-1 text-fg"
+                            title="Marquer comme Avant / Après"
                           >
-                            ✕
-                          </button>
+                            <option value="none">Normale</option>
+                            <option value="before">Avant</option>
+                            <option value="after">Après</option>
+                          </select>
                         </div>
                       </div>
                     ))}
@@ -268,6 +292,9 @@ export default function AdminProjectForm() {
 
               <p className="text-xs text-fg/45 leading-relaxed">
                 JPG, PNG ou WebP, max 10 Mo par fichier. La première image uploadée devient la cover automatiquement.
+                <br />
+                <strong className="text-fg/65">Avant / Après</strong> : marquer 2 images consécutives par leur ordre
+                (avant, puis après) — elles s'affichent en slider comparatif côté public.
               </p>
             </>
           )}

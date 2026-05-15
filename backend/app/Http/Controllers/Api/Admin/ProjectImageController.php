@@ -103,4 +103,25 @@ class ProjectImageController extends Controller
             'message' => 'Ordre mis à jour.',
         ]);
     }
+
+    /**
+     * Marque une image comme 'before' / 'after' / 'none'.
+     * Les paires before+after consécutives (par order) sont rendues
+     * en BeforeAfterSlider côté front.
+     */
+    public function setBeforeAfter(Request $request, Project $project, ProjectImage $image): JsonResponse
+    {
+        abort_unless($image->project_id === $project->id, 404);
+
+        $request->validate([
+            'before_after' => ['required', 'in:none,before,after'],
+        ]);
+
+        $image->update(['before_after' => $request->string('before_after')]);
+
+        return response()->json([
+            'data' => new ProjectImageResource($image->fresh()),
+            'message' => 'Image taguée.',
+        ]);
+    }
 }

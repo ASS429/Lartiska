@@ -17,6 +17,18 @@ class ProjectController extends Controller
             $query->whereHas('category', fn ($q) => $q->where('slug', $category));
         }
 
+        if ($city = $request->string('city')->toString()) {
+            $query->where('city', $city);
+        }
+
+        if ($search = $request->string('q')->toString()) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('city', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
         if ($request->boolean('featured')) {
             $query->featured();
         }
@@ -38,5 +50,21 @@ class ProjectController extends Controller
             ->firstOrFail();
 
         return new ProjectResource($project);
+    }
+
+    /**
+     * Liste des villes distinctes parmi les projets publiés (pour les filtres).
+     */
+    public function cities()
+    {
+        $cities = Project::published()
+            ->whereNotNull('city')
+            ->where('city', '!=', '')
+            ->select('city')
+            ->distinct()
+            ->orderBy('city')
+            ->pluck('city');
+
+        return response()->json(['data' => $cities]);
     }
 }

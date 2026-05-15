@@ -35,6 +35,7 @@ Route::prefix('auth')->group(function () {
 
 Route::get('/categories', [CategoryController::class, 'index']);
 
+Route::get('/projects/cities', [ProjectController::class, 'cities']); // avant /{slug}
 Route::get('/projects', [ProjectController::class, 'index']);
 Route::get('/projects/{slug}', [ProjectController::class, 'show']);
 
@@ -102,6 +103,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/projects/{project}/images', [AdminProjectImageController::class, 'store']);
         Route::patch('/projects/{project}/images/reorder', [AdminProjectImageController::class, 'reorder']);
         Route::patch('/projects/{project}/images/{image}/cover', [AdminProjectImageController::class, 'setCover']);
+        Route::patch('/projects/{project}/images/{image}/before-after', [AdminProjectImageController::class, 'setBeforeAfter']);
         Route::delete('/projects/{project}/images/{image}', [AdminProjectImageController::class, 'destroy']);
 
         // Services

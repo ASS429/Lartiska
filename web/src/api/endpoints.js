@@ -11,6 +11,9 @@ export const fetchProjects = (params = {}) =>
 export const fetchProject = (slug) =>
   apiClient.get(`/projects/${slug}`).then((r) => r.data.data);
 
+export const fetchProjectCities = () =>
+  apiClient.get('/projects/cities').then((r) => r.data.data);
+
 export const fetchServices = (params = {}) =>
   apiClient.get('/services', { params }).then((r) => r.data.data);
 
