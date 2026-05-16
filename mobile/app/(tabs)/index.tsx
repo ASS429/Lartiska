@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { fetchProjects, fetchCategories, fetchPublicSettings } from '@/src/api/endpoints';
+import { useAuthStore } from '@/src/store/auth';
 import { spacing, fontSize, radius, type ThemeColors } from '@/constants/theme';
 import { useStyles } from '@/src/hooks/useStyles';
 
@@ -11,6 +12,7 @@ const fetchFeatured = () => fetchProjects({ featured: 1, per_page: 6 });
 
 export default function HomeScreen() {
   const { styles, c } = useStyles(makeStyles);
+  const isAdmin = useAuthStore((s) => s.user?.role === 'admin');
   const { data: featured } = useQuery({ queryKey: ['featured'], queryFn: fetchFeatured });
   const { data: categories } = useQuery({ queryKey: ['categories'], queryFn: fetchCategories });
   const { data: settings } = useQuery({ queryKey: ['settings'], queryFn: fetchPublicSettings });
@@ -32,9 +34,16 @@ export default function HomeScreen() {
           Peinture, plafonnage, carrelage et décoration d'intérieur réunis dans une démarche artistique sur-mesure.
         </Text>
         <View style={styles.heroCtas}>
-          <Pressable style={styles.btnGold} onPress={() => router.push('/(tabs)/devis')}>
-            <Text style={styles.btnGoldText}>Demander un devis</Text>
-          </Pressable>
+          {isAdmin ? (
+            <Pressable style={styles.btnGold} onPress={() => router.push('/(tabs)/admin')}>
+              <Ionicons name="briefcase-outline" size={18} color={c.ink} />
+              <Text style={styles.btnGoldText}>Accéder à l'admin</Text>
+            </Pressable>
+          ) : (
+            <Pressable style={styles.btnGold} onPress={() => router.push('/(tabs)/devis')}>
+              <Text style={styles.btnGoldText}>Demander un devis</Text>
+            </Pressable>
+          )}
           <Pressable style={styles.btnGhost} onPress={() => router.push('/(tabs)/portfolio')}>
             <Text style={styles.btnGhostText}>Voir le portfolio →</Text>
           </Pressable>
@@ -113,8 +122,8 @@ const makeStyles = (c: ThemeColors) => ({
   heroTitle: { color: c.fg, fontSize: fontSize.hero, fontFamily: 'serif', lineHeight: 46, fontWeight: '300' as const },
   heroLead: { color: c.fgMuted, fontSize: fontSize.body, lineHeight: 24, marginTop: spacing.lg },
   heroCtas: { flexDirection: 'row' as const, gap: spacing.sm, marginTop: spacing.xl, flexWrap: 'wrap' as const },
-  btnGold: { backgroundColor: c.gold, paddingHorizontal: spacing.lg, paddingVertical: spacing.md, borderRadius: radius.pill },
-  btnGoldText: { color: c.ink, fontSize: fontSize.small, fontWeight: '600' as const, letterSpacing: 0.5 },
+  btnGold: { flexDirection: 'row' as const, alignItems: 'center' as const, gap: spacing.xs, backgroundColor: c.gold, paddingHorizontal: spacing.lg, paddingVertical: spacing.md, borderRadius: radius.pill },
+  btnGoldText: { color: c.ink, fontSize: fontSize.small, fontWeight: '700' as const, letterSpacing: 0.5 },
   btnGhost: { borderWidth: 1, borderColor: c.line, paddingHorizontal: spacing.lg, paddingVertical: spacing.md, borderRadius: radius.pill },
   btnGhostText: { color: c.fg, fontSize: fontSize.small, fontWeight: '500' as const },
 

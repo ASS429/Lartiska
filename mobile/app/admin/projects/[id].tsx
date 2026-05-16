@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Alert, Image, Pressable, ScrollView, Switch, Text, TextInput, View } from 'react-native';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useLocalSearchParams, router } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
 import {
   fetchAdminProject,
   fetchAdminCategories,
   updateAdminProject,
+  uploadProjectImages,
   setProjectCover,
   deleteProjectImage,
   setImageBeforeAfter,
@@ -82,6 +84,42 @@ export default function AdminProjectEditScreen() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['admin-project', id] }),
   });
 
+  const upload = useMutation({
+    mutationFn: (files: { uri: string; name: string; type: string }[]) => uploadProjectImages(id!, files),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['admin-project', id] });
+      qc.invalidateQueries({ queryKey: ['admin-projects'] });
+      Alert.alert('✓ Images ajoutées');
+    },
+    onError: (e: any) => Alert.alert('Erreur upload', e?.response?.data?.message || 'Réessayez.'),
+  });
+
+  const pickImages = async () => {
+    const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!perm.granted) {
+      Alert.alert('Permission refusée', 'Autorisez l\'accès aux photos depuis les réglages.');
+      return;
+    }
+    const res = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsMultipleSelection: true,
+      selectionLimit: 8,
+      quality: 0.85,
+    });
+    if (res.canceled || !res.assets?.length) return;
+
+    const files = res.assets.map((a, i) => {
+      const ext = (a.uri.split('.').pop() || 'jpg').toLowerCase();
+      return {
+        uri: a.uri,
+        name: a.fileName || `photo-${Date.now()}-${i}.${ext}`,
+        type: a.mimeType || (ext === 'png' ? 'image/png' : ext === 'webp' ? 'image/webp' : 'image/jpeg'),
+      };
+    });
+
+    upload.mutate(files);
+  };
+
   if (!project) {
     return <View style={[styles.screen, { padding: spacing.xl }]}><Text style={{ color: c.fgMuted }}>Chargement…</Text></View>;
   }
@@ -145,9 +183,15 @@ export default function AdminProjectEditScreen() {
       {/* Images */}
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Galerie ({project.images?.length || 0})</Text>
-        <Text style={{ color: c.fgDim, fontSize: fontSize.caption, marginBottom: spacing.sm, fontStyle: 'italic' }}>
-          💡 Upload de nouvelles images via le site web admin.
-        </Text>
+
+        <Pressable
+          style={[styles.btnGold, { marginTop: spacing.sm, marginBottom: spacing.md, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8 }]}
+          onPress={pickImages}
+          disabled={upload.isPending}
+        >
+          <Ionicons name="cloud-upload-outline" size={18} color={c.ink} />
+          <Text style={styles.btnGoldText}>{upload.isPending ? 'Upload…' : 'Ajouter des images'}</Text>
+        </Pressable>
 
         {project.images?.length === 0 ? (
           <Text style={{ color: c.fgMuted, fontSize: fontSize.small }}>Aucune image.</Text>

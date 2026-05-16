@@ -116,6 +116,17 @@ export const updateAdminProject = (id: number | string, payload: Record<string, 
   apiClient.patch(`/admin/projects/${id}`, payload).then((r) => r.data);
 export const deleteAdminProject = (id: number | string) =>
   apiClient.delete(`/admin/projects/${id}`).then((r) => r.data);
+export const uploadProjectImages = (projectId: number | string, files: { uri: string; name: string; type: string }[]) => {
+  const form = new FormData();
+  files.forEach((f) => {
+    // @ts-expect-error RN FormData accepte ce format objet
+    form.append('images[]', { uri: f.uri, name: f.name, type: f.type });
+  });
+  return apiClient.post(`/admin/projects/${projectId}/images`, form, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }).then((r) => r.data);
+};
+
 export const setProjectCover = (projectId: number | string, imageId: number | string) =>
   apiClient.patch(`/admin/projects/${projectId}/images/${imageId}/cover`).then((r) => r.data);
 export const deleteProjectImage = (projectId: number | string, imageId: number | string) =>

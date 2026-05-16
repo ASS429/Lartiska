@@ -3,6 +3,7 @@
  * Utiliser useTheme() (hook) pour récupérer la palette active.
  */
 import { Platform, useColorScheme } from 'react-native';
+import { useThemeStore } from '@/src/store/theme';
 
 const palette = {
   gold: '#D4AF37',
@@ -28,11 +29,12 @@ const dark = {
   surfaceSolid: '#14100B',
 
   fg: '#F4ECD8',
-  fgMuted: 'rgba(244, 236, 216, 0.78)',
-  fgDim: 'rgba(244, 236, 216, 0.55)',
+  // Plus contrastés pour la lisibilité (avant : 0.78 / 0.55)
+  fgMuted: 'rgba(244, 236, 216, 0.86)',
+  fgDim: 'rgba(244, 236, 216, 0.68)',
 
-  line: 'rgba(212, 175, 55, 0.22)',
-  lineSoft: 'rgba(212, 175, 55, 0.12)',
+  line: 'rgba(212, 175, 55, 0.26)',
+  lineSoft: 'rgba(212, 175, 55, 0.14)',
 
   // Gold readable on dark surfaces
   goldText: palette.gold,
@@ -53,11 +55,12 @@ const light = {
   surfaceSolid: '#FFFCF2',
 
   fg: palette.ink,
-  fgMuted: 'rgba(6, 4, 10, 0.78)',
-  fgDim: 'rgba(6, 4, 10, 0.55)',
+  // Plus contrastés pour la lisibilité sur fond crème
+  fgMuted: 'rgba(6, 4, 10, 0.85)',
+  fgDim: 'rgba(6, 4, 10, 0.68)',
 
-  line: 'rgba(122, 84, 8, 0.30)',
-  lineSoft: 'rgba(122, 84, 8, 0.18)',
+  line: 'rgba(122, 84, 8, 0.38)',
+  lineSoft: 'rgba(122, 84, 8, 0.22)',
 
   // Le gold pur D4AF37 est illisible sur fond crème — on utilise un brun doré profond
   goldText: palette.goldReadableLight,
@@ -71,10 +74,23 @@ const light = {
 
 export type ThemeColors = typeof dark;
 
-/** Hook qui retourne la palette en fonction du mode système. */
+/**
+ * Hook qui retourne la palette active :
+ * - 'light' / 'dark' : forcé par l'utilisateur
+ * - 'system' : suit useColorScheme() de l'OS
+ */
 export function useThemeColors(): ThemeColors {
   const scheme = useColorScheme();
-  return scheme === 'light' ? light : dark;
+  const mode = useThemeStore((s) => s.mode);
+  const resolved = mode === 'system' ? (scheme === 'light' ? 'light' : 'dark') : mode;
+  return resolved === 'light' ? light : dark;
+}
+
+/** Pour le label dans le toggle. */
+export function useResolvedThemeMode(): 'light' | 'dark' {
+  const scheme = useColorScheme();
+  const mode = useThemeStore((s) => s.mode);
+  return mode === 'system' ? (scheme === 'light' ? 'light' : 'dark') : mode;
 }
 
 /** Accès statique pour les fichiers qui ne peuvent pas appeler le hook. */
