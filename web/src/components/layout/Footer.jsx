@@ -6,13 +6,13 @@ export function Footer() {
 
   return (
     <footer className="relative mt-20 border-t border-line bg-ink/60">
-      <div className="container-art py-16 grid gap-10 md:grid-cols-4">
+      <div className="container-art py-16 grid gap-10 md:grid-cols-5">
         <div className="md:col-span-2">
           <Link to="/" className="font-serif text-3xl">
             <span className="text-fg">Lartis</span>
             <span className="text-gold italic">Ka</span>
           </Link>
-          <p className="mt-4 text-sm text-fg/65 max-w-md leading-relaxed">
+          <p className="mt-4 text-sm text-fg/85 max-w-md leading-relaxed">
             {settings?.['company.tagline'] || "L'art qui transforme vos espaces."} Peinture, plafonnage, carrelage et décoration artistique. Sénégal · Gambie · Mauritanie.
           </p>
         </div>
@@ -20,10 +20,21 @@ export function Footer() {
         <div>
           <p className="eyebrow mb-4">Plateforme</p>
           <ul className="space-y-2 text-sm">
-            <li><Link to="/services" className="text-fg/75 hover:text-gold transition-colors">Services</Link></li>
-            <li><Link to="/portfolio" className="text-fg/75 hover:text-gold transition-colors">Portfolio</Link></li>
-            <li><Link to="/devis" className="text-fg/75 hover:text-gold transition-colors">Demander un devis</Link></li>
-            <li><Link to="/about" className="text-fg/75 hover:text-gold transition-colors">À propos</Link></li>
+            <li><Link to="/services" className="text-fg/85 hover:text-gold transition-colors">Services</Link></li>
+            <li><Link to="/portfolio" className="text-fg/85 hover:text-gold transition-colors">Portfolio</Link></li>
+            <li><Link to="/devis" className="text-fg/85 hover:text-gold transition-colors">Demander un devis</Link></li>
+            <li><Link to="/about" className="text-fg/85 hover:text-gold transition-colors">À propos</Link></li>
+            <li><Link to="/faq" className="text-fg/85 hover:text-gold transition-colors">FAQ</Link></li>
+          </ul>
+        </div>
+
+        <div>
+          <p className="eyebrow mb-4">Légal</p>
+          <ul className="space-y-2 text-sm">
+            <li><Link to="/mentions-legales" className="text-fg/85 hover:text-gold transition-colors">Mentions légales</Link></li>
+            <li><Link to="/confidentialite" className="text-fg/85 hover:text-gold transition-colors">Confidentialité</Link></li>
+            <li><Link to="/cgu" className="text-fg/85 hover:text-gold transition-colors">CGU</Link></li>
+            <li><Link to="/cookies" className="text-fg/85 hover:text-gold transition-colors">Cookies</Link></li>
           </ul>
         </div>
 
@@ -31,16 +42,16 @@ export function Footer() {
           <p className="eyebrow mb-4">Contact</p>
           <ul className="space-y-2 text-sm">
             <li>
-              <a href={`tel:${settings?.['contact.phone'] || '+221785446363'}`} className="text-fg/75 hover:text-gold transition-colors">
+              <a href={`tel:${settings?.['contact.phone'] || '+221785446363'}`} className="text-fg/85 hover:text-gold transition-colors">
                 {settings?.['contact.phone'] || '+221 78 544 63 63'}
               </a>
             </li>
             <li>
-              <a href={`mailto:${settings?.['contact.email'] || 'contact@lartiska.com'}`} className="text-fg/75 hover:text-gold transition-colors">
+              <a href={`mailto:${settings?.['contact.email'] || 'contact@lartiska.com'}`} className="text-fg/85 hover:text-gold transition-colors">
                 {settings?.['contact.email'] || 'contact@lartiska.com'}
               </a>
             </li>
-            <li className="text-fg/65">{settings?.['contact.address'] || 'Dakar, Sénégal'}</li>
+            <li className="text-fg/75">{settings?.['contact.address'] || 'Dakar, Sénégal'}</li>
           </ul>
 
           <div className="mt-5 flex gap-3">

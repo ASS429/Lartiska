@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { useCategories } from '@/hooks/useApi';
 import { fetchProjects, fetchProjectCities } from '@/api/endpoints';
+import { Seo } from '@/hooks/useSeo';
 import { BeforeAfterSlider } from '@/components/portfolio/BeforeAfterSlider';
 
 const PER_PAGE = 12;
@@ -70,6 +71,11 @@ export default function Portfolio() {
 
   return (
     <div className="container-art py-16 md:py-24">
+      <Seo
+        title="Portfolio"
+        description="Nos réalisations à travers l'Afrique de l'Ouest : fresques murales, plafonds décoratifs, mosaïques, design d'intérieur. Filtrable par ville et par catégorie."
+        path="/portfolio"
+      />
       <header className="max-w-3xl mb-10 md:mb-14">
         <p className="eyebrow mb-4">— Portfolio</p>
         <h1 className="font-serif text-5xl md:text-7xl font-light leading-[1.04]">

@@ -3,6 +3,7 @@ import { useCategories, useServices } from '@/hooks/useApi';
 import { formatPriceRange } from '@/utils/format';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
+import { Seo } from '@/hooks/useSeo';
 
 export default function Services() {
   const [active, setActive] = useState('all');
@@ -11,6 +12,11 @@ export default function Services() {
 
   return (
     <div className="container-art py-16 md:py-24">
+      <Seo
+        title="Services & Tarifs"
+        description="Peinture artistique, plafonnage décoratif, carrelage design, décoration d'intérieur. Tarifs indicatifs, devis gratuit sous 48h."
+        path="/services"
+      />
       <header className="max-w-2xl mb-14">
         <p className="eyebrow mb-4">— Services & Tarifs</p>
         <h1 className="font-serif text-5xl md:text-6xl font-light leading-tight">

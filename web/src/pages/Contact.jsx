@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useSettings } from '@/hooks/useApi';
 import { submitContact } from '@/api/endpoints';
+import { Seo } from '@/hooks/useSeo';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', body: '' });
@@ -42,6 +43,11 @@ export default function Contact() {
 
   return (
     <div className="container-art py-16 md:py-24">
+      <Seo
+        title="Contact"
+        description="Joignez Lartiska : 3 numéros directs, WhatsApp, email, QR code. Réponse sous 24h ouvrées."
+        path="/contact"
+      />
       <header className="max-w-3xl mb-14">
         <p className="eyebrow mb-4">— Contact</p>
         <h1 className="font-serif text-5xl md:text-7xl font-light leading-[1.04]">

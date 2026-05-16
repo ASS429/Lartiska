@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useCategories, useSettings } from '@/hooks/useApi';
 import { apiClient } from '@/api/client';
+import { Seo } from '@/hooks/useSeo';
 import { SectionWipe } from '@/components/layout/SectionWipe';
 
 export default function Home() {
@@ -23,6 +24,11 @@ export default function Home() {
 
   return (
     <>
+      <Seo
+        title=""
+        description="Lartiska — peinture, plafonnage, carrelage et décoration artistique au Sénégal, en Gambie et en Mauritanie. Demandez votre devis gratuit en quelques minutes."
+        path="/"
+      />
       {/* ─── HERO — section conservée (validée par le user) ─── */}
       <section className="hero-video relative min-h-[88vh] grid place-items-center overflow-hidden">
         <video

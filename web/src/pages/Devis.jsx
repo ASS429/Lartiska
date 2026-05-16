@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 import { useServices } from '@/hooks/useApi';
 import { submitQuote } from '@/api/endpoints';
+import { Seo } from '@/hooks/useSeo';
 import clsx from 'clsx';
 
 const STEPS = ['Service', 'Détails', 'Coordonnées', 'Récapitulatif'];
@@ -99,6 +100,11 @@ export default function Devis() {
 
   return (
     <div className="container-art py-16 md:py-24 max-w-3xl">
+      <Seo
+        title="Demander un devis"
+        description="Décrivez votre projet en 4 étapes. Devis gratuit en PDF sous 48h. Photos et plans acceptés."
+        path="/devis"
+      />
       <header className="mb-10">
         <p className="eyebrow mb-3">— Demande de devis</p>
         <h1 className="font-serif text-4xl md:text-5xl font-light">

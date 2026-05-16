@@ -14,7 +14,14 @@ import Contact from '@/pages/Contact';
 import About from '@/pages/About';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
+import FAQ from '@/pages/FAQ';
 import NotFound from '@/pages/NotFound';
+
+import { LegalLayout } from '@/pages/legal/LegalLayout';
+import MentionsLegales from '@/pages/legal/MentionsLegales';
+import Confidentialite from '@/pages/legal/Confidentialite';
+import CGU from '@/pages/legal/CGU';
+import Cookies from '@/pages/legal/Cookies';
 
 import Account from '@/pages/account/Account';
 import AccountQuoteDetail from '@/pages/account/QuoteDetail';
@@ -48,6 +55,15 @@ export default function App() {
         <Route path="about" element={<About />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="faq" element={<FAQ />} />
+
+        {/* Pages légales (sous /legal-layout, mais URL directes) */}
+        <Route element={<LegalLayout />}>
+          <Route path="mentions-legales" element={<MentionsLegales />} />
+          <Route path="confidentialite" element={<Confidentialite />} />
+          <Route path="cgu" element={<CGU />} />
+          <Route path="cookies" element={<Cookies />} />
+        </Route>
 
         <Route element={<RequireAuth role="client" />}>
           <Route path="account" element={<Account />} />

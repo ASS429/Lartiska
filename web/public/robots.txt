@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Espaces privés non indexables
+Disallow: /admin
+Disallow: /account
+Disallow: /login
+Disallow: /register
+
+Sitemap: https://lartiska.onrender.com/sitemap.xml
