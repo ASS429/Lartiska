@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Models\Quote;
 use App\Models\Setting;
+use App\Support\PrivateStorage;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 
 class QuotePdfService
@@ -35,8 +35,9 @@ class QuotePdfService
 
         $relativePath = "quotes/{$quote->reference}.pdf";
 
-        // Stockage PRIVÉ — accessible uniquement via QuoteController::downloadPdf (auth+owner)
-        Storage::disk('local')->put($relativePath, $pdf->output());
+        // Stockage PRIVÉ (local en dev, R2 privé en prod) — accessible
+        // uniquement via QuoteController::downloadPdf (auth+owner check).
+        PrivateStorage::put($relativePath, $pdf->output());
 
         $quote->update(['pdf_path' => $relativePath]);
 

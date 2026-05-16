@@ -7,7 +7,6 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\Quote;
 use App\Models\User;
-use App\Services\ActivityLogger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -25,23 +24,25 @@ class AuthController extends Controller
             'role' => 'client',
         ]);
 
-        // Récupérer les devis créés en invité avec le même email → les associer au nouveau compte
-        $claimed = Quote::whereNull('user_id')
+        // ─── Pas de claim automatique des devis invités ────────────────
+        // L'ancienne logique récupérait tous les devis Quote(user_id=null,
+        // client_email=user.email) au moment du register. Vulnérabilité :
+        // sans email verification, n'importe qui pouvait s'inscrire avec
+        // l'email d'une victime et lire ses devis (adresse, photos, etc.).
+        //
+        // On compte juste les devis "en attente d'appariement" pour
+        // afficher un message au user → il pourra demander à Tounkara
+        // de les rattacher manuellement via l'admin.
+        $pendingCount = Quote::whereNull('user_id')
             ->where('client_email', $user->email)
-            ->update(['user_id' => $user->id]);
-
-        if ($claimed > 0) {
-            ActivityLogger::log('quotes.claimed_on_register', $user, [
-                'count' => $claimed,
-            ]);
-        }
+            ->count();
 
         $token = $user->createToken($request->string('device_name', 'web'))->plainTextToken;
 
         return response()->json([
             'data' => $user,
             'token' => $token,
-            'claimed_quotes' => $claimed,
+            'pending_quotes_to_claim' => $pendingCount,
         ], 201);
     }
 

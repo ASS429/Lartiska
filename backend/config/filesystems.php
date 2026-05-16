@@ -17,6 +17,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Private filesystem disk
+    |--------------------------------------------------------------------------
+    |
+    | Disque utilisé pour les fichiers PRIVÉS (PDFs devis, pièces jointes
+    | clients). Doit être un disque qui survit aux redéploiements en prod.
+    |
+    | - Local dev : 'local' (filesystem éphémère mais ok)
+    | - Production : 'r2' (Cloudflare R2 avec visibility=private +
+    |   signedUrl pour le download)
+    |
+    */
+
+    'private_disk' => env('FILESYSTEM_DISK_PRIVATE', 'local'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Filesystem Disks
     |--------------------------------------------------------------------------
     |

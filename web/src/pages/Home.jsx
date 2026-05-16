@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { useCategories, useServices, useSettings } from '@/hooks/useApi';
+import { useCategories, useSettings } from '@/hooks/useApi';
 import { apiClient } from '@/api/client';
 import { SectionWipe } from '@/components/layout/SectionWipe';
 
 export default function Home() {
   const { data: categories } = useCategories();
-  const { data: services } = useServices();
   const { data: settings } = useSettings();
 
   const { data: featuredProjects } = useQuery({

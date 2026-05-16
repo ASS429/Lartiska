@@ -104,7 +104,14 @@ QUEUE_CONNECTION=database
 SESSION_DRIVER=database
 
 # Storage — Cloudflare R2
+# FILESYSTEM_DISK : disque pour les fichiers PUBLICS (portfolio, avatars)
+# FILESYSTEM_DISK_PRIVATE : disque pour les fichiers PRIVÉS (PDFs devis,
+#   pièces jointes clients). DOIT être un disque persistant — sur Railway
+#   le filesystem est éphémère donc 'local' fait perdre les PDFs au prochain
+#   deploy. Utiliser 'r2' qui supporte visibility=private + URLs signées.
 FILESYSTEM_DISK=r2
+FILESYSTEM_DISK_PRIVATE=r2
+
 R2_ACCESS_KEY_ID=…                # depuis étape 1.2
 R2_SECRET_ACCESS_KEY=…
 R2_BUCKET=lartiska-media

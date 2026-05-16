@@ -3,13 +3,13 @@
 namespace App\Mail;
 
 use App\Models\Quote;
+use App\Support\PrivateStorage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Mail\Mailables\Attachment;
 
 class QuoteConfirmationMail extends Mailable
 {
@@ -38,6 +38,7 @@ class QuoteConfirmationMail extends Mailable
 
     /**
      * Attache le PDF du devis si disponible et demandé.
+     * Lit depuis le disque privé configuré (local en dev, R2 en prod).
      */
     public function attachments(): array
     {
@@ -45,12 +46,12 @@ class QuoteConfirmationMail extends Mailable
             return [];
         }
 
-        if (!Storage::disk('local')->exists($this->quote->pdf_path)) {
+        if (!PrivateStorage::exists($this->quote->pdf_path)) {
             return [];
         }
 
         return [
-            Attachment::fromStorageDisk('local', $this->quote->pdf_path)
+            Attachment::fromStorageDisk(PrivateStorage::diskName(), $this->quote->pdf_path)
                 ->as("Devis-{$this->quote->reference}.pdf")
                 ->withMime('application/pdf'),
         ];

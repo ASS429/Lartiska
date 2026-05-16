@@ -74,29 +74,34 @@ class DashboardController extends Controller
     {
         $start = now()->copy()->subMonths(5)->startOfMonth();
 
-        $rows = Quote::select(
-                DB::raw('YEAR(created_at) as y'),
-                DB::raw('MONTH(created_at) as m'),
-                DB::raw('COUNT(*) as count'),
-                DB::raw('SUM(CASE WHEN status = "accepted" THEN 1 ELSE 0 END) as accepted'),
-            )
-            ->where('created_at', '>=', $start)
-            ->groupBy('y', 'm')
-            ->orderBy('y')
-            ->orderBy('m')
-            ->get()
-            ->keyBy(fn ($r) => sprintf('%04d-%02d', $r->y, $r->m));
+        // Approche portable (MySQL + SQLite + Postgres) : on récupère les
+        // devis bruts sur 6 mois et on agrège côté PHP. Pour un volume normal
+        // (~quelques centaines max), c'est largement assez rapide.
+        $quotes = Quote::where('created_at', '>=', $start)
+            ->get(['created_at', 'status']);
+
+        $buckets = [];
+        foreach ($quotes as $q) {
+            $key = $q->created_at->format('Y-m');
+            if (!isset($buckets[$key])) {
+                $buckets[$key] = ['count' => 0, 'accepted' => 0];
+            }
+            $buckets[$key]['count']++;
+            if ($q->status === 'accepted') {
+                $buckets[$key]['accepted']++;
+            }
+        }
 
         $series = [];
         for ($i = 5; $i >= 0; $i--) {
             $date = now()->copy()->subMonths($i);
             $key = $date->format('Y-m');
-            $row = $rows->get($key);
+            $row = $buckets[$key] ?? ['count' => 0, 'accepted' => 0];
             $series[] = [
                 'label' => $date->locale('fr')->isoFormat('MMM'),
                 'year_month' => $key,
-                'count' => $row ? (int) $row->count : 0,
-                'accepted' => $row ? (int) $row->accepted : 0,
+                'count' => $row['count'],
+                'accepted' => $row['accepted'],
             ];
         }
 

@@ -7,11 +7,11 @@ use App\Http\Requests\StoreQuoteRequest;
 use App\Http\Resources\QuoteResource;
 use App\Mail\NewQuoteAdminMail;
 use App\Models\Quote;
+use App\Support\PrivateStorage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 
 class QuoteController extends Controller
 {
@@ -21,11 +21,12 @@ class QuoteController extends Controller
         $data['user_id'] = $request->user()?->id;
 
         // Pieces jointes : disque PRIVÉ (jamais expose publiquement les photos
-        // d'intérieur / adresses / contrats des clients)
+        // d'intérieur / adresses / contrats des clients).
+        // En prod, c'est R2 avec visibility=private + URLs signées au download.
         $attachments = [];
         if ($request->hasFile('attachments')) {
             foreach ($request->file('attachments') as $file) {
-                $attachments[] = $file->store('quotes/' . now()->format('Y/m'), 'local');
+                $attachments[] = PrivateStorage::putFile('quotes/' . now()->format('Y/m'), $file);
             }
         }
         $data['attachments'] = $attachments ?: null;
@@ -64,11 +65,11 @@ class QuoteController extends Controller
     {
         $this->authorizeAccess($request, $quote);
 
-        if (!$quote->pdf_path || !Storage::disk('local')->exists($quote->pdf_path)) {
+        if (!$quote->pdf_path || !PrivateStorage::exists($quote->pdf_path)) {
             abort(404);
         }
 
-        return Storage::disk('local')->download($quote->pdf_path, "{$quote->reference}.pdf");
+        return PrivateStorage::download($quote->pdf_path, "{$quote->reference}.pdf");
     }
 
     /**

@@ -31,7 +31,7 @@ export const submitQuote = (payload) => {
 
   // Si pas de fichiers, envoi JSON classique (plus rapide, plus simple)
   if (files.length === 0) {
-    const { attachments: _omit, ...rest } = payload;
+    const { attachments: _attachments, ...rest } = payload; // eslint-disable-line no-unused-vars
     return apiClient.post('/quotes', rest).then((r) => r.data);
   }
 
