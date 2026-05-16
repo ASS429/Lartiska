@@ -92,3 +92,59 @@ export const sendQuoteToClient = (id: number | string) =>
 
 export const generateQuotePdf = (id: number | string) =>
   apiClient.post(`/admin/quotes/${id}/generate-pdf`).then((r) => r.data);
+
+// Messages admin
+export const fetchAdminMessages = (params: Record<string, unknown> = {}) =>
+  apiClient.get('/admin/messages', { params }).then((r) => r.data);
+export const fetchAdminMessage = (id: number | string) =>
+  apiClient.get(`/admin/messages/${id}`).then((r) => r.data.data);
+export const markAdminMessageRead = (id: number | string) =>
+  apiClient.patch(`/admin/messages/${id}/read`).then((r) => r.data);
+
+// Categories admin
+export const fetchAdminCategories = () =>
+  apiClient.get('/admin/categories').then((r) => r.data.data);
+
+// Projects admin
+export const fetchAdminProjects = (params: Record<string, unknown> = {}) =>
+  apiClient.get('/admin/projects', { params }).then((r) => r.data);
+export const fetchAdminProject = (id: number | string) =>
+  apiClient.get(`/admin/projects/${id}`).then((r) => r.data.data);
+export const createAdminProject = (payload: Record<string, unknown>) =>
+  apiClient.post('/admin/projects', payload).then((r) => r.data);
+export const updateAdminProject = (id: number | string, payload: Record<string, unknown>) =>
+  apiClient.patch(`/admin/projects/${id}`, payload).then((r) => r.data);
+export const deleteAdminProject = (id: number | string) =>
+  apiClient.delete(`/admin/projects/${id}`).then((r) => r.data);
+export const setProjectCover = (projectId: number | string, imageId: number | string) =>
+  apiClient.patch(`/admin/projects/${projectId}/images/${imageId}/cover`).then((r) => r.data);
+export const deleteProjectImage = (projectId: number | string, imageId: number | string) =>
+  apiClient.delete(`/admin/projects/${projectId}/images/${imageId}`).then((r) => r.data);
+export const setImageBeforeAfter = (projectId: number | string, imageId: number | string, value: 'none' | 'before' | 'after') =>
+  apiClient.patch(`/admin/projects/${projectId}/images/${imageId}/before-after`, { before_after: value }).then((r) => r.data);
+
+// Services admin
+export const fetchAdminServices = (params: Record<string, unknown> = {}) =>
+  apiClient.get('/admin/services', { params }).then((r) => r.data);
+export const createAdminService = (payload: Record<string, unknown>) =>
+  apiClient.post('/admin/services', payload).then((r) => r.data);
+export const updateAdminService = (id: number | string, payload: Record<string, unknown>) =>
+  apiClient.patch(`/admin/services/${id}`, payload).then((r) => r.data);
+export const deleteAdminService = (id: number | string) =>
+  apiClient.delete(`/admin/services/${id}`).then((r) => r.data);
+
+// Testimonials admin
+export const fetchAdminTestimonials = (params: Record<string, unknown> = {}) =>
+  apiClient.get('/admin/testimonials', { params }).then((r) => r.data);
+export const createAdminTestimonial = (payload: Record<string, unknown>) =>
+  apiClient.post('/admin/testimonials', payload).then((r) => r.data);
+export const updateAdminTestimonial = (id: number | string, payload: Record<string, unknown>) =>
+  apiClient.patch(`/admin/testimonials/${id}`, payload).then((r) => r.data);
+export const deleteAdminTestimonial = (id: number | string) =>
+  apiClient.delete(`/admin/testimonials/${id}`).then((r) => r.data);
+
+// Settings admin
+export const fetchAdminSettings = () =>
+  apiClient.get('/admin/settings').then((r) => r.data.data);
+export const updateAdminSettings = (settings: Record<string, unknown>) =>
+  apiClient.put('/admin/settings', { settings }).then((r) => r.data);

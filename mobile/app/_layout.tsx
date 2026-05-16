@@ -47,6 +47,13 @@ export default function RootLayout() {
           <Stack.Screen name="quote/[id]" options={{ headerShown: true, title: 'Mon devis' }} />
           <Stack.Screen name="admin/quotes/index" options={{ headerShown: true, title: 'Devis (admin)' }} />
           <Stack.Screen name="admin/quotes/[id]" options={{ headerShown: true, title: '', headerBackTitle: 'Devis' }} />
+          <Stack.Screen name="admin/messages/index" options={{ headerShown: true, title: 'Messages' }} />
+          <Stack.Screen name="admin/messages/[id]" options={{ headerShown: true, title: '', headerBackTitle: 'Messages' }} />
+          <Stack.Screen name="admin/projects/index" options={{ headerShown: true, title: 'Portfolio (admin)' }} />
+          <Stack.Screen name="admin/projects/[id]" options={{ headerShown: true, title: '', headerBackTitle: 'Portfolio' }} />
+          <Stack.Screen name="admin/services/index" options={{ headerShown: true, title: 'Services' }} />
+          <Stack.Screen name="admin/testimonials/index" options={{ headerShown: true, title: 'Avis clients' }} />
+          <Stack.Screen name="admin/settings" options={{ headerShown: true, title: 'Réglages' }} />
         </Stack>
         <StatusBar style="light" />
       </ThemeProvider>
