@@ -18,7 +18,39 @@ const palette = {
   inkSoft: '#1A130A',
   whatsapp: '#25D366',
   emerald: '#34D399',
+
+  // ── Palette mosaïque du logo (accents par catégorie) ──
+  mosaic: {
+    magenta: '#E63E5C',    // Peinture & fresques
+    soleil: '#F4D03F',     // Plafonnage
+    emeraude: '#3FBF7F',   // Décoration
+    turquoise: '#42B5C7',  // Mosaïque · Carrelage
+    brique: '#D14F4F',     // Sur-mesure
+  },
 };
+
+/**
+ * Couleur d'accent selon le slug de catégorie (palette mosaïque).
+ * Renvoie le gris fg si la catégorie est inconnue.
+ */
+export function categoryColor(slug?: string | null): string {
+  switch (slug) {
+    case 'peinture-fresques':
+    case 'peinture':
+      return palette.mosaic.magenta;
+    case 'plafonnage':
+      return palette.mosaic.soleil;
+    case 'carrelage':
+    case 'mosaique':
+      return palette.mosaic.turquoise;
+    case 'decoration':
+      return palette.mosaic.emeraude;
+    case 'sur-mesure':
+      return palette.mosaic.brique;
+    default:
+      return palette.gold;
+  }
+}
 
 const dark = {
   ...palette,

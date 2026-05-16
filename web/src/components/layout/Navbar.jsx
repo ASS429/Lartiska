@@ -40,9 +40,14 @@ export function Navbar() {
       )}
     >
       <nav className="container-art flex items-center justify-between py-5">
-        <Link to="/" className="font-serif text-2xl md:text-3xl tracking-tight">
-          <span className="text-fg dark:text-fg">Lartis</span>
-          <span className="text-gold italic">Ka</span>
+        <Link to="/" className="flex items-center gap-3 group" aria-label="Lartiska — accueil">
+          <span className="logo-mark inline-block w-10 h-10 rounded-full overflow-hidden bg-white shrink-0">
+            <img src="/lartiska-logo.jpg" alt="Lartiska" className="w-full h-full object-cover" />
+          </span>
+          <span className="font-serif text-2xl md:text-3xl tracking-tight">
+            <span className="text-fg dark:text-fg">Lartis</span>
+            <span className="text-gold italic">Ka</span>
+          </span>
         </Link>
 
         <ul className="hidden md:flex items-center gap-9 text-sm font-medium">

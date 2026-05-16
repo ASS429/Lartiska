@@ -171,8 +171,13 @@ export default function Home() {
                       />
                     )}
                     <div className="project-ring" />
+                    {p.category?.slug && (
+                      <span className={`cat-tag absolute top-3 left-3 z-[3] cat-${p.category.slug}`}>
+                        {p.category.name}
+                      </span>
+                    )}
                     <div className="project-meta">
-                      <p className="city">{p.city || p.category?.name}</p>
+                      <p className="city">{p.city}</p>
                       <h3>{p.title}</h3>
                     </div>
                   </Link>
@@ -242,8 +247,13 @@ export default function Home() {
                   <div className="project-img" style={{ backgroundImage: `url('${p.cover_image}')` }} />
                 )}
                 <div className="project-ring" />
+                {p.category?.slug && (
+                  <span className={`cat-tag absolute top-3 left-3 z-[3] cat-${p.category.slug}`}>
+                    {p.category.name}
+                  </span>
+                )}
                 <div className="project-meta">
-                  <p className="city">{p.city || p.category?.name}</p>
+                  <p className="city">{p.city}</p>
                   <h3>{p.title}</h3>
                 </div>
               </Link>

@@ -137,8 +137,19 @@ export default function Portfolio() {
                   <div className="project-img" style={{ backgroundImage: `url('${p.cover_image}')` }} />
                 )}
                 <div className="project-ring" />
+                {/* Cat-tag (palette mosaïque) en haut de la carte */}
+                {p.category?.slug && (
+                  <span
+                    className={clsx(
+                      'cat-tag absolute top-3 left-3 z-[3]',
+                      `cat-${p.category.slug}`,
+                    )}
+                  >
+                    {p.category.name}
+                  </span>
+                )}
                 <div className="project-meta">
-                  <p className="city">{p.city || p.category?.name}</p>
+                  <p className="city">{p.city}</p>
                   <h3>{p.title}</h3>
                   <p className="mt-2 text-[11px] tracking-widest uppercase text-gold/85 inline-flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     Voir la galerie →

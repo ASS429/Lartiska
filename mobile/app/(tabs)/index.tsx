@@ -6,6 +6,7 @@ import { fetchProjects, fetchCategories, fetchPublicSettings } from '@/src/api/e
 import { useAuthStore } from '@/src/store/auth';
 import { spacing, fontSize, radius, type ThemeColors } from '@/constants/theme';
 import { useStyles } from '@/src/hooks/useStyles';
+import { CategoryBadge } from '@/src/components/CategoryBadge';
 
 // Wrap fetchProjects pour featured only
 const fetchFeatured = () => fetchProjects({ featured: 1, per_page: 6 });
@@ -85,6 +86,11 @@ export default function HomeScreen() {
             >
               {p.cover_image && (
                 <Image source={{ uri: p.cover_image }} style={styles.projectImg} />
+              )}
+              {p.category?.slug && (
+                <View style={{ position: 'absolute', top: 10, left: 10, zIndex: 3 }}>
+                  <CategoryBadge slug={p.category.slug} label={p.category.name} />
+                </View>
               )}
               <View style={styles.projectMeta}>
                 <Text style={styles.projectCity}>{p.city || p.category?.name}</Text>

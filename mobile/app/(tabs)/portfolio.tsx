@@ -5,6 +5,7 @@ import { router } from 'expo-router';
 import { fetchProjects, fetchCategories, fetchProjectCities } from '@/src/api/endpoints';
 import { spacing, fontSize, radius, type ThemeColors } from '@/constants/theme';
 import { useStyles } from '@/src/hooks/useStyles';
+import { CategoryBadge } from '@/src/components/CategoryBadge';
 
 export default function PortfolioScreen() {
   const { styles, c } = useStyles(makeStyles);
@@ -62,6 +63,11 @@ export default function PortfolioScreen() {
         renderItem={({ item }) => (
           <Pressable style={styles.card} onPress={() => router.push(`/project/${item.slug}`)}>
             {item.cover_image && <Image source={{ uri: item.cover_image }} style={styles.cardImg} />}
+            {item.category?.slug && (
+              <View style={{ position: 'absolute', top: 10, left: 10, zIndex: 3 }}>
+                <CategoryBadge slug={item.category.slug} label={item.category.name} />
+              </View>
+            )}
             <View style={styles.cardOverlay}>
               <Text style={styles.cardCity}>{item.city || item.category?.name}</Text>
               <Text style={styles.cardTitle} numberOfLines={2}>{item.title}</Text>
