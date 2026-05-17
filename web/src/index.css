@@ -123,6 +123,21 @@
   }
   html:not(.dark) .eyebrow { color: #7A5408; }
 
+  /* ─── Footer typography — denser + bolder ─── */
+  .footer-col-title {
+    @apply uppercase tracking-[0.32em] text-[12px] font-bold mb-5;
+    color: #D4AF37;
+  }
+  html:not(.dark) .footer-col-title { color: #7A5408; }
+
+  .footer-link {
+    color: rgb(var(--fg-rgb));
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+  .footer-link:hover { color: #D4AF37; }
+  html:not(.dark) .footer-link:hover { color: #7A5408; }
+
   /* Eyebrow décoratif avec barres ::before/::after automatiques.
      Si l'élément contient ses propres <span class="w-X h-px bg-gold"> (legacy),
      on les laisse. Sinon les barres CSS sont injectées. */
