@@ -1,8 +1,9 @@
 # Configuration Nixpacks pour Railway
-# Détecte automatiquement Laravel 11 + PHP 8.3 et installe les bonnes extensions.
+# Force PHP 8.4 — le composer.lock pin intervention/image 4 (php ^8.3) et
+# symfony/* 8.x (php >=8.4). Sans ça Railway tombe sur PHP 8.2 par défaut.
 
 [phases.setup]
-nixPkgs = ["php83", "php83Packages.composer", "nodejs_20"]
+nixPkgs = ["php84", "php84Packages.composer", "nodejs_20"]
 nixLibs = ["openssl"]
 
 [phases.install]
@@ -20,6 +21,7 @@ cmds = [
 cmd = "sh ./railway-start.sh"
 
 [variables]
-PHP_VERSION = "8.3"
+PHP_VERSION = "8.4"
+NIXPACKS_PHP_VERSION = "8.4"
 APP_ENV = "production"
 LOG_CHANNEL = "stderr"
