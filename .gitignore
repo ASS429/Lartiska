@@ -90,3 +90,6 @@ backend/yarn-error.log
 
 # Local zip backups
 /lartiska.zip
+
+# Local extracted clone of the repo
+/Lartiska-main/
