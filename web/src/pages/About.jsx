@@ -52,7 +52,7 @@ export default function About() {
       <header className="max-w-3xl">
         <p className="eyebrow mb-4">— À propos</p>
         <h1 className="font-serif text-5xl md:text-6xl font-light leading-tight">
-          L'art comme <em className="text-gold not-italic">manière de vivre</em><br />
+          L'art comme <em className="gold-em">manière de vivre</em><br />
           un espace.
         </h1>
         <p className="mt-6 text-fg/85 leading-relaxed text-lg">
@@ -61,6 +61,54 @@ export default function About() {
           qu'on ne trouve nulle part ailleurs sur le marché.
         </p>
       </header>
+
+      {/* ─── L'artiste — carte portrait Tounkara + lien portfolio externe ─── */}
+      <section className="mt-16 md:mt-20">
+        <div className="surface-card overflow-hidden grid md:grid-cols-[minmax(0,1fr)_1.4fr] gap-0">
+          <figure className="art-frame aspect-[4/5] md:aspect-auto md:min-h-[420px] m-0 rounded-none border-0 border-r border-line">
+            <img
+              src="/tounkara-portrait.jpeg"
+              alt="Tounkara — fondateur de Lartiska"
+              loading="lazy"
+            />
+            <figcaption>
+              <span className="art-caption-line" />
+              <span className="art-caption-text">Tounkara · Mbour</span>
+            </figcaption>
+          </figure>
+
+          <div className="p-8 md:p-12 flex flex-col justify-center">
+            <p className="eyebrow mb-4">— L'artiste</p>
+            <h2 className="font-serif text-3xl md:text-4xl font-light leading-tight">
+              Tounkara, fondateur de <em className="gold-em">Lartiska</em>.
+            </h2>
+            <p className="mt-5 text-fg/85 leading-relaxed">
+              Artiste polyvalent — peintre, plafonneur, carreleur, designer d'intérieur — Tounkara signe
+              chaque chantier comme une pièce unique. Quinze ans à l'œuvre entre Dakar, Saint-Louis,
+              Banjul et Nouakchott, à transformer murs, plafonds et carreaux en récits visuels.
+            </p>
+            <p className="mt-4 text-fg/75 text-sm leading-relaxed">
+              Découvrez son portfolio personnel — croquis, études, projets antérieurs et œuvres
+              d'atelier qui nourrissent l'univers Lartiska.
+            </p>
+
+            <div className="mt-7 flex flex-wrap gap-3">
+              <a
+                href="https://lartiska-portfolio.onrender.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-gold inline-flex items-center gap-2"
+              >
+                Voir son portfolio
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M7 17 17 7" /><path d="M7 7h10v10" />
+                </svg>
+              </a>
+              <Link to="/contact" className="btn-ghost">Rencontrer Tounkara →</Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="mt-20 grid md:grid-cols-3 gap-10">
         <div>
@@ -95,7 +143,7 @@ export default function About() {
           <p className="eyebrow mb-3">— Comment ça marche</p>
           <h2 className="font-serif text-4xl md:text-5xl font-light leading-tight">
             5 étapes, de la première idée<br />
-            <em className="text-gold not-italic">à l'œuvre livrée</em>.
+            <em className="gold-em">à l'œuvre livrée</em>.
           </h2>
         </header>
         <ol className="grid md:grid-cols-5 gap-4">
@@ -114,7 +162,7 @@ export default function About() {
         <header className="max-w-2xl mb-10">
           <p className="eyebrow mb-3">— Garanties</p>
           <h2 className="font-serif text-4xl md:text-5xl font-light leading-tight">
-            Notre <em className="text-gold not-italic">engagement</em> de qualité.
+            Notre <em className="gold-em">engagement</em> de qualité.
           </h2>
         </header>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -133,7 +181,7 @@ export default function About() {
         <header className="max-w-2xl mb-8">
           <p className="eyebrow mb-3">— Zones desservies</p>
           <h2 className="font-serif text-4xl md:text-5xl font-light leading-tight">
-            Sénégal · Gambie · <em className="text-gold not-italic">Mauritanie</em>.
+            Sénégal · Gambie · <em className="gold-em">Mauritanie</em>.
           </h2>
           <p className="mt-5 text-fg/85 leading-relaxed">
             Nous intervenons principalement dans les villes ci-dessous. Pour les chantiers en dehors de ces zones
@@ -157,7 +205,7 @@ export default function About() {
 
       <section className="mt-24 text-center">
         <p className="font-serif text-3xl md:text-4xl max-w-3xl mx-auto leading-tight">
-          « Chaque espace mérite d'avoir sa propre <em className="text-gold not-italic">œuvre</em>. »
+          « Chaque espace mérite d'avoir sa propre <em className="gold-em">œuvre</em>. »
         </p>
         <p className="mt-3 text-fg/70 text-sm uppercase tracking-widest">— Tounkara, fondateur de Lartiska</p>
 

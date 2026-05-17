@@ -3,6 +3,7 @@ import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { WhatsAppButton } from './WhatsAppButton';
 import { PaintDrops } from './PaintDrops';
+import { PageEnterWipe } from './PageEnterWipe';
 
 export function Layout() {
   return (
@@ -14,6 +15,7 @@ export function Layout() {
       </main>
       <Footer />
       <WhatsAppButton />
+      <PageEnterWipe />
     </div>
   );
 }

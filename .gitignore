@@ -81,3 +81,12 @@ backend/yarn-error.log
 *.sql
 *.sqlite
 *.sqlite-journal
+
+# Design system source kit (read-only reference, not for prod)
+/Lartiska Design System/
+
+# Legacy portfolio prototype
+/portfolio-new/
+
+# Local zip backups
+/lartiska.zip

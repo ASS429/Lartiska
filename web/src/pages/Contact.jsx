@@ -51,7 +51,7 @@ export default function Contact() {
       <header className="max-w-3xl mb-14">
         <p className="eyebrow mb-4">— Contact</p>
         <h1 className="font-serif text-5xl md:text-7xl font-light leading-[1.04]">
-          Parlons de votre <em className="text-gold not-italic">projet</em>.
+          Parlons de votre <em className="gold-em">projet</em>.
         </h1>
         <p className="mt-6 text-fg/75 leading-relaxed max-w-xl">
           Trois lignes directes, cinq canaux sociaux et un QR code pour démarrer la conversation en deux secondes. Nous répondons sous 24h ouvrées.

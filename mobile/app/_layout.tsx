@@ -1,10 +1,10 @@
-import { DarkTheme, ThemeProvider } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useAuthStore } from '@/src/store/auth';
-import { colors } from '@/constants/theme';
+import { useThemeColors, useResolvedThemeMode } from '@/constants/theme';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,29 +16,31 @@ export const unstable_settings = {
   anchor: '(tabs)',
 };
 
-const LartiskaTheme = {
-  ...DarkTheme,
-  colors: {
-    ...DarkTheme.colors,
-    primary: colors.gold,
-    background: colors.bg,
-    card: colors.ink,
-    text: colors.fg,
-    border: colors.line,
-    notification: colors.gold,
-  },
-};
-
 export default function RootLayout() {
   const hydrate = useAuthStore((s) => s.hydrate);
+  const c = useThemeColors();
+  const mode = useResolvedThemeMode();
 
   useEffect(() => {
     hydrate();
   }, [hydrate]);
 
+  const navTheme = {
+    ...(mode === 'dark' ? DarkTheme : DefaultTheme),
+    colors: {
+      ...(mode === 'dark' ? DarkTheme.colors : DefaultTheme.colors),
+      primary: c.gold,
+      background: c.bg,
+      card: c.surfaceSolid,
+      text: c.fg,
+      border: c.line,
+      notification: c.gold,
+    },
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider value={LartiskaTheme}>
+      <ThemeProvider value={navTheme}>
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="auth/login" options={{ presentation: 'modal', headerShown: true, title: 'Connexion' }} />
@@ -55,7 +57,7 @@ export default function RootLayout() {
           <Stack.Screen name="admin/testimonials/index" options={{ headerShown: true, title: 'Avis clients' }} />
           <Stack.Screen name="admin/settings" options={{ headerShown: true, title: 'Réglages' }} />
         </Stack>
-        <StatusBar style="light" />
+        <StatusBar style={mode === 'light' ? 'dark' : 'light'} />
       </ThemeProvider>
     </QueryClientProvider>
   );

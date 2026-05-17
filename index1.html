@@ -1562,68 +1562,110 @@
         /* ─────────────────────────────────────────────────────────
            TYPOGRAPHY DENSITY BOOST — both modes
            ───────────────────────────────────────────────────────── */
-
-        body { font-size: 17px; }
-        p { font-size: 16px; }
-
+        
+        body {
+            font-size: 17px;
+        }
+        
+        p {
+            font-size: 16px;
+        }
+        
         .eyebrow {
             font-size: 12.5px;
             font-weight: 600;
             letter-spacing: 4.5px;
         }
-
+        
         .welcome-title .tagline {
             font-size: clamp(13px, 1.05vw, 17px);
             font-weight: 500;
             letter-spacing: 3.5px;
         }
-
-        .welcome-sub { font-weight: 400; }
-
+        
+        .welcome-sub {
+            font-weight: 400;
+        }
+        
         .explosion p,
         .premium-head p,
         .portfolio-head p,
-        .contact-content > p.lead {
+        .contact-content>p.lead {
             font-size: clamp(16px, 1.2vw, 20px);
             font-weight: 400;
             line-height: 1.7;
         }
-
-        .premium-card h3 { font-size: 27px; font-weight: 400; }
-        .premium-card p { font-size: 15.5px; line-height: 1.7; font-weight: 400; }
-
-        .project-meta .city { font-size: 11px; letter-spacing: 4px; font-weight: 600; }
-        .project-meta h3 { font-size: 30px; font-weight: 400; }
-
+        
+        .premium-card h3 {
+            font-size: 27px;
+            font-weight: 400;
+        }
+        
+        .premium-card p {
+            font-size: 15.5px;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+        
+        .project-meta .city {
+            font-size: 11px;
+            letter-spacing: 4px;
+            font-weight: 600;
+        }
+        
+        .project-meta h3 {
+            font-size: 30px;
+            font-weight: 400;
+        }
+        
         .tile-text .label {
             font-size: 10.5px;
             letter-spacing: 3px;
             font-weight: 600;
         }
-        .tile-text .value { font-size: 21px; font-weight: 500; }
-
+        
+        .tile-text .value {
+            font-size: 21px;
+            font-weight: 500;
+        }
+        
         .form-label {
             font-size: 11.5px;
             letter-spacing: 2.8px;
             font-weight: 600;
         }
+        
         .contact-form input,
         .contact-form select,
         .contact-form textarea {
             font-size: 16px;
             font-weight: 400;
         }
-
-        .partner { font-size: 24px; font-weight: 500; }
-        .copyright { font-size: 11px; letter-spacing: 2.5px; font-weight: 500; }
-
-        .nav-links a { font-size: 12px; font-weight: 500; }
-        .nav-cta { font-size: 12px; font-weight: 600; }
-
+        
+        .partner {
+            font-size: 24px;
+            font-weight: 500;
+        }
+        
+        .copyright {
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            font-weight: 500;
+        }
+        
+        .nav-links a {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .nav-cta {
+            font-size: 12px;
+            font-weight: 600;
+        }
         /* ─────────────────────────────────────────────────────────
            WHATSAPP BUTTON — branded green, bold, with icon
            ───────────────────────────────────────────────────────── */
-
+        
         .btn-whatsapp {
             display: inline-flex;
             align-items: center;
@@ -1642,139 +1684,171 @@
             color: #25D366;
             backdrop-filter: blur(10px);
         }
-        .btn-whatsapp svg { flex-shrink: 0; }
-        .btn-whatsapp strong { font-weight: 700; letter-spacing: 2.5px; }
+        
+        .btn-whatsapp svg {
+            flex-shrink: 0;
+        }
+        
+        .btn-whatsapp strong {
+            font-weight: 700;
+            letter-spacing: 2.5px;
+        }
+        
         .btn-whatsapp:hover {
             background: #25D366;
             color: #fff;
             transform: translateY(-2px);
             box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45);
         }
-        .btn-whatsapp .arrow { background: currentColor; }
+        
+        .btn-whatsapp .arrow {
+            background: currentColor;
+        }
+        
         .btn-whatsapp .arrow::before,
-        .btn-whatsapp .arrow::after { background: currentColor; }
-        .btn-whatsapp:hover .arrow { width: 24px; transform: translateX(4px); }
-
+        .btn-whatsapp .arrow::after {
+            background: currentColor;
+        }
+        
+        .btn-whatsapp:hover .arrow {
+            width: 24px;
+            transform: translateX(4px);
+        }
+        
         [data-theme="light"] .btn-whatsapp {
             background: rgba(37, 211, 102, 0.18);
             color: #128C3F;
             border-color: #128C3F;
         }
+        
         [data-theme="light"] .btn-whatsapp:hover {
             background: #128C3F;
             color: #fff;
             border-color: #128C3F;
         }
-
         /* ─────────────────────────────────────────────────────────
            LIGHT MODE — readability hardening
            Cards, partners, text-shadows, decorative overlays.
            ───────────────────────────────────────────────────────── */
-
         /* Project cards keep a dark cinematic gradient → text must stay light
            in BOTH themes, otherwise dark-on-dark in light mode = invisible */
+        
         .project-meta h3 {
             color: #F4ECD8 !important;
             text-shadow: 0 2px 12px rgba(0, 0, 0, .55);
         }
+        
         .project-meta .city {
             color: var(--gold-soft);
             text-shadow: 0 1px 8px rgba(0, 0, 0, .55);
         }
-        [data-theme="light"] .project-meta .city { color: #E8C547; }
-
+        
+        [data-theme="light"] .project-meta .city {
+            color: #E8C547;
+        }
         /* CTA "Voir la série" sits on dark gradient → keep bright gold */
-        [data-theme="light"] .project-cta { color: #E8C547; }
-        [data-theme="light"] .project-cta .line { background: #E8C547; }
-
+        
+        [data-theme="light"] .project-cta {
+            color: #E8C547;
+        }
+        
+        [data-theme="light"] .project-cta .line {
+            background: #E8C547;
+        }
         /* Title on cards' dark overlay — keep dark gradient regardless of theme */
+        
         [data-theme="light"] .project-card::after {
-            background: linear-gradient(to top,
-                rgba(15, 10, 4, .92) 0%,
-                rgba(15, 10, 4, .35) 50%,
-                transparent 100%);
+            background: linear-gradient(to top, rgba(15, 10, 4, .92) 0%, rgba(15, 10, 4, .35) 50%, transparent 100%);
         }
+        
         [data-theme="light"] .project-card:hover::after {
-            background: linear-gradient(to top,
-                rgba(15, 10, 4, .82) 0%,
-                rgba(143, 101, 16, .25) 60%,
-                transparent 100%);
+            background: linear-gradient(to top, rgba(15, 10, 4, .82) 0%, rgba(143, 101, 16, .25) 60%, transparent 100%);
         }
-
         /* Partners: dense, readable in light mode */
+        
         [data-theme="light"] .partner {
             color: #1A130A;
             font-weight: 600;
         }
-        [data-theme="light"] .partner:hover { color: var(--gold); font-weight: 700; }
-
+        
+        [data-theme="light"] .partner:hover {
+            color: var(--gold);
+            font-weight: 700;
+        }
         /* Welcome title shadow becomes a soft light halo in light mode */
+        
         [data-theme="light"] .welcome-title h1 {
             color: #04030A;
             font-weight: 400;
             text-shadow: 0 2px 22px rgba(245, 237, 214, .9), 0 0 50px rgba(245, 237, 214, .65);
         }
+        
         [data-theme="light"] .welcome-sub {
             text-shadow: 0 2px 14px rgba(245, 237, 214, .85);
             color: #1A130A;
             font-weight: 400;
         }
+        
         [data-theme="light"] .welcome-title .tagline {
             color: #1A130A;
             font-weight: 600;
         }
-
         /* Body copy in sections with video bg — full density in light mode */
+        
         [data-theme="light"] .explosion p,
-        [data-theme="light"] .contact-content > p.lead {
+        [data-theme="light"] .contact-content>p.lead {
             color: #0A0805;
             font-weight: 500;
         }
+        
         [data-theme="light"] .premium-head p,
         [data-theme="light"] .portfolio-head p {
             color: #14100B;
             font-weight: 500;
         }
-
         /* Card text boost in light mode */
+        
         [data-theme="light"] .premium-card h3 {
             color: #06040A;
             font-weight: 500;
         }
+        
         [data-theme="light"] .premium-card p,
         [data-theme="light"] .tile-text .label,
         [data-theme="light"] .form-label {
             color: #1A130A;
             font-weight: 600;
         }
+        
         [data-theme="light"] .tile-text .value {
             color: #06040A;
             font-weight: 500;
         }
-
         /* Card icon backgrounds need more contrast on cream */
+        
         [data-theme="light"] .premium-icon,
         [data-theme="light"] .tile-icon,
         [data-theme="light"] .social {
             background: rgba(143, 101, 16, .14);
             border-color: rgba(143, 101, 16, .55);
         }
-
         /* Eyebrow lines blend better with deeper gold */
+        
         [data-theme="light"] .eyebrow {
             font-weight: 600;
         }
-
         /* Copyright + footer brand more readable */
+        
         [data-theme="light"] .copyright {
             color: #14100B;
             font-weight: 600;
         }
+        
         [data-theme="light"] .footer-socials a {
             color: #1A130A;
         }
-
         /* Form inputs: stronger border + clearer placeholder in light mode */
+        
         [data-theme="light"] .contact-form input,
         [data-theme="light"] .contact-form select,
         [data-theme="light"] .contact-form textarea {
@@ -1782,33 +1856,33 @@
             color: #06040A;
             font-weight: 500;
         }
+        
         [data-theme="light"] .contact-form input::placeholder,
         [data-theme="light"] .contact-form textarea::placeholder {
             color: rgba(20, 16, 11, .65);
         }
-
         /* Nav links contrast */
+        
         [data-theme="light"] .nav-links a {
             opacity: .9;
             font-weight: 500;
         }
-        [data-theme="light"] .nav-links a:hover { color: var(--gold); }
-
+        
+        [data-theme="light"] .nav-links a:hover {
+            color: var(--gold);
+        }
         /* Nav CTA & burger button visible on cream */
+        
         [data-theme="light"] .nav-cta,
         [data-theme="light"] .theme-toggle,
         [data-theme="light"] .nav-burger {
             border-color: rgba(143, 101, 16, .45);
         }
-
         /* Welcome video glow — softer halo in light mode */
+        
         [data-theme="light"] .welcome-video {
-            filter:
-                drop-shadow(0 0 60px rgba(143, 101, 16, .35))
-                drop-shadow(0 0 110px rgba(184, 132, 28, .2))
-                drop-shadow(0 20px 40px rgba(80, 50, 10, .25));
+            filter: drop-shadow(0 0 60px rgba(143, 101, 16, .35)) drop-shadow(0 0 110px rgba(184, 132, 28, .2)) drop-shadow(0 20px 40px rgba(80, 50, 10, .25));
         }
-
         /* ─────────────────────────────────────────────────────────
            A11Y — SKIP LINK & FOCUS-VISIBLE
            ───────────────────────────────────────────────────────── */
@@ -2336,11 +2410,14 @@
         /* ─────────────────────────────────────────────────────────
            SMARTPHONE & SMALL SCREEN POLISH
            ───────────────────────────────────────────────────────── */
-
+        
         @media (max-width: 768px) {
-            .container { padding: 0 18px; }
-
-            .welcome { height: 200vh; }
+            .container {
+                padding: 0 18px;
+            }
+            .welcome {
+                height: 200vh;
+            }
             .welcome-eyebrow {
                 width: auto;
                 left: 50%;
@@ -2361,9 +2438,13 @@
             }
             .welcome-title h1 {
                 font-size: clamp(44px, 11vw, 88px);
-                text-shadow: 0 4px 18px rgba(0,0,0,.55);
+                text-shadow: 0 4px 18px rgba(0, 0, 0, .55);
             }
-            .welcome-title .accent { width: 56px; margin-top: 18px; margin-bottom: 14px; }
+            .welcome-title .accent {
+                width: 56px;
+                margin-top: 18px;
+                margin-bottom: 14px;
+            }
             .welcome-title .tagline {
                 font-size: 11px;
                 letter-spacing: 3px;
@@ -2397,8 +2478,9 @@
                 line-height: 1.45;
                 gap: 10px;
             }
-            .welcome-sub::before { width: 24px; }
-
+            .welcome-sub::before {
+                width: 24px;
+            }
             .explosion,
             .premium,
             .portfolio,
@@ -2423,52 +2505,118 @@
             .portfolio-head {
                 margin-bottom: 50px;
             }
-            .premium-card { padding: 28px 22px; }
-            .premium-card h3 { font-size: 22px; }
-
-            .contact-actions { gap: 12px; }
+            .premium-card {
+                padding: 28px 22px;
+            }
+            .premium-card h3 {
+                font-size: 22px;
+            }
+            .contact-actions {
+                gap: 12px;
+            }
             .contact-actions .btn {
                 padding: 14px 24px;
                 font-size: 10px;
                 letter-spacing: 2.5px;
             }
-            .contact-tiles { margin-top: 56px; }
-            .contact-form { margin-top: 40px; }
-
-            .lightbox { padding: 14px; }
-            .lightbox-card { max-height: 94vh; border-radius: 14px; }
-            .lb-stage { aspect-ratio: 4/3; }
-            .lb-meta { padding: 28px 22px 26px; }
-            .lb-nav { width: 38px; height: 38px; }
-            .lb-prev { left: 8px; }
-            .lb-next { right: 8px; }
-
-            .footer-top { padding: 60px 0 40px; }
-            .partners-grid { gap: 24px 18px; }
-            .partner { font-size: 18px; }
-            .footer-bottom { padding: 22px 0; gap: 14px; }
-            .footer-brand { font-size: 19px; }
+            .contact-tiles {
+                margin-top: 56px;
+            }
+            .contact-form {
+                margin-top: 40px;
+            }
+            .lightbox {
+                padding: 14px;
+            }
+            .lightbox-card {
+                max-height: 94vh;
+                border-radius: 14px;
+            }
+            .lb-stage {
+                aspect-ratio: 4/3;
+            }
+            .lb-meta {
+                padding: 28px 22px 26px;
+            }
+            .lb-nav {
+                width: 38px;
+                height: 38px;
+            }
+            .lb-prev {
+                left: 8px;
+            }
+            .lb-next {
+                right: 8px;
+            }
+            .footer-top {
+                padding: 60px 0 40px;
+            }
+            .partners-grid {
+                gap: 24px 18px;
+            }
+            .partner {
+                font-size: 18px;
+            }
+            .footer-bottom {
+                padding: 22px 0;
+                gap: 14px;
+            }
+            .footer-brand {
+                font-size: 19px;
+            }
         }
-
+        
         @media (max-width: 480px) {
-            .container { padding: 0 14px; }
-            nav.site-nav { padding: 14px 16px; }
-            nav.site-nav.scrolled { padding: 12px 16px; }
-            .nav-logo { font-size: 22px; letter-spacing: 3px; }
-            .theme-toggle, .nav-burger { width: 36px; height: 36px; }
-
-            .welcome { height: 180vh; }
-            .welcome-title { top: 22%; }
-            .welcome-title h1 { font-size: clamp(36px, 12vw, 60px); }
-            .welcome-sub { font-size: 13px; bottom: 24px; }
-            .welcome-video-wrap { top: auto; bottom: 5%; height: 38vh; transform: none; }
-            .welcome-video { transform: scale(1.25); max-height: 38vh; }
-
+            .container {
+                padding: 0 14px;
+            }
+            nav.site-nav {
+                padding: 14px 16px;
+            }
+            nav.site-nav.scrolled {
+                padding: 12px 16px;
+            }
+            .nav-logo {
+                font-size: 22px;
+                letter-spacing: 3px;
+            }
+            .theme-toggle,
+            .nav-burger {
+                width: 36px;
+                height: 36px;
+            }
+            .welcome {
+                height: 180vh;
+            }
+            .welcome-title {
+                top: 22%;
+            }
+            .welcome-title h1 {
+                font-size: clamp(36px, 12vw, 60px);
+            }
+            .welcome-sub {
+                font-size: 13px;
+                bottom: 24px;
+            }
+            .welcome-video-wrap {
+                top: auto;
+                bottom: 5%;
+                height: 38vh;
+                transform: none;
+            }
+            .welcome-video {
+                transform: scale(1.25);
+                max-height: 38vh;
+            }
             .explosion,
             .premium,
             .portfolio,
-            .contact { padding: 10vh 0; }
-            .explosion-content { padding: 28px 20px; }
+            .contact {
+                padding: 10vh 0;
+            }
+            .explosion-content {
+                padding: 28px 20px;
+            }
             .explosion h2,
             .premium h2,
             .portfolio h2 {
@@ -2477,50 +2625,93 @@
             .contact h2 {
                 font-size: clamp(32px, 11vw, 54px) !important;
             }
-
-            .premium-card { padding: 24px 20px; }
-            .contact-tile { padding: 18px 18px; }
-            .tile-icon { width: 40px; height: 40px; }
-            .tile-text .value { font-size: 17px; }
-
-            .contact-form { gap: 14px; }
+            .premium-card {
+                padding: 24px 20px;
+            }
+            .contact-tile {
+                padding: 18px 18px;
+            }
+            .tile-icon {
+                width: 40px;
+                height: 40px;
+            }
+            .tile-text .value {
+                font-size: 17px;
+            }
+            .contact-form {
+                gap: 14px;
+            }
             .contact-form input,
             .contact-form select,
             .contact-form textarea {
                 padding: 12px 14px;
                 font-size: 14px;
             }
-
-            .lb-meta .lb-title { font-size: clamp(22px, 6vw, 30px); }
-            .lb-meta .lb-desc { font-size: 14px; line-height: 1.6; }
-            .lb-cta { padding: 12px 22px; font-size: 10px; }
-
-            .partners-grid { gap: 22px 14px; }
-            .partner { font-size: 16px; }
-
-            .copyright { font-size: 9.5px; letter-spacing: 2px; }
+            .lb-meta .lb-title {
+                font-size: clamp(22px, 6vw, 30px);
+            }
+            .lb-meta .lb-desc {
+                font-size: 14px;
+                line-height: 1.6;
+            }
+            .lb-cta {
+                padding: 12px 22px;
+                font-size: 10px;
+            }
+            .partners-grid {
+                gap: 22px 14px;
+            }
+            .partner {
+                font-size: 16px;
+            }
+            .copyright {
+                font-size: 9.5px;
+                letter-spacing: 2px;
+            }
         }
-
+        
         @media (max-width: 360px) {
-            .welcome-title h1 { font-size: 36px; }
-            .welcome-eyebrow { top: 78px; }
-            .welcome-eyebrow .eyebrow { font-size: 9px; letter-spacing: 3px; }
-            .nav-logo { font-size: 20px; letter-spacing: 2px; }
-            .theme-toggle, .nav-burger { width: 34px; height: 34px; }
-            .nav-right { gap: 10px; }
-            .premium-card h3 { font-size: 20px; }
-            .partner { font-size: 15px; }
+            .welcome-title h1 {
+                font-size: 36px;
+            }
+            .welcome-eyebrow {
+                top: 78px;
+            }
+            .welcome-eyebrow .eyebrow {
+                font-size: 9px;
+                letter-spacing: 3px;
+            }
+            .nav-logo {
+                font-size: 20px;
+                letter-spacing: 2px;
+            }
+            .theme-toggle,
+            .nav-burger {
+                width: 34px;
+                height: 34px;
+            }
+            .nav-right {
+                gap: 10px;
+            }
+            .premium-card h3 {
+                font-size: 20px;
+            }
+            .partner {
+                font-size: 15px;
+            }
             .mobile-drawer {
                 width: min(92vw, 360px);
                 padding: 90px 26px 26px;
             }
-            .mobile-drawer a { font-size: 24px; padding: 12px 0; }
+            .mobile-drawer a {
+                font-size: 24px;
+                padding: 12px 0;
+            }
         }
-
         /* ─────────────────────────────────────────────────────────
            REDUCED MOTION
            ───────────────────────────────────────────────────────── */
-
+        
         @media (prefers-reduced-motion: reduce) {
             *,
             *::before,
@@ -2866,12 +3057,12 @@
                             Envoyer la demande<span class="arrow" aria-hidden="true"></span>
                         </button>
                             <a href="https://wa.me/221785446363" class="btn btn-whatsapp" target="_blank" rel="noopener" aria-label="Contacter Lartiska via WhatsApp">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.876 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 0 0-3.48-8.413"/>
                             </svg>
-                            <strong>WhatsApp direct</strong>
-                            <span class="arrow" aria-hidden="true"></span>
-                        </a>
+                                <strong>WhatsApp direct</strong>
+                                <span class="arrow" aria-hidden="true"></span>
+                            </a>
                         </div>
                         <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
                     </form>
@@ -3017,8 +3208,8 @@
 
     <script>
         /* ─────────────────────────────────────────────────────────
-                                                                                                                                                                                               BOOT
-                                                                                                                                                                                               ───────────────────────────────────────────────────────── */
+                                                                                                                                                                                                       BOOT
+                                                                                                                                                                                                       ───────────────────────────────────────────────────────── */
         document.getElementById('year').textContent = new Date().getFullYear();
         gsap.registerPlugin(ScrollTrigger);
 
@@ -3111,7 +3302,9 @@
             const isMobile = window.matchMedia('(max-width: 900px)').matches;
 
             // Lock GSAP onto the existing CSS centering so it doesn't get clobbered
-            gsap.set('#welcomeVidWrap', { yPercent: isMobile ? 0 : -50 });
+            gsap.set('#welcomeVidWrap', {
+                yPercent: isMobile ? 0 : -50
+            });
 
             const tl = gsap.timeline({
                 scrollTrigger: {
@@ -3122,19 +3315,29 @@
                 }
             });
 
-            tl.to('#welcomeBg', { y: 80, scale: 1.06, ease: 'none' }, 0);
-            tl.to('#welcomeEyebrow', { y: -60, opacity: 0, ease: 'power1.in' }, 0);
+            tl.to('#welcomeBg', {
+                y: 80,
+                scale: 1.06,
+                ease: 'none'
+            }, 0);
+            tl.to('#welcomeEyebrow', {
+                y: -60,
+                opacity: 0,
+                ease: 'power1.in'
+            }, 0);
 
             // Logo video — scale + opacity in both modes;
             // horizontal drift only on desktop where layout supports it
-            tl.fromTo('#welcomeVidWrap',
-                { scale: 0.95, x: 0, opacity: 1 },
-                {
-                    scale: isMobile ? 1.08 : 1.22,
-                    x: isMobile ? 0 : 80,
-                    opacity: isMobile ? 0.35 : 0.12,
-                    ease: 'none'
-                }, 0);
+            tl.fromTo('#welcomeVidWrap', {
+                scale: 0.95,
+                x: 0,
+                opacity: 1
+            }, {
+                scale: isMobile ? 1.08 : 1.22,
+                x: isMobile ? 0 : 80,
+                opacity: isMobile ? 0.35 : 0.12,
+                ease: 'none'
+            }, 0);
 
             tl.to('#welcomeTitle', {
                 y: -220,
@@ -3143,8 +3346,17 @@
                 ease: 'power1.in'
             }, 0);
 
-            tl.to('#welcomeSub', { y: 60, opacity: 0, ease: 'power1.in' }, 0);
-            tl.to('#scrollHint', { opacity: 0, y: 30, duration: 0.25, ease: 'power1.in' }, 0);
+            tl.to('#welcomeSub', {
+                y: 60,
+                opacity: 0,
+                ease: 'power1.in'
+            }, 0);
+            tl.to('#scrollHint', {
+                opacity: 0,
+                y: 30,
+                duration: 0.25,
+                ease: 'power1.in'
+            }, 0);
         })();
 
         /* ─────────────────────────────────────────────────────────
@@ -3223,7 +3435,9 @@
                 v.setAttribute('playsinline', '');
                 v.setAttribute('webkit-playsinline', '');
                 // Boot once data lands
-                v.addEventListener('loadeddata', () => v.play().catch(() => {}), { once: true });
+                v.addEventListener('loadeddata', () => v.play().catch(() => {}), {
+                    once: true
+                });
                 // Recover from accidental pauses (background tab, system interruption)
                 v.addEventListener('pause', () => {
                     const r = v.getBoundingClientRect();
@@ -3243,7 +3457,9 @@
                         v.pause();
                     }
                 });
-            }, { threshold: 0.05 });
+            }, {
+                threshold: 0.05
+            });
             vids.forEach(v => io.observe(v));
 
             // Safety net: retry paused videos on EVERY user gesture
@@ -3258,7 +3474,9 @@
                 });
             };
             ['touchstart', 'touchend', 'click', 'scroll', 'pointerdown'].forEach(evt => {
-                window.addEventListener(evt, playPausedVisible, { passive: true });
+                window.addEventListener(evt, playPausedVisible, {
+                    passive: true
+                });
             });
 
             // When tab regains focus, replay (Android Chrome backgrounds tabs aggressively)

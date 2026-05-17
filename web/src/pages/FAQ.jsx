@@ -79,7 +79,7 @@ export default function FAQ() {
       <header className="max-w-3xl mb-14">
         <p className="eyebrow mb-4">— FAQ</p>
         <h1 className="font-serif text-5xl md:text-6xl font-light leading-tight">
-          Questions <em className="text-gold not-italic">fréquentes</em>.
+          Questions <em className="gold-em">fréquentes</em>.
         </h1>
         <p className="mt-6 text-fg/85 leading-relaxed">
           On répond aux questions qu'on nous pose le plus souvent. Si la vôtre n'y est pas, écrivez-nous

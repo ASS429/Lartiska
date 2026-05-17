@@ -69,7 +69,7 @@ export default function Home() {
           <div className="max-w-3xl border-l-2 border-gold/40 pl-8 md:pl-12 py-2">
             <p className="eyebrow mb-5">— Notre essence</p>
             <h2 className="font-serif text-4xl md:text-6xl font-light leading-[1.05]">
-              Une explosion de <em className="text-gold not-italic font-normal">couleur</em><br />
+              Une explosion de <em className="gold-em">couleur</em><br />
               dans chaque pièce.
             </h2>
             <p className="mt-7 max-w-xl text-fg/80 leading-[1.75]">
@@ -79,15 +79,31 @@ export default function Home() {
         </section>
       </SectionWipe>
 
-      {/* ─── ŒUVRE #001 — art-frame avec vidéo verticale ─── */}
+      {/* ─── ŒUVRES — triptyque vidéo (V3 / V4 / V1) ─── */}
       <section className="container-art py-12 md:py-20">
-        <figure className="art-frame max-w-md mx-auto aspect-[3/4]">
-          <video src="/V3.mp4" autoPlay muted loop playsInline preload="metadata" />
-          <figcaption>
-            <span className="art-caption-line" />
-            <span className="art-caption-text">œuvre #001</span>
-          </figcaption>
-        </figure>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+          <figure className="art-frame aspect-[3/4]">
+            <video src="/V3.mp4" autoPlay muted loop playsInline preload="metadata" />
+            <figcaption>
+              <span className="art-caption-line" />
+              <span className="art-caption-text">œuvre #001</span>
+            </figcaption>
+          </figure>
+          <figure className="art-frame aspect-[3/4]">
+            <video src="/V4.mp4" autoPlay muted loop playsInline preload="metadata" />
+            <figcaption>
+              <span className="art-caption-line" />
+              <span className="art-caption-text">œuvre #002</span>
+            </figcaption>
+          </figure>
+          <figure className="art-frame aspect-[3/4]">
+            <video src="/V1.mp4" autoPlay muted loop playsInline preload="metadata" />
+            <figcaption>
+              <span className="art-caption-line" />
+              <span className="art-caption-text">œuvre #003</span>
+            </figcaption>
+          </figure>
+        </div>
       </section>
 
       {/* ─── SERVICES — wipe V5 + eyebrow ✦ + image art-frame "émeraude · or · pièce signature" ─── */}
@@ -99,7 +115,7 @@ export default function Home() {
                 <span className="text-gold">✦</span> Nos services <span className="text-gold">✦</span>
               </p>
               <h2 className="font-serif text-4xl md:text-6xl font-light leading-tight">
-                L'<em className="text-gold not-italic">excellence</em> dans chaque finition.
+                L'<em className="gold-em">excellence</em> dans chaque finition.
               </h2>
               <p className="mt-6 text-fg/75 leading-relaxed">
                 Une approche artistique appliquée à votre intérieur — du concept à la pose. Chaque chantier est traité comme une pièce unique.
@@ -145,7 +161,7 @@ export default function Home() {
             <header className="max-w-2xl mb-12">
               <p className="eyebrow mb-4">— Portfolio</p>
               <h2 className="font-serif text-4xl md:text-6xl font-light leading-[1.04]">
-                Nos réalisations <em className="text-gold not-italic">à travers</em><br />
+                Nos réalisations <em className="gold-em">à travers</em><br />
                 l'Afrique de l'Ouest.
               </h2>
               <p className="mt-6 text-fg/75 leading-relaxed max-w-xl">
@@ -271,7 +287,7 @@ export default function Home() {
             </p>
             <h2 className="font-serif text-4xl md:text-6xl font-light leading-tight max-w-3xl mx-auto">
               Discutons de votre projet.<br />
-              <em className="text-gold not-italic">Devis offert sous 48h.</em>
+              <em className="gold-em">Devis offert sous 48h.</em>
             </h2>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
               <Link to="/devis" className="btn-gold">Lancer mon devis</Link>

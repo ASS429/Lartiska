@@ -14,7 +14,7 @@ export function LegalLayout() {
       <header className="max-w-3xl mb-10">
         <p className="eyebrow mb-3">— Informations légales</p>
         <h1 className="font-serif text-4xl md:text-5xl font-light leading-tight">
-          Mentions, <em className="text-gold not-italic">confidentialité</em>, conditions.
+          Mentions, <em className="gold-em">confidentialité</em>, conditions.
         </h1>
       </header>
 

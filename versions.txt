@@ -102,10 +102,17 @@ Create layered scenes with foreground, midground, and backgroud for depth, Apply
 
 https://www.figma.com/make/ZOs2BBZ4UfEFSh9SCWj6FJ/Flyer-page-mockups?t=esWIVuiNeBqCS8NU-1
 
-
-
-
-
+il faut nécessairement que dans le dashboard admin, que l'admin puisse aussi contrôler les informations qui sont affichées.
+ Ajouter, modifier, retirer une carte d'une oeuvre réalisées (portfolio) avec ses photos et Vidéos, des derniers travaux; de même pour un nouveau service
+ Ajouter, modifier, retirer les avis clients
+Pour le protfolio, démarré par y mettre de fausses données avec les images dans le dossier villes
+Pour la page contact, il y a trois numéros de téléphones chacuns avec un whatsapp, les identifiants: facebook, instagram, tik tok, snapchat et gmail. en plus va se rajouter le code qr renvoyant à whatsapp
+Côté design, dans la section "nos services" ajouter: "émeraude · or · pièce signature" comme dans index.html;
+ aussi la section portfolio doit ressembler à celle dans index.html 
+ les écritures doivent rester lisibles peu importe le mode clair comme sombre 
+ Vidéos défilant de gauche à droite au passage entre les nouvelles sections comme dans index.html ou lorsqu'on ouvre une section
+ il y a aussi le background avec des goutes de peinture navigant partout sur la plateforme
+Ta section welcome est parfaite, pour le reste inspire toi de index.html et améliore
 
 
 

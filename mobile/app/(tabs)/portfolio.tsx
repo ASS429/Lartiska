@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FlatList, Image, Pressable, ScrollView, Text, View } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import { router } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
 import { fetchProjects, fetchCategories, fetchProjectCities } from '@/src/api/endpoints';
 import { spacing, fontSize, radius, type ThemeColors } from '@/constants/theme';
 import { useStyles } from '@/src/hooks/useStyles';
@@ -30,9 +31,19 @@ export default function PortfolioScreen() {
     <View style={styles.screen}>
       <View style={styles.header}>
         <Text style={styles.eyebrow}>— Portfolio</Text>
-        <Text style={styles.title}>Nos réalisations</Text>
+        <Text style={styles.title}>
+          Œuvres <Text style={styles.italicGold}>récentes.</Text>
+        </Text>
+        <Text style={styles.lead}>
+          Du Sénégal à la Mauritanie — chaque chantier est l'occasion de redéfinir un espace.
+        </Text>
 
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filters}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingRight: spacing.lg }}
+          style={[styles.filters, { marginHorizontal: -spacing.lg, paddingLeft: spacing.lg }]}
+        >
           <Pill label="Toutes" active={category === 'all'} onPress={() => setCategory('all')} c={c} />
           {(categories ?? []).map((cat) => (
             <Pill key={cat.id} label={cat.name} active={category === cat.slug} onPress={() => setCategory(cat.slug)} c={c} />
@@ -40,7 +51,12 @@ export default function PortfolioScreen() {
         </ScrollView>
 
         {(cities?.length ?? 0) > 0 && (
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={[styles.filters, { marginTop: 6 }]}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingRight: spacing.lg }}
+            style={[styles.filters, { marginTop: 8, marginHorizontal: -spacing.lg, paddingLeft: spacing.lg }]}
+          >
             <Pill label="Toutes villes" active={city === 'all'} onPress={() => setCity('all')} c={c} />
             {(cities ?? []).map((cy) => (
               <Pill key={cy} label={cy} active={city === cy} onPress={() => setCity(cy)} c={c} />
@@ -63,6 +79,11 @@ export default function PortfolioScreen() {
         renderItem={({ item }) => (
           <Pressable style={styles.card} onPress={() => router.push(`/project/${item.slug}`)}>
             {item.cover_image && <Image source={{ uri: item.cover_image }} style={styles.cardImg} />}
+            <LinearGradient
+              colors={['transparent', 'rgba(7,6,10,0.92)']}
+              locations={[0.45, 1]}
+              style={styles.cardGradient}
+            />
             {item.category?.slug && (
               <View style={{ position: 'absolute', top: 10, left: 10, zIndex: 3 }}>
                 <CategoryBadge slug={item.category.slug} label={item.category.name} />
@@ -89,8 +110,8 @@ function Pill({ label, active, onPress, c }: { label: string; active: boolean; o
       ]}
     >
       <Text style={[
-        { color: c.fgMuted, fontSize: 12, letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: '500' },
-        active && { color: c.goldText, fontWeight: '600' },
+        { color: c.fgMuted, fontSize: 11, letterSpacing: 1.8, textTransform: 'uppercase', fontWeight: '600' },
+        active && { color: c.goldText, fontWeight: '700' },
       ]}>{label}</Text>
     </Pressable>
   );
@@ -98,14 +119,75 @@ function Pill({ label, active, onPress, c }: { label: string; active: boolean; o
 
 const makeStyles = (c: ThemeColors) => ({
   screen: { flex: 1, backgroundColor: c.bg },
-  header: { paddingTop: 60, paddingHorizontal: spacing.lg, paddingBottom: spacing.md },
-  eyebrow: { color: c.goldText, fontSize: fontSize.caption, letterSpacing: 3, textTransform: 'uppercase' as const, fontWeight: '600' as const },
-  title: { color: c.fg, fontFamily: 'serif', fontSize: fontSize.hero, fontWeight: '300' as const, marginTop: spacing.xs, lineHeight: 46 },
+  header: {
+    paddingTop: 60,
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.md,
+  },
+  eyebrow: {
+    color: c.gold,
+    fontSize: fontSize.caption,
+    letterSpacing: 3,
+    textTransform: 'uppercase' as const,
+    fontWeight: '600' as const,
+    marginBottom: spacing.xs,
+  },
+  title: {
+    color: c.fg,
+    fontFamily: 'serif',
+    fontSize: 40,
+    fontWeight: '300' as const,
+    marginTop: spacing.xs,
+    lineHeight: 46,
+    letterSpacing: -0.5,
+  },
+  italicGold: { color: c.goldText, fontStyle: 'italic' as const, fontWeight: '300' as const },
+  lead: {
+    color: c.fgMuted,
+    fontSize: fontSize.small,
+    lineHeight: 22,
+    marginTop: spacing.sm,
+    maxWidth: 340,
+  },
   filters: { marginTop: spacing.md, flexDirection: 'row' as const },
   grid: { padding: spacing.md, gap: spacing.sm, paddingBottom: spacing.xxl },
-  card: { flex: 1, aspectRatio: 4 / 5, borderRadius: radius.md, overflow: 'hidden' as const, backgroundColor: c.inkSoft, borderWidth: 1, borderColor: c.line },
+  card: {
+    flex: 1,
+    aspectRatio: 4 / 5,
+    borderRadius: radius.md,
+    overflow: 'hidden' as const,
+    backgroundColor: c.inkSoft,
+    borderWidth: 1,
+    borderColor: c.line,
+  },
   cardImg: { width: '100%' as const, height: '100%' as const, position: 'absolute' as const },
-  cardOverlay: { position: 'absolute' as const, bottom: 0, left: 0, right: 0, padding: spacing.sm, backgroundColor: 'rgba(7,6,10,0.88)' },
-  cardCity: { color: '#E8C547', fontSize: 10, letterSpacing: 2.5, textTransform: 'uppercase' as const, fontWeight: '600' as const },
-  cardTitle: { color: '#F4ECD8', fontFamily: 'serif', fontSize: fontSize.body, marginTop: 2, lineHeight: 20 },
+  cardGradient: {
+    position: 'absolute' as const,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: '65%' as const,
+  },
+  cardOverlay: {
+    position: 'absolute' as const,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: spacing.sm,
+  },
+  cardCity: {
+    color: '#E8C547',
+    fontSize: 10,
+    letterSpacing: 2.5,
+    textTransform: 'uppercase' as const,
+    fontWeight: '600' as const,
+  },
+  cardTitle: {
+    color: '#F4ECD8',
+    fontFamily: 'serif',
+    fontSize: 15,
+    marginTop: 2,
+    lineHeight: 19,
+    fontWeight: '400' as const,
+  },
 });

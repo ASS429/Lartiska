@@ -79,7 +79,7 @@ export default function Portfolio() {
       <header className="max-w-3xl mb-10 md:mb-14">
         <p className="eyebrow mb-4">— Portfolio</p>
         <h1 className="font-serif text-5xl md:text-7xl font-light leading-[1.04]">
-          Nos <em className="text-gold not-italic">réalisations</em><br />
+          Nos <em className="gold-em">réalisations</em><br />
           à travers l'Afrique de l'Ouest.
         </h1>
         <p className="mt-6 text-fg/75 leading-relaxed max-w-xl">
