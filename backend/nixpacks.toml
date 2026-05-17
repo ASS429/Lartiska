@@ -10,11 +10,11 @@ nixLibs = ["openssl"]
 cmds = ["composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist"]
 
 [phases.build]
+# Pas de config:cache ici — les env vars Railway ne sont pas encore injectées
+# au moment du build, le cache contiendrait des valeurs vides.
+# Le cache est généré au runtime dans railway-start.sh après injection des env.
 cmds = [
-  "php artisan config:cache",
-  "php artisan route:cache",
-  "php artisan view:cache",
-  "php artisan event:cache"
+  "echo 'Build phase: skipping artisan cache (done at runtime)'"
 ]
 
 [start]
