@@ -14,10 +14,15 @@ class ProjectSeeder extends Seeder
 {
     public function run(): void
     {
-        $villesPath = realpath(base_path('../villes'));
+        // Cherche villes/ d'abord dans backend/villes/ (prod Railway),
+        // puis dans ../villes (ancien emplacement local) en fallback.
+        $villesPath = realpath(base_path('villes'));
+        if (!$villesPath || !is_dir($villesPath)) {
+            $villesPath = realpath(base_path('../villes'));
+        }
 
         if (!$villesPath || !is_dir($villesPath)) {
-            $this->command?->warn("Dossier villes/ introuvable ($villesPath) — seeder ignoré.");
+            $this->command?->warn("Dossier villes/ introuvable — seeder ignoré.");
             return;
         }
 
