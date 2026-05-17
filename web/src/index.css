@@ -147,6 +147,46 @@
   }
   html:not(.dark) .surface-card { background-color: rgba(255, 252, 241, 0.82); border-color: rgba(122, 84, 8, 0.20); }
 
+  /* ─── Service card — variation surface-card avec accent catégorie ─── */
+  .service-card {
+    @apply backdrop-blur-md bg-ink/60 border border-line rounded-3xl relative overflow-hidden;
+    transition: transform 0.7s var(--ease-cinema), box-shadow 0.7s var(--ease-cinema), border-color 0.5s ease;
+  }
+  html:not(.dark) .service-card {
+    background-color: rgba(255, 252, 241, 0.86);
+    border-color: rgba(122, 84, 8, 0.22);
+  }
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212, 175, 55, 0.55);
+    box-shadow: 0 20px 50px -20px rgba(7, 6, 10, 0.6), 0 0 0 1px rgba(212, 175, 55, 0.18);
+  }
+  html:not(.dark) .service-card:hover {
+    box-shadow: 0 20px 50px -22px rgba(122, 84, 8, 0.25), 0 0 0 1px rgba(212, 175, 55, 0.35);
+  }
+  /* Accent vertical à gauche (palette mosaïque par catégorie) */
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: currentColor;
+    opacity: 0.4;
+    transition: opacity 0.5s ease, width 0.5s var(--ease-cinema);
+  }
+  .service-card:hover::before {
+    opacity: 0.9;
+    width: 5px;
+  }
+  /* Couleurs accent par slug de catégorie */
+  .service-card.cat-peinture-fresques,
+  .service-card.cat-peinture { color: var(--m-magenta); }
+  .service-card.cat-plafonnage { color: var(--m-soleil); }
+  .service-card.cat-carrelage,
+  .service-card.cat-mosaique { color: var(--m-turquoise); }
+  .service-card.cat-decoration { color: var(--m-emeraude); }
+  .service-card.cat-sur-mesure { color: var(--m-brique); }
+
   .lartiska-input {
     @apply w-full px-4 py-3 rounded-xl bg-ink/50 border border-line text-fg placeholder:text-fg/35 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300;
   }
@@ -281,17 +321,24 @@
   .project-card:hover .project-meta { transform: translateY(-6px); }
 
   .project-meta .city {
-    font-size: 10px;
-    letter-spacing: 0.28em;
-    color: #D4AF37;
+    font-size: 12px;
+    letter-spacing: 0.24em;
+    color: #E8C547;
     text-transform: uppercase;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+    font-weight: 700;
+    text-shadow: 0 1px 12px rgba(7, 6, 10, 0.85);
   }
   .project-meta h3 {
-    font-size: 24px;
-    line-height: 1.2;
-    color: #F4ECD8;
-    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.18;
+    color: #F8EFD9;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    text-shadow: 0 2px 14px rgba(7, 6, 10, 0.85);
+  }
+  @media (min-width: 768px) {
+    .project-meta h3 { font-size: 25px; }
   }
 
   /* ─── Page enter wipe — vidéo intro qui traverse à chaque changement de route ─── */
@@ -419,26 +466,28 @@
   .cat-tag {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 3px 8px;
+    gap: 6px;
+    padding: 5px 11px;
     border-radius: 999px;
     font-family: 'DM Sans', sans-serif;
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     font-weight: 700;
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(7, 6, 10, 0.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     color: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
   }
   .cat-tag::before {
     content: '';
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: currentColor;
-    box-shadow: 0 0 6px currentColor;
+    box-shadow: 0 0 8px currentColor;
   }
   .cat-tag.cat-peinture-fresques,
   .cat-tag.cat-peinture { color: var(--m-magenta); }
