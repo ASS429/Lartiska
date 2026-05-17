@@ -23,6 +23,14 @@ fi
 echo "→ Migrations BDD"
 php artisan migrate --force
 
+# Seed conditionnel — défini RUN_SEED=true dans les env vars Railway pour peupler
+# la base (admin Tounkara, catégories, services, projets fake, témoignages).
+# À retirer / mettre à "false" après le premier seed pour éviter les doublons.
+if [ "$RUN_SEED" = "true" ]; then
+  echo "→ Seeding BDD (RUN_SEED=true)"
+  php artisan db:seed --force
+fi
+
 echo "→ Re-cache avec les vraies variables d'env Railway"
 php artisan config:cache
 php artisan route:cache
