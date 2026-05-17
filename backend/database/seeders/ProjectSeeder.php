@@ -122,9 +122,18 @@ class ProjectSeeder extends Seeder
 
             if ($images->isEmpty()) continue;
 
+            $slug = Str::slug($data['title']);
+
+            // Idempotent : si le projet existe déjà (slug unique), on saute pour éviter
+            // de re-uploader les images en R2 et de doubler la BDD.
+            if (Project::where('slug', $slug)->exists()) {
+                $this->command?->info("↪ Projet '{$data['title']}' déjà présent — skipped.");
+                continue;
+            }
+
             $project = Project::create([
                 'title' => $data['title'],
-                'slug' => Str::slug($data['title']),
+                'slug' => $slug,
                 'description' => $data['description'],
                 'category_id' => $category->id,
                 'city' => $cityName,
