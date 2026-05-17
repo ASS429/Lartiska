@@ -101,7 +101,10 @@ class ProjectSeeder extends Seeder
             ],
         ];
 
-        $disk = Storage::disk('public');
+        // Utilise le disque par défaut (r2 en prod, public en local) — pas
+        // hardcodé sur 'public' sinon Railway uploadait en éphémère local
+        // mais le MediaUrl helper rewriait l'URL vers R2 → 404 sur tout.
+        $disk = Storage::disk(config('filesystems.default'));
 
         foreach ($cities as $cityName => $data) {
             $cityFolder = $villesPath . DIRECTORY_SEPARATOR . $cityName;
@@ -124,26 +127,30 @@ class ProjectSeeder extends Seeder
 
             $slug = Str::slug($data['title']);
 
-            // Idempotent : si le projet existe déjà (slug unique), on saute pour éviter
-            // de re-uploader les images en R2 et de doubler la BDD.
-            if (Project::where('slug', $slug)->exists()) {
-                $this->command?->info("↪ Projet '{$data['title']}' déjà présent — skipped.");
-                continue;
+            // Récupère ou crée le Project (idempotent)
+            $existing = Project::where('slug', $slug)->first();
+            if ($existing) {
+                // Projet déjà créé — on supprime ses ProjectImage records pour les
+                // re-générer proprement (utile si l'upload initial s'était fait
+                // sur le mauvais disque, ex : 'public' local au lieu de 'r2').
+                $existing->images()->delete();
+                $project = $existing;
+                $this->command?->info("↺ Projet '{$data['title']}' existant — réupload des images.");
+            } else {
+                $project = Project::create([
+                    'title' => $data['title'],
+                    'slug' => $slug,
+                    'description' => $data['description'],
+                    'category_id' => $category->id,
+                    'city' => $cityName,
+                    'materials' => $data['materials'],
+                    'duration' => $data['duration'],
+                    'completed_at' => $data['completed_at'],
+                    'status' => 'published',
+                    'featured' => $data['featured'],
+                    'order' => 0,
+                ]);
             }
-
-            $project = Project::create([
-                'title' => $data['title'],
-                'slug' => $slug,
-                'description' => $data['description'],
-                'category_id' => $category->id,
-                'city' => $cityName,
-                'materials' => $data['materials'],
-                'duration' => $data['duration'],
-                'completed_at' => $data['completed_at'],
-                'status' => 'published',
-                'featured' => $data['featured'],
-                'order' => 0,
-            ]);
 
             $coverPath = null;
 
