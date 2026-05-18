@@ -172,7 +172,7 @@ export default function Home() {
             {projects.length === 0 ? (
               <p className="text-fg/55">Bientôt — les premières réalisations seront publiées.</p>
             ) : (
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
                 {projects.slice(0, 4).map((p, idx) => (
                   <Link
                     key={p.id}
@@ -256,7 +256,7 @@ export default function Home() {
             </Link>
           </header>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
             {projects.slice(4, 8).map((p) => (
               <Link key={p.id} to={`/portfolio/${p.slug}`} className="project-card">
                 {p.cover_image && (

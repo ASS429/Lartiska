@@ -291,31 +291,47 @@
     border-color: rgba(122, 84, 8, 0.30);
   }
 
-  /* ─── HERO video — comportement adapté light / dark ─── */
+  /* ─── HERO video — TOUJOURS sombre, peu importe le thème ─── */
+  /* La vidéo (logo 3D coloré) est intrinsèquement vibrante : impossible
+     d'avoir du texte noir lisible dessus en light mode. On verrouille donc
+     le hero en couleurs "cinéma" (cream + gold sur fond ink) dans les
+     deux thèmes, comme le footer. */
   .hero-video__media {
     opacity: 0.55;
     mix-blend-mode: screen;
     filter: brightness(1) saturate(1.1);
   }
   html:not(.dark) .hero-video__media {
-    /* En light mode, plus de "screen" qui blanchit tout :
-       on garde la vidéo en mode normal, plus opaque, plus contrastée,
-       et on assombrit légèrement pour que les écritures restent lisibles. */
-    opacity: 0.78;
-    mix-blend-mode: multiply;
-    filter: brightness(0.92) saturate(1.18) contrast(1.05);
+    opacity: 0.55;
+    mix-blend-mode: normal;
+    filter: brightness(0.55) saturate(0.95) contrast(1.05);
   }
   .hero-video__overlay {
     background: linear-gradient(to bottom,
-      rgba(7, 6, 10, 0.35) 0%,
-      rgba(7, 6, 10, 0.55) 60%,
+      rgba(7, 6, 10, 0.45) 0%,
+      rgba(7, 6, 10, 0.65) 60%,
       rgb(var(--bg-rgb)) 100%);
   }
   html:not(.dark) .hero-video__overlay {
     background: linear-gradient(to bottom,
-      rgba(70, 50, 20, 0.22) 0%,
-      rgba(70, 50, 20, 0.45) 55%,
+      rgba(7, 6, 10, 0.55) 0%,
+      rgba(7, 6, 10, 0.75) 60%,
       rgb(var(--bg-rgb)) 100%);
+  }
+  /* Hero section : fond ink permanent pour ancrer la lisibilité */
+  .hero-video { background: #07060A; }
+  /* Texte du hero : cream + gold en permanence */
+  html:not(.dark) .hero-video :is(h1, h2, p) { color: #F4ECD8 !important; }
+  html:not(.dark) .hero-video .eyebrow,
+  html:not(.dark) .hero-video .eyebrow-deco,
+  html:not(.dark) .hero-video .gold-em { color: #D4AF37 !important; }
+  html:not(.dark) .hero-video .btn-ghost {
+    color: #F4ECD8 !important;
+    border-color: rgba(244, 236, 216, 0.45) !important;
+  }
+  html:not(.dark) .hero-video .btn-ghost:hover {
+    color: #D4AF37 !important;
+    border-color: #D4AF37 !important;
   }
 
   /* ─── Caption "art-frame" comme dans index.html ─── */
