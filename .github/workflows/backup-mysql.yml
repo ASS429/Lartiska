@@ -2,6 +2,22 @@ name: Backup MySQL → R2
 
 # Sauvegarde la BDD Railway chaque dimanche à 03h UTC (= 03h Africa/Dakar)
 # et l'upload sur Cloudflare R2 sous backups/YYYY-MM-DD.sql.gz.
+#
+# Secrets à configurer dans GitHub → Settings → Secrets and variables → Actions :
+#   - MYSQL_HOST            (Railway → MySQL → MYSQLHOST côté public)
+#   - MYSQL_PORT            (généralement 3306 ou un port custom Railway)
+#   - MYSQL_DATABASE        (railway)
+#   - MYSQL_USER            (root)
+#   - MYSQL_PASSWORD        (MYSQL_ROOT_PASSWORD)
+#   - R2_ACCESS_KEY_ID
+#   - R2_SECRET_ACCESS_KEY
+#   - R2_BUCKET             (lartiska-media)
+#   - R2_ENDPOINT           (https://<account_id>.r2.cloudflarestorage.com)
+#
+# Pour récupérer un backup :
+#   aws s3 cp s3://lartiska-media/backups/2026-05-19.sql.gz . --endpoint-url $R2_ENDPOINT
+#   gunzip 2026-05-19.sql.gz
+#   mysql -h ... < 2026-05-19.sql
 
 on:
   schedule:
@@ -17,7 +33,11 @@ jobs:
       - name: Install MySQL client + AWS CLI
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y mysql-client awscli
+          sudo apt-get install -y mysql-client unzip
+          curl -sSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
+          unzip -q /tmp/awscliv2.zip -d /tmp
+          sudo /tmp/aws/install --update
+          aws --version
 
       - name: Dump database
         run: |
