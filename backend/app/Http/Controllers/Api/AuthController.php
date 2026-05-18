@@ -10,6 +10,8 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -74,5 +76,57 @@ class AuthController extends Controller
     public function me(Request $request): JsonResponse
     {
         return response()->json(['data' => $request->user()]);
+    }
+
+    /**
+     * Envoie un email de réinitialisation de mot de passe.
+     * On retourne TOUJOURS un succès (200) même si l'email n'existe pas,
+     * pour éviter l'énumération des comptes.
+     */
+    public function forgotPassword(Request $request): JsonResponse
+    {
+        $request->validate([
+            'email' => ['required', 'email'],
+        ]);
+
+        // Password::sendResetLink déclenche notre notification custom
+        // (configurée dans AppServiceProvider) qui pointe vers le frontend React.
+        Password::sendResetLink(['email' => $request->string('email')->toString()]);
+
+        return response()->json([
+            'message' => 'Si cette adresse correspond à un compte, un lien vient d\'être envoyé.',
+        ]);
+    }
+
+    /**
+     * Définit un nouveau mot de passe à partir du token reçu par email.
+     */
+    public function resetPassword(Request $request): JsonResponse
+    {
+        $request->validate([
+            'token' => ['required', 'string'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password),
+                    'remember_token' => Str::random(60),
+                ])->save();
+            },
+        );
+
+        if ($status !== Password::PASSWORD_RESET) {
+            throw ValidationException::withMessages([
+                'email' => __($status),
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Mot de passe réinitialisé. Vous pouvez maintenant vous connecter.',
+        ]);
     }
 }

@@ -25,7 +25,19 @@ function buildClientWhatsAppText(quote) {
   const total = quote?.total_amount
     ? new Intl.NumberFormat('fr-FR').format(quote.total_amount) + ' FCFA'
     : null;
-  const accountLink = `${window.location.origin}/account/quotes/${quote?.id || ''}`;
+
+  // Le lien envoyé au client redirige vers /login avec contexte pré-rempli :
+  // - email : reconnu par le backend pour login direct, ou pour rattacher
+  //   automatiquement le devis si le client crée un compte
+  // - ref : affiché en banner ("Pour voir votre devis LRTSK-2026-0002")
+  // - redirect : où aller après login/register/reset → page du devis
+  const accountPath = `/account/quotes/${quote?.id || ''}`;
+  const loginParams = new URLSearchParams({
+    ...(quote?.client_email && { email: quote.client_email }),
+    ...(ref && { ref }),
+    redirect: accountPath,
+  });
+  const accountLink = `${window.location.origin}/login?${loginParams.toString()}`;
 
   switch (quote?.status) {
     case 'pending':

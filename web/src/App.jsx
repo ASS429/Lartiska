@@ -14,6 +14,8 @@ import Contact from '@/pages/Contact';
 import About from '@/pages/About';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
+import ForgotPassword from '@/pages/ForgotPassword';
+import ResetPassword from '@/pages/ResetPassword';
 import FAQ from '@/pages/FAQ';
 import NotFound from '@/pages/NotFound';
 
@@ -55,6 +57,8 @@ export default function App() {
         <Route path="about" element={<About />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="reset-password" element={<ResetPassword />} />
         <Route path="faq" element={<FAQ />} />
 
         {/* Pages légales (sous /legal-layout, mais URL directes) */}
