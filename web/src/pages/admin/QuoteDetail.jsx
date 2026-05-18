@@ -14,6 +14,91 @@ const STATUS_OPTIONS = [
   { value: 'expired', label: 'Expiré' },
 ];
 
+/**
+ * Template WhatsApp pré-rempli envoyé au client depuis l'admin.
+ * Adapté au statut courant du devis pour que Tounkara ait juste
+ * à appuyer Envoyer.
+ */
+function buildClientWhatsAppText(quote) {
+  const firstname = (quote?.client_name || '').split(' ')[0] || 'cher client';
+  const ref = quote?.reference || '';
+  const total = quote?.total_amount
+    ? new Intl.NumberFormat('fr-FR').format(quote.total_amount) + ' FCFA'
+    : null;
+  const accountLink = `${window.location.origin}/account/quotes/${quote?.id || ''}`;
+
+  switch (quote?.status) {
+    case 'pending':
+    case 'processing':
+      return [
+        `Bonjour ${firstname},`,
+        '',
+        `J'ai bien reçu votre demande de devis Lartiska (référence ${ref}).`,
+        'Je l\'étudie et je reviens vers vous sous 48h ouvrées avec un devis détaillé.',
+        '',
+        'À bientôt,',
+        'Tounkara — Lartiska',
+      ].join('\n');
+
+    case 'sent':
+      return [
+        `Bonjour ${firstname},`,
+        '',
+        '🎨 Votre devis Lartiska est prêt.',
+        `✦ Référence : ${ref}`,
+        ...(total ? [`✦ Montant : ${total}`] : []),
+        '',
+        'Le PDF officiel vous a été envoyé par email.',
+        `Vous pouvez aussi le consulter et le valider en ligne : ${accountLink}`,
+        '',
+        'N\'hésitez pas si vous avez des questions ou souhaitez des ajustements.',
+        '',
+        'Tounkara — Lartiska',
+      ].join('\n');
+
+    case 'accepted':
+      return [
+        `Bonjour ${firstname},`,
+        '',
+        `✨ Merci pour la validation du devis ${ref}.`,
+        'Je planifie maintenant le démarrage du chantier.',
+        '',
+        'Je reviens vers vous sous 48h pour :',
+        '— caler une date de démarrage',
+        '— organiser l\'acompte (40 %)',
+        '— préciser les matériaux & finitions',
+        '',
+        'À très vite,',
+        'Tounkara — Lartiska',
+      ].join('\n');
+
+    case 'rejected':
+      return [
+        `Bonjour ${firstname},`,
+        '',
+        `Bien noté pour votre retour sur le devis ${ref}.`,
+        'Je reste à votre disposition si vos besoins évoluent, ou pour échanger sur d\'autres projets.',
+        '',
+        'À bientôt,',
+        'Tounkara — Lartiska',
+      ].join('\n');
+
+    case 'expired':
+      return [
+        `Bonjour ${firstname},`,
+        '',
+        `Le devis ${ref} a dépassé sa date de validité.`,
+        'Je peux le réactualiser facilement si le projet vous intéresse toujours.',
+        '',
+        'Dites-moi,',
+        'Tounkara — Lartiska',
+      ].join('\n');
+
+    default:
+      return `Bonjour ${firstname}, à propos de votre demande ${ref} chez Lartiska…`;
+  }
+}
+
 export default function AdminQuoteDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -263,10 +348,11 @@ export default function AdminQuoteDetail() {
 
           {quote.client_phone && (
             <a
-              href={`https://wa.me/${quote.client_phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Bonjour ${quote.client_name.split(' ')[0]}, à propos de votre demande ${quote.reference} chez Lartiska...`)}`}
+              href={`https://wa.me/${quote.client_phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(buildClientWhatsAppText(quote))}`}
               target="_blank"
               rel="noreferrer"
               className="block btn-ghost text-center w-full"
+              title={`Message contextuel selon le statut "${quote.status}"`}
             >
               Contacter sur WhatsApp
             </a>
