@@ -76,10 +76,10 @@ export default function ProjectDetail() {
         </section>
       )}
 
-      <div className="mt-16 surface-card p-10 text-center">
+      <div className="mt-16 surface-card p-6 md:p-10 text-center">
         <p className="eyebrow mb-3">Inspiré ?</p>
-        <h2 className="font-serif text-3xl">Discutons de votre projet.</h2>
-        <Link to="/devis" className="btn-gold mt-7">Demander un devis</Link>
+        <h2 className="font-serif text-2xl md:text-3xl">Discutons de votre projet.</h2>
+        <Link to="/devis" className="btn-gold mt-7 inline-block">Demander un devis</Link>
       </div>
     </article>
   );

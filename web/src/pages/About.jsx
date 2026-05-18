@@ -110,7 +110,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="mt-20 grid md:grid-cols-3 gap-10">
+      <section className="mt-20 grid md:grid-cols-3 gap-8 md:gap-10">
         <div>
           <p className="font-serif text-5xl text-gold">01</p>
           <h2 className="font-serif text-2xl mt-3">Vision</h2>
@@ -146,7 +146,7 @@ export default function About() {
             <em className="gold-em">à l'œuvre livrée</em>.
           </h2>
         </header>
-        <ol className="grid md:grid-cols-5 gap-4">
+        <ol className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
           {STEPS.map((s) => (
             <li key={s.n} className="surface-card p-5 flex flex-col gap-3">
               <p className="font-serif text-3xl text-gold">{s.n}</p>

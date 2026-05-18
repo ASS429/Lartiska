@@ -112,19 +112,39 @@ export default function Devis() {
         </h1>
       </header>
 
-      <ol className="flex items-center gap-2 mb-10">
-        {STEPS.map((label, i) => (
-          <li
-            key={label}
-            className={clsx(
-              'flex-1 text-center text-xs uppercase tracking-widest py-2 border-b-2 transition-colors',
-              i <= step ? 'border-gold text-gold' : 'border-line text-fg/45',
-            )}
-          >
-            {i + 1}. {label}
-          </li>
-        ))}
-      </ol>
+      {/* Stepper — mobile : barre fine + label de l'étape courante seulement.
+          Desktop (sm+) : tous les labels visibles. */}
+      <div className="mb-10">
+        <ol className="hidden sm:flex items-center gap-2">
+          {STEPS.map((label, i) => (
+            <li
+              key={label}
+              className={clsx(
+                'flex-1 text-center text-xs uppercase tracking-widest py-2 border-b-2 transition-colors',
+                i <= step ? 'border-gold text-gold' : 'border-line text-fg/45',
+              )}
+            >
+              {i + 1}. {label}
+            </li>
+          ))}
+        </ol>
+        <div className="sm:hidden">
+          <div className="flex items-center gap-1.5 mb-3">
+            {STEPS.map((label, i) => (
+              <div
+                key={label}
+                className={clsx(
+                  'flex-1 h-1 rounded-full transition-colors',
+                  i <= step ? 'bg-gold' : 'bg-line',
+                )}
+              />
+            ))}
+          </div>
+          <p className="text-xs uppercase tracking-widest text-gold font-semibold">
+            Étape {step + 1} / {STEPS.length} · {STEPS[step]}
+          </p>
+        </div>
+      </div>
 
       <section className="surface-card p-7 md:p-10">
         {step === 0 && (

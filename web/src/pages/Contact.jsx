@@ -77,7 +77,7 @@ export default function Contact() {
   const buildWhatsAppUrl = (whatsapp, label) =>
     `https://wa.me/${whatsapp}?text=${encodeURIComponent(buildWhatsAppText(label))}`;
 
-  const email = settings?.['contact.email'] || 'contact@lartiska.com';
+  const email = settings?.['contact.email'] || 'lartiska2@gmail.com';
   const gmail = settings?.['social.gmail'] || email;
   const address = settings?.['contact.address'] || 'Dakar, Sénégal';
 
@@ -105,7 +105,7 @@ export default function Contact() {
       />
       <header className="max-w-3xl mb-14">
         <p className="eyebrow mb-4">— Contact</p>
-        <h1 className="font-serif text-5xl md:text-7xl font-light leading-[1.04]">
+        <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl font-light leading-[1.04]">
           Parlons de votre <em className="gold-em">projet</em>.
         </h1>
         <p className="mt-6 text-fg/75 leading-relaxed max-w-xl">

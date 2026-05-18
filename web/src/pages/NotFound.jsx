@@ -7,7 +7,7 @@ export default function NotFound() {
       <Seo title="Page introuvable" description="Cette page n'existe pas ou plus." path="/404" />
 
       <div className="text-center max-w-xl">
-        <p className="font-serif text-[120px] md:text-[180px] leading-none gold-em" style={{ letterSpacing: '-0.05em' }}>
+        <p className="font-serif text-[88px] sm:text-[120px] md:text-[180px] leading-none gold-em" style={{ letterSpacing: '-0.05em' }}>
           404
         </p>
         <p className="eyebrow-deco mt-4">

@@ -44,13 +44,13 @@ export default function Account() {
 
   return (
     <div className="container-art py-16 md:py-20 max-w-5xl">
-      <header className="flex items-end justify-between gap-4 flex-wrap mb-10">
+      <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
         <div>
           <p className="eyebrow mb-2">— Mon espace</p>
-          <h1 className="font-serif text-4xl md:text-5xl font-light">Bonjour {user?.name?.split(' ')[0]}</h1>
-          <p className="text-fg/65 text-sm mt-2">{user?.email}</p>
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light">Bonjour {user?.name?.split(' ')[0]}</h1>
+          <p className="text-fg/65 text-sm mt-2 break-all">{user?.email}</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-wrap">
           <Link to="/devis" className="btn-gold !py-2.5 !px-5 text-xs">Nouvelle demande</Link>
           <button onClick={handleLogout} className="btn-ghost !py-2.5 !px-5 text-xs">Déconnexion</button>
         </div>
