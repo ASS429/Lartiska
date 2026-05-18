@@ -48,7 +48,11 @@ export default function AdminMessages() {
       </header>
 
       <div className="grid lg:grid-cols-[2fr_3fr] gap-6">
-        <div className="surface-card overflow-hidden divide-y divide-line max-h-[70vh] overflow-y-auto">
+        {/* Liste — masquée sur mobile quand un message est sélectionné */}
+        <div className={clsx(
+          'surface-card overflow-hidden divide-y divide-line lg:max-h-[70vh] lg:overflow-y-auto',
+          selectedId ? 'hidden lg:block' : '',
+        )}>
           {isLoading ? (
             <p className="p-8 text-center text-fg/55">Chargement…</p>
           ) : messages.length === 0 ? (
@@ -88,19 +92,32 @@ export default function AdminMessages() {
           )}
         </div>
 
-        <div className="surface-card p-6">
+        {/* Détail — masqué sur mobile quand aucun message sélectionné */}
+        <div className={clsx(
+          'surface-card p-6',
+          !selectedId ? 'hidden lg:block' : '',
+        )}>
           {!selectedId ? (
             <p className="text-fg/55 text-center py-12">Sélectionnez un message pour le lire.</p>
           ) : !detail ? (
             <p className="text-fg/55">Chargement…</p>
           ) : (
             <article>
+              {/* Bouton retour mobile */}
+              <button
+                type="button"
+                onClick={() => setSelectedId(null)}
+                className="lg:hidden text-xs uppercase tracking-widest text-fg/55 hover:text-gold mb-4"
+              >
+                ← Boîte de réception
+              </button>
+
               <header className="border-b border-line pb-5 mb-5">
                 <p className="text-xs uppercase tracking-widest text-gold/80 mb-2">{detail.source}</p>
                 <h2 className="font-serif text-2xl mb-1">{detail.subject || '(sans sujet)'}</h2>
-                <p className="text-fg/75">
+                <p className="text-fg/75 break-words">
                   <strong>{detail.name}</strong>
-                  {detail.email && <> · <a href={`mailto:${detail.email}`} className="text-gold hover:underline">{detail.email}</a></>}
+                  {detail.email && <> · <a href={`mailto:${detail.email}`} className="text-gold hover:underline break-all">{detail.email}</a></>}
                   {detail.phone && <> · {detail.phone}</>}
                 </p>
                 <p className="text-xs text-fg/45 mt-2">

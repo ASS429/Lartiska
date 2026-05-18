@@ -184,13 +184,17 @@ export default function AdminQuoteDetail() {
   return (
     <div className="space-y-8 max-w-5xl">
       <header className="flex items-start justify-between gap-4 flex-wrap">
-        <div>
+        <div className="min-w-0">
           <button onClick={() => navigate(-1)} className="text-xs uppercase tracking-widest text-fg/55 hover:text-gold mb-3">
             ← Retour
           </button>
           <p className="font-mono text-sm text-gold">{quote.reference}</p>
-          <h1 className="font-serif text-3xl md:text-4xl font-light mt-1">{quote.client_name}</h1>
-          <p className="text-fg/65 text-sm mt-2">{quote.client_email} · {quote.client_phone}</p>
+          <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mt-1 break-words">{quote.client_name}</h1>
+          <p className="text-fg/65 text-sm mt-2 break-all">
+            <span className="break-all">{quote.client_email}</span>
+            {' · '}
+            <span className="whitespace-nowrap">{quote.client_phone}</span>
+          </p>
         </div>
       </header>
 
@@ -208,28 +212,30 @@ export default function AdminQuoteDetail() {
           </div>
 
           {quote.items?.length > 0 && (
-            <div className="surface-card p-6">
+            <div className="surface-card p-4 md:p-6">
               <h2 className="font-serif text-xl mb-4">Lignes du devis</h2>
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="text-xs uppercase tracking-widest text-fg/55 border-b border-line">
-                    <th className="text-left pb-2">Description</th>
-                    <th className="text-right pb-2">Qté</th>
-                    <th className="text-right pb-2">PU</th>
-                    <th className="text-right pb-2">Total</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-line">
-                  {quote.items.map((item) => (
-                    <tr key={item.id}>
-                      <td className="py-3">{item.description}</td>
-                      <td className="py-3 text-right">{item.quantity} {item.unit}</td>
-                      <td className="py-3 text-right">{formatPriceXOF(item.unit_price)}</td>
-                      <td className="py-3 text-right font-medium">{formatPriceXOF(item.total)}</td>
+              <div className="overflow-x-auto -mx-4 md:mx-0">
+                <table className="w-full text-sm min-w-[500px]">
+                  <thead>
+                    <tr className="text-xs uppercase tracking-widest text-fg/55 border-b border-line">
+                      <th className="text-left pb-2 px-4 md:px-0">Description</th>
+                      <th className="text-right pb-2 px-2 whitespace-nowrap">Qté</th>
+                      <th className="text-right pb-2 px-2 whitespace-nowrap">PU</th>
+                      <th className="text-right pb-2 px-4 md:px-0 whitespace-nowrap">Total</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-line">
+                    {quote.items.map((item) => (
+                      <tr key={item.id}>
+                        <td className="py-3 px-4 md:px-0">{item.description}</td>
+                        <td className="py-3 text-right px-2 whitespace-nowrap">{item.quantity} {item.unit}</td>
+                        <td className="py-3 text-right px-2 whitespace-nowrap">{formatPriceXOF(item.unit_price)}</td>
+                        <td className="py-3 text-right font-medium px-4 md:px-0 whitespace-nowrap">{formatPriceXOF(item.total)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
         </div>
