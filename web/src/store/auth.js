@@ -9,7 +9,7 @@ export const useAuthStore = create(
     (set, get) => ({
       user: null,
       token: null,
-      status: 'idle', // 'idle' | 'loading' | 'authenticated' | 'error'
+      status: 'idle', // 'idle' | 'loading' | 'authenticated' | 'unauthenticated' | 'error'
       error: null,
 
       login: async ({ email, password }) => {
@@ -36,13 +36,16 @@ export const useAuthStore = create(
           }
         } catch { /* ignore */ }
         localStorage.removeItem(TOKEN_KEY);
-        set({ user: null, token: null, status: 'idle', error: null });
+        set({ user: null, token: null, status: 'unauthenticated', error: null });
       },
 
       hydrate: async () => {
         const token = localStorage.getItem(TOKEN_KEY);
         if (!token) {
-          set({ status: 'idle', user: null, token: null });
+          // Hydrate terminé sans token → état "unauthenticated" (distinct de 'idle'
+          // qui est l'état initial avant tentative). RequireAuth peut maintenant
+          // rediriger vers /login au lieu de boucler sur "Chargement…".
+          set({ status: 'unauthenticated', user: null, token: null });
           return;
         }
         set({ token, status: 'loading' });
@@ -50,8 +53,9 @@ export const useAuthStore = create(
           const user = await auth.fetchMe();
           set({ user, status: 'authenticated' });
         } catch {
+          // Token présent mais invalide (expiré, révoqué) → idem
           localStorage.removeItem(TOKEN_KEY);
-          set({ user: null, token: null, status: 'idle' });
+          set({ user: null, token: null, status: 'unauthenticated' });
         }
       },
 
