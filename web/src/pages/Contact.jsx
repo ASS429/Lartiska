@@ -24,6 +24,59 @@ export default function Contact() {
         { label: 'Service client',     phone: '+221 77 289 85 37', whatsapp: '221772898537' },
       ];
 
+  // Pré-remplissage WhatsApp adapté au contexte de chaque ligne.
+  // Le client reçoit ce template prêt à compléter dans son app WhatsApp.
+  const buildWhatsAppText = (label) => {
+    const portfolioLink = `${window.location.origin}/portfolio`;
+    if (/atelier|tounkara/i.test(label)) {
+      return [
+        'Bonjour Tounkara,',
+        '',
+        "J'ai parcouru le portfolio Lartiska et votre univers m'intéresse. J'aimerais échanger sur un projet créatif :",
+        '',
+        '✦ Type de prestation : ',
+        '✦ Lieu : ',
+        '✦ Brief / inspiration : ',
+        '',
+        `Portfolio consulté : ${portfolioLink}`,
+      ].join('\n');
+    }
+    if (/devis|projet/i.test(label)) {
+      return [
+        'Bonjour Lartiska,',
+        '',
+        'Je souhaite obtenir un devis pour un projet :',
+        '',
+        '✦ Type de prestation : ',
+        '✦ Lieu / ville : ',
+        '✦ Surface approximative : ',
+        '✦ Délais souhaités : ',
+        '✦ Budget envisagé : ',
+        '',
+        `Portfolio : ${portfolioLink}`,
+        '',
+        'Merci d\'avance.',
+      ].join('\n');
+    }
+    if (/service|client|support/i.test(label)) {
+      return [
+        'Bonjour Lartiska,',
+        '',
+        "J'ai une question concernant :",
+        '',
+        '✦ Sujet : ',
+        '✦ Référence devis (si applicable) : ',
+        '',
+        'Merci pour votre aide.',
+      ].join('\n');
+    }
+    // Fallback générique
+    return 'Bonjour Lartiska, je souhaite discuter d\'un projet.';
+  };
+
+  const buildWhatsAppUrl = (whatsapp, label) =>
+    `https://wa.me/${whatsapp}?text=${encodeURIComponent(buildWhatsAppText(label))}`;
+
   const email = settings?.['contact.email'] || 'contact@lartiska.com';
   const gmail = settings?.['social.gmail'] || email;
   const address = settings?.['contact.address'] || 'Dakar, Sénégal';
@@ -37,9 +90,10 @@ export default function Contact() {
     { key: 'gmail',     label: 'Gmail',     url: gmail.startsWith('http') ? gmail : `mailto:${gmail}`, handle: gmail, icon: <GmailIcon />, brand: '#EA4335', contrast: '#FFFFFF' },
   ].filter((s) => s.url);
 
-  // QR code WhatsApp (premier numéro)
+  // QR code WhatsApp (premier numéro avec son template contextualisé)
   const primaryWhatsapp = phones[0]?.whatsapp || '221785446363';
-  const whatsappUrl = `https://wa.me/${primaryWhatsapp}?text=${encodeURIComponent('Bonjour Lartiska, je souhaite discuter d\'un projet.')}`;
+  const primaryLabel = phones[0]?.label || 'Tounkara — Atelier';
+  const whatsappUrl = buildWhatsAppUrl(primaryWhatsapp, primaryLabel);
   const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=12&data=${encodeURIComponent(whatsappUrl)}`;
 
   return (
@@ -69,7 +123,7 @@ export default function Contact() {
             </a>
             <div className="mt-auto pt-4 border-t border-line flex items-center gap-3">
               <a
-                href={`https://wa.me/${p.whatsapp}`}
+                href={buildWhatsAppUrl(p.whatsapp, p.label)}
                 target="_blank"
                 rel="noreferrer"
                 className="brand-btn-whatsapp inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs uppercase tracking-widest font-bold transition-all"
