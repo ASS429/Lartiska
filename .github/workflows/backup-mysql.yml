@@ -1,0 +1,71 @@
+name: Backup MySQL → R2
+
+# Sauvegarde la BDD Railway chaque dimanche à 03h UTC (= 03h Africa/Dakar)
+# et l'upload sur Cloudflare R2 sous backups/YYYY-MM-DD.sql.gz.
+
+on:
+  schedule:
+    - cron: '0 3 * * 0'   # Tous les dimanches à 03h UTC
+  workflow_dispatch:       # Permet de lancer manuellement depuis l'onglet Actions
+
+jobs:
+  dump-and-upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Install MySQL client + AWS CLI
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y mysql-client awscli
+
+      - name: Dump database
+        run: |
+          DATE=$(date -u +%Y-%m-%d)
+          FILE="lartiska-${DATE}.sql.gz"
+          echo "FILE=${FILE}" >> $GITHUB_ENV
+
+          mysqldump \
+            --host="${{ secrets.MYSQL_HOST }}" \
+            --port="${{ secrets.MYSQL_PORT }}" \
+            --user="${{ secrets.MYSQL_USER }}" \
+            --password="${{ secrets.MYSQL_PASSWORD }}" \
+            --single-transaction \
+            --quick \
+            --routines \
+            --triggers \
+            --no-tablespaces \
+            --set-gtid-purged=OFF \
+            "${{ secrets.MYSQL_DATABASE }}" \
+          | gzip > "$FILE"
+
+          ls -lh "$FILE"
+
+      - name: Upload to R2
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+        run: |
+          aws s3 cp "$FILE" "s3://${{ secrets.R2_BUCKET }}/backups/$FILE" \
+            --endpoint-url "${{ secrets.R2_ENDPOINT }}" \
+            --content-encoding gzip
+
+      - name: Cleanup old backups (keep last 8 weeks)
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+        run: |
+          aws s3 ls "s3://${{ secrets.R2_BUCKET }}/backups/" \
+            --endpoint-url "${{ secrets.R2_ENDPOINT }}" \
+          | sort -r \
+          | tail -n +9 \
+          | awk '{print $4}' \
+          | while read OLD; do
+              if [ -n "$OLD" ]; then
+                echo "Suppression : $OLD"
+                aws s3 rm "s3://${{ secrets.R2_BUCKET }}/backups/$OLD" \
+                  --endpoint-url "${{ secrets.R2_ENDPOINT }}"
+              fi
+            done
