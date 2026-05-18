@@ -13,6 +13,7 @@ const CATEGORY_ICON: Record<string, keyof typeof Ionicons.glyphMap> = {
   'peinture-fresques': 'brush-outline',
   'plafonnage': 'sparkles-outline',
   'carrelage': 'grid-outline',
+  'epoxy-resine': 'water-outline',
   'mosaique': 'grid-outline',
   'decoration': 'flower-outline',
   'sur-mesure': 'cut-outline',

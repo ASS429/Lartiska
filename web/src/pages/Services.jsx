@@ -35,6 +35,15 @@ const CATEGORY_ICON = {
       <path d="M5 3v4" /><path d="M19 17v4" /><path d="M3 5h4" /><path d="M17 19h4" />
     </svg>
   ),
+  /* Epoxy résine : couches superposées + reflet brillant (vague subtle) */
+  'epoxy-resine': (
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 17h18" />
+      <path d="M3 13h18" />
+      <path d="M5 9c2-1.5 4-1.5 6 0s4 1.5 6 0 4-1.5 6 0" transform="translate(-1 0)" />
+      <path d="M19 19v2" /><path d="M5 19v2" />
+    </svg>
+  ),
 };
 
 export default function Services() {

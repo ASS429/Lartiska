@@ -21,6 +21,7 @@ const CATEGORY_ICON: Record<string, keyof typeof Ionicons.glyphMap> = {
   'carrelage': 'grid-outline',
   'mosaique': 'grid-outline',
   'decoration': 'flower-outline',
+  'epoxy-resine': 'water-outline',
   'sur-mesure': 'cut-outline',
 };
 

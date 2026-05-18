@@ -56,8 +56,9 @@ export default function About() {
           un espace.
         </h1>
         <p className="mt-6 text-fg/85 leading-relaxed text-lg">
-          Lartiska est l'entreprise d'un artiste polyvalent, Tounkara — peintre, plafonneur, carreleur et designer
-          d'intérieur. Spécialisée dans les créations uniques et innovantes, elle propose une gamme de prestations
+          Lartiska est l'entreprise d'un <strong className="text-gold font-semibold">Maître Artisan en finition luxe</strong>,
+          Tounkara — peintre, plafonneur, carreleur, poseur d'epoxy résine et designer d'intérieur.
+          Spécialisée dans les créations uniques et innovantes, elle propose une gamme de prestations
           qu'on ne trouve nulle part ailleurs sur le marché.
         </p>
       </header>
@@ -82,10 +83,14 @@ export default function About() {
             <h2 className="font-serif text-3xl md:text-4xl font-light leading-tight">
               Tounkara, fondateur de <em className="gold-em">Lartiska</em>.
             </h2>
+            <p className="mt-3 text-[11px] uppercase tracking-[0.32em] text-gold font-semibold">
+              Maître Artisan · Finition luxe
+            </p>
             <p className="mt-5 text-fg/85 leading-relaxed">
-              Artiste polyvalent — peintre, plafonneur, carreleur, designer d'intérieur — Tounkara signe
-              chaque chantier comme une pièce unique. Quinze ans à l'œuvre entre Dakar, Saint-Louis,
-              Banjul et Nouakchott, à transformer murs, plafonds et carreaux en récits visuels.
+              Artiste polyvalent — peintre, plafonneur, carreleur, poseur d'epoxy résine et designer
+              d'intérieur — Tounkara signe chaque chantier comme une pièce unique. Quinze ans à l'œuvre
+              entre Dakar, Saint-Louis, Banjul et Nouakchott, à transformer murs, plafonds, sols
+              et carreaux en récits visuels.
             </p>
             <p className="mt-4 text-fg/75 text-sm leading-relaxed">
               Découvrez son portfolio personnel — croquis, études, projets antérieurs et œuvres

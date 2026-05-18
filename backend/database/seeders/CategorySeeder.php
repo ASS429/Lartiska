@@ -39,11 +39,18 @@ class CategorySeeder extends Seeder
                 'order' => 4,
             ],
             [
+                'name' => 'Epoxy résine & revêtement sol',
+                'slug' => 'epoxy-resine',
+                'icon' => 'shine',
+                'description' => 'Sols et plans en résine epoxy haute brillance — finitions miroir, marbrées, métallisées. Résistance et durabilité pour résidentiel et commercial.',
+                'order' => 5,
+            ],
+            [
                 'name' => 'Commandes personnalisées',
                 'slug' => 'sur-mesure',
                 'icon' => 'sparkle',
                 'description' => 'Créations sur-mesure adaptées aux souhaits spécifiques de chaque client.',
-                'order' => 5,
+                'order' => 6,
             ],
         ];
 

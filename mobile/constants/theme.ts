@@ -25,6 +25,7 @@ const palette = {
     soleil: '#F4D03F',     // Plafonnage
     emeraude: '#3FBF7F',   // Décoration
     turquoise: '#42B5C7',  // Mosaïque · Carrelage
+    cuivre: '#C77B30',     // Epoxy résine & revêtement sol
     brique: '#D14F4F',     // Sur-mesure
   },
 };
@@ -45,6 +46,8 @@ export function categoryColor(slug?: string | null): string {
       return palette.mosaic.turquoise;
     case 'decoration':
       return palette.mosaic.emeraude;
+    case 'epoxy-resine':
+      return palette.mosaic.cuivre;
     case 'sur-mesure':
       return palette.mosaic.brique;
     default:

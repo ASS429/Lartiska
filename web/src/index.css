@@ -37,6 +37,7 @@
     --m-soleil: #F4D03F;     /* Plafonnage */
     --m-emeraude: #3FBF7F;   /* Décoration */
     --m-turquoise: #42B5C7;  /* Mosaïque · Carrelage */
+    --m-cuivre: #C77B30;     /* Epoxy résine & revêtement sol */
     --m-brique: #D14F4F;     /* Sur-mesure */
   }
 
@@ -280,6 +281,7 @@
   .service-card.cat-carrelage,
   .service-card.cat-mosaique { color: var(--m-turquoise); }
   .service-card.cat-decoration { color: var(--m-emeraude); }
+  .service-card.cat-epoxy-resine { color: var(--m-cuivre); }
   .service-card.cat-sur-mesure { color: var(--m-brique); }
 
   .lartiska-input {
@@ -571,6 +573,7 @@
   .cat-badge.cat-carrelage,
   .cat-badge.cat-mosaique { color: var(--m-turquoise); }
   .cat-badge.cat-decoration { color: var(--m-emeraude); }
+  .cat-badge.cat-epoxy-resine { color: var(--m-cuivre); }
   .cat-badge.cat-sur-mesure { color: var(--m-brique); }
 
   /* Variante "tag" — pour les overlays sur les photos */
@@ -606,6 +609,7 @@
   .cat-tag.cat-carrelage,
   .cat-tag.cat-mosaique { color: var(--m-turquoise); }
   .cat-tag.cat-decoration { color: var(--m-emeraude); }
+  .cat-tag.cat-epoxy-resine { color: var(--m-cuivre); }
   .cat-tag.cat-sur-mesure { color: var(--m-brique); }
 
   /* Typographie longue (pages légales, FAQ) */
