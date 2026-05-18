@@ -145,6 +145,21 @@
   }
 
   /* ─── Footer typography — denser + bolder ─── */
+  .lartiska-footer {
+    /* Dark : bg sombre semi-transparent pour matérialiser le footer.
+       Light : bg crème teinté + dégradé top pour séparer du content au-dessus. */
+    background: rgba(7, 6, 10, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  html:not(.dark) .lartiska-footer {
+    background:
+      linear-gradient(180deg, rgba(122, 84, 8, 0.06) 0%, rgba(122, 84, 8, 0.02) 100%),
+      #F5EDD6;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   .footer-col-title {
     @apply uppercase tracking-[0.32em] text-[12px] font-bold mb-5;
     color: #D4AF37;

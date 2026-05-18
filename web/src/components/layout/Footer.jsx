@@ -5,7 +5,7 @@ export function Footer() {
   const { data: settings } = useSettings();
 
   return (
-    <footer className="relative mt-20 border-t border-line bg-ink/75">
+    <footer className="lartiska-footer relative mt-20 border-t border-line">
       <div className="container-art py-16 md:py-20 grid gap-12 md:gap-10 md:grid-cols-5">
         <div className="md:col-span-2">
           <Link to="/" className="font-serif text-4xl md:text-5xl tracking-tight leading-none inline-block">
@@ -13,9 +13,9 @@ export function Footer() {
             <span className="gold-em">Ka</span>
           </Link>
           <p className="mt-5 text-base md:text-[17px] text-fg leading-[1.7] font-medium max-w-md">
-            <span className="font-serif italic text-gold">L'art qui transforme vos espaces.</span>
+            <em className="gold-em font-serif">L'art qui transforme vos espaces.</em>
             <br />
-            <span className="text-fg/90">
+            <span className="text-fg/95">
               Peinture, plafonnage, carrelage et décoration artistique.
               <br />
               Sénégal · Gambie · Mauritanie.
@@ -83,8 +83,8 @@ export function Footer() {
 
       <div className="border-t border-line">
         <div className="container-art py-6 text-[13px] text-fg flex flex-col md:flex-row justify-between gap-2 font-medium">
-          <p className="text-fg/85">© {new Date().getFullYear()} <span className="text-fg font-semibold">Lartiska</span> — Tous droits réservés.</p>
-          <p className="font-serif italic text-gold/95">L'art qui transforme vos espaces.</p>
+          <p className="text-fg/90">© {new Date().getFullYear()} <span className="text-fg font-semibold">Lartiska</span> — Tous droits réservés.</p>
+          <p><em className="gold-em font-serif">L'art qui transforme vos espaces.</em></p>
         </div>
       </div>
     </footer>
