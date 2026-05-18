@@ -33,7 +33,11 @@ jobs:
       - name: Install MySQL client + AWS CLI
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y mysql-client awscli
+          sudo apt-get install -y mysql-client unzip
+          curl -sSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
+          unzip -q /tmp/awscliv2.zip -d /tmp
+          sudo /tmp/aws/install --update
+          aws --version
 
       - name: Dump database
         run: |
