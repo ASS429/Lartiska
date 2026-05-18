@@ -28,12 +28,13 @@ export default function Contact() {
   const gmail = settings?.['social.gmail'] || email;
   const address = settings?.['contact.address'] || 'Dakar, Sénégal';
 
+  // Couleur de marque pour chaque réseau (utilisée pour le fond du badge icône + accent au hover)
   const socials = [
-    { key: 'facebook',  label: 'Facebook',  url: settings?.['social.facebook'],  handle: settings?.['social_handle.facebook']  || '@lartiska',           icon: <FacebookIcon /> },
-    { key: 'instagram', label: 'Instagram', url: settings?.['social.instagram'], handle: settings?.['social_handle.instagram'] || '@lartiska_officiel',  icon: <InstagramIcon /> },
-    { key: 'tiktok',    label: 'TikTok',    url: settings?.['social.tiktok'],    handle: settings?.['social_handle.tiktok']    || '@lartiska',           icon: <TikTokIcon /> },
-    { key: 'snapchat',  label: 'Snapchat',  url: settings?.['social.snapchat'],  handle: settings?.['social_handle.snapchat']  || 'lartiska',            icon: <SnapchatIcon /> },
-    { key: 'gmail',     label: 'Gmail',     url: gmail.startsWith('http') ? gmail : `mailto:${gmail}`, handle: gmail, icon: <GmailIcon /> },
+    { key: 'facebook',  label: 'Facebook',  url: settings?.['social.facebook'],  handle: settings?.['social_handle.facebook']  || '@lartiska',           icon: <FacebookIcon />,  brand: '#1877F2', contrast: '#FFFFFF' },
+    { key: 'instagram', label: 'Instagram', url: settings?.['social.instagram'], handle: settings?.['social_handle.instagram'] || '@lartiska_officiel',  icon: <InstagramIcon />, brand: '#E1306C', contrast: '#FFFFFF', gradient: 'linear-gradient(135deg, #FEDA75 0%, #FA7E1E 25%, #D62976 55%, #962FBF 80%, #4F5BD5 100%)' },
+    { key: 'tiktok',    label: 'TikTok',    url: settings?.['social.tiktok'],    handle: settings?.['social_handle.tiktok']    || '@lartiska',           icon: <TikTokIcon />,    brand: '#000000', contrast: '#FFFFFF' },
+    { key: 'snapchat',  label: 'Snapchat',  url: settings?.['social.snapchat'],  handle: settings?.['social_handle.snapchat']  || 'lartiska',            icon: <SnapchatIcon />,  brand: '#FFFC00', contrast: '#000000' },
+    { key: 'gmail',     label: 'Gmail',     url: gmail.startsWith('http') ? gmail : `mailto:${gmail}`, handle: gmail, icon: <GmailIcon />, brand: '#EA4335', contrast: '#FFFFFF' },
   ].filter((s) => s.url);
 
   // QR code WhatsApp (premier numéro)
@@ -71,14 +72,14 @@ export default function Contact() {
                 href={`https://wa.me/${p.whatsapp}`}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-400/40 bg-emerald-500/10 text-emerald-300 text-xs uppercase tracking-widest hover:bg-emerald-500/20 transition-all"
+                className="brand-btn-whatsapp inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs uppercase tracking-widest font-bold transition-all"
               >
                 <WhatsAppIcon className="w-3.5 h-3.5" />
                 WhatsApp
               </a>
               <a
                 href={`tel:${(p.phone || '').replace(/\s/g, '')}`}
-                className="text-xs uppercase tracking-widest text-fg/65 hover:text-gold transition-colors ml-auto"
+                className="text-xs uppercase tracking-widest text-fg/65 hover:text-gold transition-colors ml-auto font-semibold"
               >
                 Appeler →
               </a>
@@ -108,14 +109,24 @@ export default function Contact() {
                 href={s.url}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-3 p-3.5 rounded-xl border border-line hover:border-gold hover:bg-gold/5 transition-all duration-300 group"
+                className="social-tile group flex items-center gap-3 p-3.5 rounded-xl border border-line transition-all duration-300"
+                style={{ '--brand': s.brand, '--brand-contrast': s.contrast }}
               >
-                <span className="w-10 h-10 rounded-full grid place-items-center bg-gold/10 text-gold group-hover:bg-gold group-hover:text-bg transition-all">
+                <span
+                  className="social-tile__icon w-11 h-11 rounded-full grid place-items-center shrink-0 transition-all duration-300"
+                  style={{
+                    background: s.gradient || s.brand,
+                    color: s.contrast,
+                    boxShadow: `0 4px 14px -4px ${s.brand}66`,
+                  }}
+                >
                   {s.icon}
                 </span>
-                <span className="min-w-0">
-                  <span className="block text-xs uppercase tracking-widest text-gold/75">{s.label}</span>
-                  <span className="block text-sm truncate">{s.handle}</span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[11px] uppercase tracking-[0.22em] font-bold" style={{ color: s.brand }}>
+                    {s.label}
+                  </span>
+                  <span className="block text-[14px] truncate font-semibold text-fg/95">{s.handle}</span>
                 </span>
               </a>
             ))}

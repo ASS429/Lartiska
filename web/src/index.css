@@ -123,6 +123,27 @@
   }
   html:not(.dark) .eyebrow { color: #7A5408; }
 
+  /* ─── Boutons marques (WhatsApp + tuiles réseaux sociaux) ─── */
+  .brand-btn-whatsapp {
+    background: #25D366;
+    color: #FFFFFF;
+    border: 1px solid #1da851;
+    box-shadow: 0 6px 18px -8px rgba(37, 211, 102, 0.6);
+  }
+  .brand-btn-whatsapp:hover {
+    background: #1da851;
+    box-shadow: 0 10px 22px -8px rgba(37, 211, 102, 0.75);
+    transform: translateY(-1px);
+  }
+
+  .social-tile:hover {
+    border-color: var(--brand) !important;
+    background: color-mix(in srgb, var(--brand) 10%, transparent);
+  }
+  .social-tile:hover .social-tile__icon {
+    transform: scale(1.06) rotate(-2deg);
+  }
+
   /* ─── Footer typography — denser + bolder ─── */
   .footer-col-title {
     @apply uppercase tracking-[0.32em] text-[12px] font-bold mb-5;
