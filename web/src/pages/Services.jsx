@@ -4,6 +4,7 @@ import { formatPriceRange } from '@/utils/format';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { Seo } from '@/hooks/useSeo';
+import { ServiceCardSkeleton } from '@/components/ui/Skeleton';
 
 const CATEGORY_ICON = {
   'peinture-fresques': (
@@ -86,7 +87,9 @@ export default function Services() {
       </div>
 
       {isLoading ? (
-        <p className="text-fg/55">Chargement…</p>
+        <div className="grid md:grid-cols-2 gap-5 md:gap-6">
+          {Array.from({ length: 6 }).map((_, i) => <ServiceCardSkeleton key={i} />)}
+        </div>
       ) : (
         <div className="grid md:grid-cols-2 gap-5 md:gap-6">
           {(services || []).map((s) => {

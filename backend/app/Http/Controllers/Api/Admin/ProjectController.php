@@ -69,14 +69,16 @@ class ProjectController extends Controller
 
     public function destroy(Project $project): JsonResponse
     {
-        // Supprimer aussi les fichiers physiques
+        // Supprime les fichiers sur le disque par défaut (r2 en prod, public en local)
+        $disk = Storage::disk(config('filesystems.default'));
+
         if ($project->cover_image && str_starts_with($project->cover_image, 'projects/')) {
-            Storage::disk('public')->delete($project->cover_image);
+            $disk->delete($project->cover_image);
         }
 
         foreach ($project->images as $image) {
             if ($image->path) {
-                Storage::disk('public')->delete($image->path);
+                $disk->delete($image->path);
             }
         }
 

@@ -23,7 +23,7 @@ class ProjectImageController extends Controller
         $nextOrder = ($project->images()->max('order') ?? -1) + 1;
 
         foreach ($request->file('images', []) as $file) {
-            $path = $file->store('projects/' . $project->id, 'public');
+            $path = $file->store('projects/' . $project->id, config('filesystems.default'));
 
             $image = $project->images()->create([
                 'path' => $path,
@@ -65,7 +65,7 @@ class ProjectImageController extends Controller
         abort_unless($image->project_id === $project->id, 404);
 
         if ($image->path) {
-            Storage::disk('public')->delete($image->path);
+            Storage::disk(config('filesystems.default'))->delete($image->path);
         }
 
         $wasCover = $image->is_cover;

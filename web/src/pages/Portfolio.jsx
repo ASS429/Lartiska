@@ -6,6 +6,7 @@ import { useCategories } from '@/hooks/useApi';
 import { fetchProjects, fetchProjectCities } from '@/api/endpoints';
 import { Seo } from '@/hooks/useSeo';
 import { BeforeAfterSlider } from '@/components/portfolio/BeforeAfterSlider';
+import { ProjectCardSkeleton } from '@/components/ui/Skeleton';
 
 const PER_PAGE = 12;
 
@@ -114,7 +115,9 @@ export default function Portfolio() {
       </div>
 
       {isLoading && accumulated.length === 0 ? (
-        <p className="text-fg/55">Chargement…</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
+          {Array.from({ length: 8 }).map((_, i) => <ProjectCardSkeleton key={i} />)}
+        </div>
       ) : accumulated.length === 0 ? (
         <div className="surface-card p-12 text-center">
           <p className="font-serif text-2xl mb-3 text-gold">Aucun projet</p>

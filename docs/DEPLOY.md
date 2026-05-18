@@ -243,15 +243,52 @@ railway run --service backend php artisan tinker
 ```
 
 ### Brancher Resend pour les emails
-- [resend.com](https://resend.com) → free 3 000 emails/mois
-- Settings → API Keys → créer une clé
-- Railway → ajouter :
-  ```
-  MAIL_MAILER=resend
-  MAIL_FROM_ADDRESS=contact@lartiska.com
-  RESEND_KEY=re_xxx
-  ```
-- Installer le driver côté Laravel : `composer require resend/resend-laravel`
+
+Le package `resend/resend-php` est déjà dans `composer.json` (depuis le commit "feat(mail): activer Resend"). Il ne reste qu'à fournir la clé API et basculer le mailer dans Railway.
+
+1. **Créer un compte** sur [resend.com](https://resend.com) — gratuit 3 000 emails/mois, 100 emails/jour.
+2. **API Keys** → **Create API Key** → permissions "Full access" → copier la clé `re_xxxxxxxxxxxxxxxxx` (visible une seule fois, à coller dans Railway directement, **pas dans le chat**).
+3. **Verify a domain** *(recommandé)* : Domains → Add Domain → `lartiska.com` (ou ton domaine custom) → ajouter les enregistrements DNS demandés (3 TXT/MX). Tant que pas vérifié, tu peux uniquement envoyer **depuis** `onboarding@resend.dev` mais **vers** n'importe quelle adresse.
+4. **Railway → backend → Variables → Raw Editor** :
+   ```bash
+   MAIL_MAILER=resend
+   RESEND_KEY=re_xxxxxxxxxxxxxxxxx
+   MAIL_FROM_ADDRESS=onboarding@resend.dev      # ou contact@lartiska.com si domaine vérifié
+   MAIL_FROM_NAME=Lartiska
+   MAIL_ADMIN_NOTIFY=tounkara@lartiska.com       # admin recevoir les notifs nouveau devis
+   ```
+5. **Update** → Railway redéploie auto.
+6. **Test** : soumettre un devis depuis `/devis` → l'email de confirmation arrive dans la boîte du client + une notif admin chez Tounkara.
+
+### Backups MySQL automatisés
+
+Le workflow GitHub Actions `.github/workflows/backup-mysql.yml` exécute un `mysqldump` chaque dimanche 03h UTC et l'envoie sur R2 sous `backups/YYYY-MM-DD.sql.gz` (rétention 8 semaines).
+
+**Secrets à configurer une fois** dans GitHub → **Settings** → **Secrets and variables** → **Actions** → **New repository secret** :
+
+| Nom | Valeur (depuis Railway / Cloudflare) |
+|---|---|
+| `MYSQL_HOST` | Railway → MySQL → Variables → `MYSQL_PUBLIC_URL` → extraire le host (ex : `containers-us-west-X.railway.app`) |
+| `MYSQL_PORT` | Idem, le port (ex : `1234`) |
+| `MYSQL_DATABASE` | `railway` |
+| `MYSQL_USER` | `root` |
+| `MYSQL_PASSWORD` | Railway → MySQL → `MYSQL_ROOT_PASSWORD` |
+| `R2_ACCESS_KEY_ID` | Cloudflare R2 |
+| `R2_SECRET_ACCESS_KEY` | Cloudflare R2 |
+| `R2_BUCKET` | `lartiska-media` |
+| `R2_ENDPOINT` | `https://<account_id>.r2.cloudflarestorage.com` |
+
+⚠️ Il faut le **public host** Railway (depuis `MYSQL_PUBLIC_URL`), pas le private — GitHub Actions ne vit pas dans le réseau Railway.
+
+**Lancer manuellement** un backup pour tester : GitHub → onglet **Actions** → workflow "Backup MySQL → R2" → **Run workflow**.
+
+**Restaurer** un backup :
+```bash
+aws s3 cp s3://lartiska-media/backups/2026-05-19.sql.gz . \
+  --endpoint-url https://<account_id>.r2.cloudflarestorage.com
+gunzip lartiska-2026-05-19.sql.gz
+mysql -h <host> -P <port> -u root -p railway < lartiska-2026-05-19.sql
+```
 
 ### Domaine custom (plus tard)
 - Acheter `lartiska.com` (Namecheap ~10 €/an)
