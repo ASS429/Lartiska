@@ -54,9 +54,21 @@ export default function Services() {
   return (
     <div className="container-art py-16 md:py-24">
       <Seo
-        title="Services & Tarifs"
-        description="Peinture artistique, plafonnage décoratif, carrelage design, décoration d'intérieur. Tarifs indicatifs, devis gratuit sous 48h."
+        title="Services & Tarifs · Peinture artistique, fresques, plafonnage, carrelage, epoxy résine Sénégal"
+        description="Tarifs Lartiska au Sénégal : peinture artistique, fresques murales, plafonnage décoratif, carrelage zellige, mosaïque, epoxy résine, décoration d'intérieur. Fourchettes en FCFA, devis détaillé gratuit sous 48h. Mbour, Dakar, Saint-Louis."
         path="/services"
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'ItemList',
+          name: 'Services Lartiska — Peinture, fresques, plafonnage, carrelage, epoxy au Sénégal',
+          itemListElement: [
+            { '@type': 'Service', name: 'Peinture & fresques murales', areaServed: 'Sénégal', provider: { '@type': 'LocalBusiness', name: 'Lartiska' } },
+            { '@type': 'Service', name: 'Plafonnage décoratif', areaServed: 'Sénégal', provider: { '@type': 'LocalBusiness', name: 'Lartiska' } },
+            { '@type': 'Service', name: 'Carrelage artistique & mosaïque', areaServed: 'Sénégal', provider: { '@type': 'LocalBusiness', name: 'Lartiska' } },
+            { '@type': 'Service', name: 'Décoration & design d\'intérieur', areaServed: 'Sénégal', provider: { '@type': 'LocalBusiness', name: 'Lartiska' } },
+            { '@type': 'Service', name: 'Epoxy résine & revêtement sol', areaServed: 'Sénégal', provider: { '@type': 'LocalBusiness', name: 'Lartiska' } },
+          ],
+        }}
       />
       <header className="max-w-2xl mb-14">
         <p className="eyebrow mb-4">— Services & Tarifs</p>

@@ -6,9 +6,11 @@ Disallow: /admin
 Disallow: /account
 Disallow: /login
 Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
 
-# Sitemap statique (pages principales : home, services, portfolio, about, contact, faq, legal)
-Sitemap: https://lartiska.onrender.com/sitemap.xml
+# Sitemap principal (pages publiques)
+Sitemap: https://lartiska.sn/sitemap.xml
 
-# Sitemap dynamique (projets publiés — généré par Laravel)
+# Sitemap dynamique des projets (généré par Laravel)
 Sitemap: https://lartiska-web-production.up.railway.app/sitemap-projects.xml

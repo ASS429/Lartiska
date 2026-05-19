@@ -26,7 +26,7 @@ export default function Home() {
     <>
       <Seo
         title=""
-        description="Lartiska — peinture, plafonnage, carrelage et décoration artistique au Sénégal, en Gambie et en Mauritanie. Demandez votre devis gratuit en quelques minutes."
+        description="Lartiska — Maître Artisan finition luxe à Mbour, Sénégal. Peinture artistique, fresques murales, plafonnage décoratif, carrelage zellige, mosaïque, epoxy résine. Devis gratuit sous 48h. Intervention Sénégal, Gambie, Mauritanie."
         path="/"
       />
       {/* ─── HERO — section conservée (validée par le user) ─── */}
@@ -124,7 +124,7 @@ export default function Home() {
 
             {/* Œuvre encadrée — salon émeraude marbré or */}
             <figure className="art-frame max-w-3xl mx-auto aspect-[16/10] mb-14">
-              <img src="/1.jpg" alt="Réalisation Lartiska — salon contemporain avec mur d'art émeraude et veines dorées" loading="lazy" />
+              <img src="/1.jpg" alt="Peinture artistique Lartiska au Sénégal — mur d'art émeraude marbré avec veines dorées à la feuille, salon contemporain à Mbour. Maître Artisan Tounkara." loading="lazy" width="1200" height="750" />
               <figcaption>
                 <span className="art-caption-line" />
                 <span className="art-caption-text">{essence}</span>

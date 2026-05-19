@@ -99,8 +99,8 @@ export default function Contact() {
   return (
     <div className="container-art py-16 md:py-24">
       <Seo
-        title="Contact"
-        description="Joignez Lartiska : 3 numéros directs, WhatsApp, email, QR code. Réponse sous 24h ouvrées."
+        title="Contact · Lartiska Mbour Sénégal · WhatsApp +221 78 544 63 63"
+        description="Contactez Lartiska à Mbour, Sénégal : 3 numéros directs, WhatsApp, email, QR code. Devis peinture artistique, fresque murale, plafonnage, carrelage, epoxy résine. Réponse sous 24h ouvrées."
         path="/contact"
       />
       <header className="max-w-3xl mb-14">

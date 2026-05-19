@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useProject } from '@/hooks/useApi';
+import { Seo, SITE_URL } from '@/hooks/useSeo';
 
 export default function ProjectDetail() {
   const { slug } = useParams();
@@ -18,8 +19,44 @@ export default function ProjectDetail() {
     );
   }
 
+  // JSON-LD : CreativeWork + Breadcrumbs pour Google
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CreativeWork',
+        name: data.title,
+        description: data.description,
+        image: data.cover_image,
+        creator: { '@type': 'Person', name: 'Tounkara', jobTitle: 'Maître Artisan · Finition luxe' },
+        provider: { '@type': 'LocalBusiness', name: 'Lartiska' },
+        ...(data.city && { contentLocation: { '@type': 'Place', name: data.city } }),
+        ...(data.materials && { material: data.materials }),
+        ...(data.completed_at && { dateCreated: data.completed_at }),
+        keywords: [data.category?.name, data.city, 'Lartiska', 'Sénégal'].filter(Boolean).join(', '),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE_URL}/` },
+          { '@type': 'ListItem', position: 2, name: 'Portfolio', item: `${SITE_URL}/portfolio` },
+          { '@type': 'ListItem', position: 3, name: data.title, item: `${SITE_URL}/portfolio/${data.slug}` },
+        ],
+      },
+    ],
+  };
+
   return (
     <article className="container-art py-16 md:py-24">
+      <Seo
+        title={`${data.title} · ${data.category?.name || 'Réalisation'} · Lartiska`}
+        description={`${data.title} — ${data.category?.name || 'Réalisation artistique'} Lartiska ${data.city ? `à ${data.city}` : 'au Sénégal'}. ${(data.description || '').slice(0, 140)}`}
+        path={`/portfolio/${data.slug}`}
+        image={data.cover_image}
+        type="article"
+        jsonLd={jsonLd}
+      />
+
       <Link to="/portfolio" className="text-xs uppercase tracking-widest text-fg/55 hover:text-gold transition-colors">
         ← Portfolio
       </Link>
@@ -32,7 +69,12 @@ export default function ProjectDetail() {
 
       {data.cover_image && (
         <figure className="mt-10 surface-card overflow-hidden">
-          <img src={data.cover_image} alt={data.title} className="w-full h-auto object-cover" />
+          <img
+            src={data.cover_image}
+            alt={`${data.title} — ${data.category?.name || 'Réalisation artistique'} Lartiska${data.city ? ` à ${data.city}` : ' au Sénégal'}. Maître Artisan Tounkara.`}
+            className="w-full h-auto object-cover"
+            loading="lazy"
+          />
         </figure>
       )}
 
@@ -69,7 +111,12 @@ export default function ProjectDetail() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {data.images.map((img) => (
               <figure key={img.id} className="aspect-square overflow-hidden surface-card">
-                <img src={img.url} alt={img.caption || data.title} loading="lazy" className="w-full h-full object-cover" />
+                <img
+                  src={img.url}
+                  alt={img.caption || `${data.title} — détail ${data.category?.name || ''} Lartiska${data.city ? ` ${data.city}` : ''}`}
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
               </figure>
             ))}
           </div>

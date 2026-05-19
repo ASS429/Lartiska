@@ -101,8 +101,8 @@ export default function Devis() {
   return (
     <div className="container-art py-16 md:py-24 max-w-3xl">
       <Seo
-        title="Demander un devis"
-        description="Décrivez votre projet en 4 étapes. Devis gratuit en PDF sous 48h. Photos et plans acceptés."
+        title="Devis gratuit · Peinture, fresque, plafonnage, carrelage, epoxy résine Sénégal"
+        description="Demandez un devis gratuit Lartiska au Sénégal : peinture artistique, fresque murale, plafonnage décoratif, carrelage zellige, mosaïque, epoxy résine, décoration d'intérieur. 4 étapes, PDF détaillé sous 48h ouvrées. Photos et plans acceptés."
         path="/devis"
       />
       <header className="mb-10">

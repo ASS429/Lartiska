@@ -44,9 +44,19 @@ export default function About() {
   return (
     <div className="container-art py-16 md:py-24">
       <Seo
-        title="À propos de Lartiska"
-        description="L'histoire de Tounkara, la vision artistique de Lartiska, comment se déroule un chantier, nos garanties et les villes que nous desservons."
+        title="À propos · Tounkara, Maître Artisan finition luxe à Mbour"
+        description="Découvrez Tounkara — Maître Artisan finition luxe, fondateur de Lartiska à Mbour, Sénégal. 15 ans d'expérience en peinture artistique, fresques, plafonnage, carrelage zellige, mosaïque, epoxy résine. Nos garanties, zones d'intervention."
         path="/about"
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'Person',
+          name: 'Tounkara',
+          jobTitle: 'Maître Artisan · Finition luxe',
+          worksFor: { '@type': 'LocalBusiness', name: 'Lartiska' },
+          address: { '@type': 'PostalAddress', addressLocality: 'Mbour', addressCountry: 'SN' },
+          knowsAbout: ['Peinture artistique', 'Fresques murales', 'Plafonnage décoratif', 'Carrelage zellige', 'Mosaïque', 'Epoxy résine', 'Décoration d\'intérieur'],
+          sameAs: ['https://lartiska-portfolio.onrender.com'],
+        }}
       />
 
       <header className="max-w-3xl">
@@ -69,8 +79,10 @@ export default function About() {
           <figure className="art-frame aspect-[4/5] md:aspect-auto md:min-h-[420px] m-0 rounded-none border-0 border-r border-line">
             <img
               src="/tounkara-portrait.jpeg"
-              alt="Tounkara — fondateur de Lartiska"
+              alt="Tounkara, Maître Artisan finition luxe — fondateur de Lartiska à Mbour, Sénégal. Spécialiste peinture artistique, fresques murales, plafonnage, carrelage zellige, mosaïque et epoxy résine."
               loading="lazy"
+              width="800"
+              height="1000"
             />
             <figcaption>
               <span className="art-caption-line" />
