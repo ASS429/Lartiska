@@ -6,6 +6,8 @@ import { Seo } from '@/hooks/useSeo';
 import { SectionWipe } from '@/components/layout/SectionWipe';
 import { LazyVideo } from '@/components/ui/LazyVideo';
 import { BrushStroke } from '@/components/ui/BrushStroke';
+import { CraftStory } from '@/components/home/CraftStory';
+import { EpoxyStudio } from '@/components/home/EpoxyStudio';
 
 export default function Home() {
   const { data: categories } = useCategories();
@@ -109,6 +111,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ─── SCROLLYTELLING SIGNATURE — Du brut à l'œuvre (pin + scrub) ─── */}
+      <CraftStory />
+
       {/* ─── SERVICES — wipe V5 + eyebrow ✦ + image art-frame "émeraude · or · pièce signature" ─── */}
       <SectionWipe video="/V5.mp4">
         <section id="services" className="py-24 md:py-32 border-y border-line relative z-[5]">
@@ -156,6 +161,9 @@ export default function Home() {
           </div>
         </section>
       </SectionWipe>
+
+      {/* ─── STUDIO EPOXY — teinte en temps réel + devis prérempli ─── */}
+      <EpoxyStudio />
 
       {/* ─── PORTFOLIO TEASER — wipe V4 + project-cards style index.html ─── */}
       <SectionWipe video="/V4.mp4">

@@ -746,3 +746,163 @@
   height: 26px;
   margin: 0.9rem auto 0;
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   Scrollytelling « Du brut à l'œuvre » (CraftStory.jsx)
+   Le mur traverse 4 états en couches superposées, pilotées par GSAP.
+   Textures 100% CSS (dégradés) — zéro asset téléchargé.
+   ═══════════════════════════════════════════════════════════════════ */
+.craft-story {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.craft-story__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+  width: 100%;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+@media (max-width: 767px) {
+  .craft-story__inner { grid-template-columns: 1fr; }
+  .craft-wall { max-height: 38vh; }
+}
+
+/* Le mur : cadre 2/3 portrait, couches empilées */
+.craft-wall {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  max-height: 70vh;
+  margin-inline: auto;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.6);
+}
+.craft-layer { position: absolute; inset: 0; }
+
+/* 1. Brut — béton froid, taches, lumière crue en haut */
+.craft-layer--brut {
+  background:
+    radial-gradient(140% 60% at 50% -10%, rgba(255, 255, 255, 0.14), transparent 60%),
+    radial-gradient(35% 25% at 24% 38%, rgba(0, 0, 0, 0.18), transparent),
+    radial-gradient(28% 20% at 74% 64%, rgba(0, 0, 0, 0.14), transparent),
+    radial-gradient(20% 16% at 56% 22%, rgba(255, 255, 255, 0.05), transparent),
+    linear-gradient(160deg, #8f8d88 0%, #75736e 45%, #5f5d59 100%);
+}
+/* fissures discrètes */
+.craft-layer--brut::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(83deg, transparent 49.6%, rgba(0, 0, 0, 0.22) 49.9%, transparent 50.25%) 18% 0 / 140% 60% no-repeat,
+    linear-gradient(94deg, transparent 49.7%, rgba(0, 0, 0, 0.16) 49.95%, transparent 50.2%) 70% 100% / 120% 45% no-repeat;
+}
+
+/* 2. Enduit — surface lissée, teinte chaude uniforme */
+.craft-layer--enduit {
+  background:
+    radial-gradient(120% 55% at 50% -5%, rgba(255, 255, 255, 0.2), transparent 55%),
+    linear-gradient(165deg, #d9cfc0 0%, #cbbfae 55%, #b8ab98 100%);
+}
+
+/* 3. Couleur — émeraude profonde, passes croisées */
+.craft-layer--couleur {
+  background:
+    radial-gradient(130% 50% at 50% 0%, rgba(255, 255, 255, 0.12), transparent 55%),
+    linear-gradient(20deg, rgba(0, 0, 0, 0.22), transparent 40%),
+    linear-gradient(160deg, #0d5c48 0%, #0a4d3c 45%, #06382c 100%);
+}
+
+/* 4. Or — vernis chaud + filets + monogramme */
+.craft-layer--or {
+  background: radial-gradient(120% 70% at 50% 10%, rgba(212, 175, 55, 0.12), transparent 65%);
+}
+.craft-veins { position: absolute; inset: 0; width: 100%; height: 100%; }
+.craft-mono {
+  position: absolute;
+  right: 10%;
+  bottom: 8%;
+  width: clamp(56px, 22%, 96px);
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.45));
+}
+
+/* Textes empilés au même endroit — GSAP les relaie */
+.craft-steps { position: relative; min-height: 12rem; }
+.craft-step { position: absolute; inset: 0; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   Studio epoxy (EpoxyStudio.jsx) — pièce en fausse perspective,
+   sol clearcoat avec reflet qui balaie en continu. Teinte pilotée
+   par les variables CSS --epoxy-base / --epoxy-deep / --epoxy-sheen.
+   ═══════════════════════════════════════════════════════════════════ */
+.epoxy-room {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.55);
+}
+.epoxy-wall {
+  position: absolute;
+  inset: 0 0 42% 0;
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(255, 255, 255, 0.10), transparent 60%),
+    linear-gradient(170deg, #35322c 0%, #262420 100%);
+}
+/* plinthe */
+.epoxy-wall::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 5%;
+  background: linear-gradient(#161513, #0d0c0b);
+}
+.epoxy-floor {
+  position: absolute;
+  inset: 58% 0 0 0;
+  background:
+    /* reflet du mur dans le vernis */
+    linear-gradient(180deg, rgba(255, 255, 255, 0.10), transparent 34%),
+    /* profondeur des pigments */
+    radial-gradient(90% 130% at 50% 0%, var(--epoxy-base) 0%, var(--epoxy-deep) 78%);
+  transition: background 0.6s ease;
+}
+/* veines de marbre — activées seulement pour la teinte marbre */
+.epoxy-floor.is-veined::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(102deg, transparent 49.4%, rgba(90, 95, 110, 0.5) 49.9%, transparent 50.5%) 12% 0 / 130% 100% no-repeat,
+    linear-gradient(78deg, transparent 49.5%, rgba(110, 115, 128, 0.35) 49.95%, transparent 50.4%) 78% 0 / 110% 100% no-repeat,
+    linear-gradient(95deg, transparent 49.7%, rgba(70, 74, 88, 0.28) 50%, transparent 50.3%) 45% 0 / 160% 100% no-repeat;
+}
+/* balayage spéculaire — le "clearcoat" vivant */
+.epoxy-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    var(--epoxy-sheen) 46%,
+    transparent 62%
+  );
+  background-size: 300% 100%;
+  animation: epoxy-sweep 5.5s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+@keyframes epoxy-sweep {
+  0%, 12%  { background-position: 120% 0; }
+  55%, 100% { background-position: -60% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .epoxy-sheen { animation: none; background-position: 30% 0; }
+}

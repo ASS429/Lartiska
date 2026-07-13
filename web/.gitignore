@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Originaux vidéo avant compression ffmpeg (backup local, hors repo)
+.video-originals/
