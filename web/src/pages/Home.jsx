@@ -323,6 +323,16 @@ function CategoryIcon({ slug }) {
     case 'decoration':
     case 'sur-mesure':
       return <svg {...common}><path d="m12 3-1.5 4.5L6 9l4.5 1.5L12 15l1.5-4.5L18 9l-4.5-1.5z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>;
+    case 'maconnerie':
+      return <svg {...common}><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9h18"/><path d="M3 14h18"/><path d="M9 4v5"/><path d="M15 9v5"/><path d="M9 14v6"/></svg>;
+    case 'charpente':
+      return <svg {...common}><path d="M3 20 12 5l9 15"/><path d="M7.5 13.5h9"/><path d="M5.5 17h13"/><path d="M12 5v15"/></svg>;
+    case 'couverture':
+      return <svg {...common}><path d="M2 12 12 4l10 8"/><path d="M5 10v9h14v-9"/><path d="M5 14h14"/></svg>;
+    case 'facade-platrerie':
+      return <svg {...common}><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 7h3v3H8z"/><path d="M13 7h3v3h-3z"/><path d="M8 13h3v3H8z"/><path d="M13 13h3v3h-3z"/></svg>;
+    case 'isolation':
+      return <svg {...common}><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"/><path d="M12 8v5"/><path d="M9.5 10.5h5"/></svg>;
     default:
       return <svg {...common}><circle cx="12" cy="12" r="9"/><path d="M12 7v10"/><path d="M7 12h10"/></svg>;
   }

@@ -13,44 +13,84 @@ use Illuminate\Support\Facades\Storage;
 
 class ProjectImageController extends Controller
 {
+    /** Poids max par fichier : 12 Mo pour une image, 100 Mo pour une vidéo. */
+    private const MAX_IMAGE_KB = 12288;
+    private const MAX_VIDEO_KB = 102400;
+
     public function store(Request $request, Project $project): JsonResponse
     {
+        // Le champ s'appelle "images" pour compatibilité, mais accepte
+        // désormais aussi les vidéos de réalisations (mp4, mov, webm).
         $request->validate([
             'images' => ['required', 'array', 'min:1', 'max:20'],
-            'images.*' => ['required', 'image', 'mimes:jpeg,jpg,png,webp', 'max:10240'],
+            'images.*' => [
+                'required', 'file',
+                'mimetypes:image/jpeg,image/png,image/webp,video/mp4,video/quicktime,video/webm',
+                'max:' . self::MAX_VIDEO_KB,
+            ],
         ]);
+
+        // Taille max différenciée : GD chargerait une image de 100 Mo en mémoire.
+        foreach ($request->file('images', []) as $i => $file) {
+            $isVideo = str_starts_with((string) $file->getMimeType(), 'video/');
+            if (!$isVideo && $file->getSize() > self::MAX_IMAGE_KB * 1024) {
+                return response()->json([
+                    'message' => 'Image trop lourde (max 12 Mo) : ' . $file->getClientOriginalName(),
+                    'errors' => ["images.$i" => ['Image trop lourde (max 12 Mo).']],
+                ], 422);
+            }
+        }
 
         $created = [];
         $nextOrder = ($project->images()->max('order') ?? -1) + 1;
 
         foreach ($request->file('images', []) as $file) {
-            // Ré-encodage WebP (strip EXIF/GPS + anti-polyglotte) + vignette.
-            $processed = ImageProcessor::storeProjectImage($file, $project->id);
+            if (str_starts_with((string) $file->getMimeType(), 'video/')) {
+                // Vidéo : stockée telle quelle sur le disque (R2 en prod).
+                // Pas de ré-encodage serveur (pas de ffmpeg sur Railway) —
+                // le front l'affiche en <video preload="metadata">.
+                $path = $file->store('projects/' . $project->id, config('filesystems.default'));
 
-            $image = $project->images()->create([
-                'path' => $processed['path'],
-                'thumbnail' => $processed['thumbnail'],
-                'width' => $processed['width'],
-                'height' => $processed['height'],
-                'order' => $nextOrder++,
-                'is_cover' => false,
-            ]);
+                $image = $project->images()->create([
+                    'path' => $path,
+                    'type' => 'video',
+                    'order' => $nextOrder++,
+                    'is_cover' => false,
+                ]);
+            } else {
+                // Image : ré-encodage WebP (strip EXIF/GPS + anti-polyglotte) + vignette.
+                $processed = ImageProcessor::storeProjectImage($file, $project->id);
+
+                $image = $project->images()->create([
+                    'path' => $processed['path'],
+                    'type' => 'image',
+                    'thumbnail' => $processed['thumbnail'],
+                    'width' => $processed['width'],
+                    'height' => $processed['height'],
+                    'order' => $nextOrder++,
+                    'is_cover' => false,
+                ]);
+            }
 
             $created[] = $image;
         }
 
-        // S'il n'y a pas encore de cover, prendre la 1ʳᵉ image uploadée
-        if (!$project->cover_image && !empty($created)) {
-            $project->update([
-                'cover_image' => $created[0]->path,
-                'cover_thumbnail' => $created[0]->thumbnail,
-            ]);
-            $created[0]->update(['is_cover' => true]);
+        // S'il n'y a pas encore de cover, prendre la 1ʳᵉ IMAGE uploadée
+        // (jamais une vidéo : la cover sert d'og:image, de vignette de grille…)
+        if (!$project->cover_image) {
+            $firstImage = collect($created)->firstWhere('type', '!=', 'video');
+            if ($firstImage) {
+                $project->update([
+                    'cover_image' => $firstImage->path,
+                    'cover_thumbnail' => $firstImage->thumbnail,
+                ]);
+                $firstImage->update(['is_cover' => true]);
+            }
         }
 
         return response()->json([
             'data' => ProjectImageResource::collection(collect($created)),
-            'message' => count($created) . ' image(s) ajoutée(s).',
+            'message' => count($created) . ' média(s) ajouté(s).',
         ], 201);
     }
 

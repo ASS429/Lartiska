@@ -111,12 +111,24 @@ export default function ProjectDetail() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {data.images.map((img) => (
               <figure key={img.id} className="aspect-square overflow-hidden surface-card">
-                <img
-                  src={img.url}
-                  alt={img.caption || `${data.title} — détail ${data.category?.name || ''} Lartiska${data.city ? ` ${data.city}` : ''}`}
-                  loading="lazy"
-                  className="w-full h-full object-cover"
-                />
+                {img.type === 'video' ? (
+                  <video
+                    src={img.url}
+                    controls
+                    muted
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-full object-cover"
+                    aria-label={img.caption || `${data.title} — vidéo de la réalisation Lartiska${data.city ? ` à ${data.city}` : ''}`}
+                  />
+                ) : (
+                  <img
+                    src={img.url}
+                    alt={img.caption || `${data.title} — détail ${data.category?.name || ''} Lartiska${data.city ? ` ${data.city}` : ''}`}
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                  />
+                )}
               </figure>
             ))}
           </div>

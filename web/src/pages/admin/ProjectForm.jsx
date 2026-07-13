@@ -122,6 +122,18 @@ export default function AdminProjectForm() {
   const onFiles = (e) => {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;
+
+    // Pré-contrôle client : 12 Mo image / 100 Mo vidéo (le serveur revérifie).
+    const tooBig = files.find((f) => {
+      const isVideo = f.type.startsWith('video/');
+      return f.size > (isVideo ? 100 : 12) * 1024 * 1024;
+    });
+    if (tooBig) {
+      alert(`${tooBig.name} est trop lourd (max ${tooBig.type.startsWith('video/') ? '100 Mo pour une vidéo' : '12 Mo pour une image'}).`);
+      e.target.value = '';
+      return;
+    }
+
     uploadMutation.mutate(files);
   };
 
@@ -224,7 +236,7 @@ export default function AdminProjectForm() {
                   <input
                     ref={fileRef}
                     type="file"
-                    accept="image/jpeg,image/png,image/webp"
+                    accept="image/jpeg,image/png,image/webp,video/mp4,video/quicktime,video/webm"
                     multiple
                     onChange={onFiles}
                     className="block w-full text-xs text-fg/70 file:mr-3 file:px-4 file:py-2.5 file:rounded-full file:border-0 file:bg-gold/15 file:text-gold file:cursor-pointer file:uppercase file:tracking-widest hover:file:bg-gold/25 cursor-pointer"
@@ -242,7 +254,16 @@ export default function AdminProjectForm() {
                   <div className="grid grid-cols-3 gap-2 mt-5">
                     {project.images.map((img) => (
                       <div key={img.id} className="relative group rounded-lg overflow-hidden bg-ink aspect-square">
-                        <img src={img.url} alt="" className="w-full h-full object-cover" />
+                        {img.type === 'video' ? (
+                          <>
+                            <video src={img.url} muted playsInline preload="metadata" className="w-full h-full object-cover" />
+                            <span className="absolute inset-0 grid place-items-center pointer-events-none">
+                              <span className="w-8 h-8 rounded-full bg-bg/70 grid place-items-center text-gold text-sm">▶</span>
+                            </span>
+                          </>
+                        ) : (
+                          <img src={img.thumbnail || img.url} alt="" className="w-full h-full object-cover" />
+                        )}
                         {img.is_cover && (
                           <span className="absolute top-1 left-1 text-[10px] uppercase tracking-widest bg-gold/90 text-bg px-1.5 py-0.5 rounded-full">★</span>
                         )}
@@ -254,7 +275,7 @@ export default function AdminProjectForm() {
                         )}
                         <div className="absolute inset-0 bg-bg/85 opacity-0 group-hover:opacity-100 transition flex flex-col items-center justify-center gap-1.5 text-xs p-2">
                           <div className="flex gap-1.5">
-                            {!img.is_cover && (
+                            {!img.is_cover && img.type !== 'video' && (
                               <button
                                 type="button"
                                 onClick={() => setCoverMutation.mutate(img.id)}
@@ -273,16 +294,18 @@ export default function AdminProjectForm() {
                               ✕
                             </button>
                           </div>
-                          <select
-                            value={img.before_after || 'none'}
-                            onChange={(e) => beforeAfterMutation.mutate({ imageId: img.id, value: e.target.value })}
-                            className="w-full text-[10px] uppercase tracking-widest bg-ink border border-line rounded px-1.5 py-1 text-fg"
-                            title="Marquer comme Avant / Après"
-                          >
-                            <option value="none">Normale</option>
-                            <option value="before">Avant</option>
-                            <option value="after">Après</option>
-                          </select>
+                          {img.type !== 'video' && (
+                            <select
+                              value={img.before_after || 'none'}
+                              onChange={(e) => beforeAfterMutation.mutate({ imageId: img.id, value: e.target.value })}
+                              className="w-full text-[10px] uppercase tracking-widest bg-ink border border-line rounded px-1.5 py-1 text-fg"
+                              title="Marquer comme Avant / Après"
+                            >
+                              <option value="none">Normale</option>
+                              <option value="before">Avant</option>
+                              <option value="after">Après</option>
+                            </select>
+                          )}
                         </div>
                       </div>
                     ))}
@@ -291,7 +314,7 @@ export default function AdminProjectForm() {
               </div>
 
               <p className="text-xs text-fg/45 leading-relaxed">
-                JPG, PNG ou WebP, max 10 Mo par fichier. La première image uploadée devient la cover automatiquement.
+                Images : JPG, PNG ou WebP, max 12 Mo. Vidéos : MP4, MOV ou WebM, max 100 Mo. La première image uploadée devient la cover automatiquement (les vidéos ne peuvent pas servir de cover).
                 <br />
                 <strong className="text-fg/65">Avant / Après</strong> : marquer 2 images consécutives par leur ordre
                 (avant, puis après) — elles s'affichent en slider comparatif côté public.

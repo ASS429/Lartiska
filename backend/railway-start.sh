@@ -42,4 +42,8 @@ if [ "$FILESYSTEM_DISK" = "public" ] || [ -z "$FILESYSTEM_DISK" ]; then
 fi
 
 echo "→ Démarrage du serveur sur 0.0.0.0:$PORT"
+# PHP_INI_SCAN_DIR : le ":" initial conserve les ini par défaut, puis charge
+# php-conf/uploads.ini (limites d'upload vidéo 100M). La variable est héritée
+# par le process php -S que `artisan serve` lance en interne.
+export PHP_INI_SCAN_DIR=":$PWD/php-conf"
 exec php artisan serve --host=0.0.0.0 --port=$PORT

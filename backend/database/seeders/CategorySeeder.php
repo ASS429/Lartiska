@@ -52,6 +52,42 @@ class CategorySeeder extends Seeder
                 'description' => 'Créations sur-mesure adaptées aux souhaits spécifiques de chaque client.',
                 'order' => 6,
             ],
+            // ── Élargissement des métiers (2026) ──────────────────────
+            [
+                'name' => 'Maçonnerie & gros œuvre',
+                'slug' => 'maconnerie',
+                'icon' => 'wall',
+                'description' => 'Construction, extension, murs et dalles — des fondations saines pour recevoir la finition.',
+                'order' => 7,
+            ],
+            [
+                'name' => 'Charpente',
+                'slug' => 'charpente',
+                'icon' => 'roof-frame',
+                'description' => 'Charpentes bois et métalliques, ossatures et structures de toiture sur mesure.',
+                'order' => 8,
+            ],
+            [
+                'name' => 'Couverture & toiture',
+                'slug' => 'couverture',
+                'icon' => 'roof',
+                'description' => 'Pose et rénovation de toitures : tuiles, tôles, bacs acier, étanchéité.',
+                'order' => 9,
+            ],
+            [
+                'name' => 'Façade & plâtrerie',
+                'slug' => 'facade-platrerie',
+                'icon' => 'facade',
+                'description' => 'Ravalement de façades, enduits décoratifs, plâtrerie fine intérieure et extérieure.',
+                'order' => 10,
+            ],
+            [
+                'name' => 'Isolation',
+                'slug' => 'isolation',
+                'icon' => 'shield',
+                'description' => 'Isolation thermique et phonique — confort durable et économies d\'énergie.',
+                'order' => 11,
+            ],
         ];
 
         foreach ($categories as $cat) {

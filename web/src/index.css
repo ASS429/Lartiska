@@ -283,6 +283,12 @@
   .service-card.cat-decoration { color: var(--m-emeraude); }
   .service-card.cat-epoxy-resine { color: var(--m-cuivre); }
   .service-card.cat-sur-mesure { color: var(--m-brique); }
+  /* Nouveaux métiers (2026) */
+  .service-card.cat-maconnerie { color: var(--m-brique); }
+  .service-card.cat-charpente { color: var(--m-cuivre); }
+  .service-card.cat-couverture { color: var(--m-soleil); }
+  .service-card.cat-facade-platrerie { color: var(--m-turquoise); }
+  .service-card.cat-isolation { color: var(--m-emeraude); }
 
   .lartiska-input {
     @apply w-full px-4 py-3 rounded-xl bg-ink/50 border border-line text-fg placeholder:text-fg/35 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300;
@@ -575,6 +581,11 @@
   .cat-badge.cat-decoration { color: var(--m-emeraude); }
   .cat-badge.cat-epoxy-resine { color: var(--m-cuivre); }
   .cat-badge.cat-sur-mesure { color: var(--m-brique); }
+  .cat-badge.cat-maconnerie { color: var(--m-brique); }
+  .cat-badge.cat-charpente { color: var(--m-cuivre); }
+  .cat-badge.cat-couverture { color: var(--m-soleil); }
+  .cat-badge.cat-facade-platrerie { color: var(--m-turquoise); }
+  .cat-badge.cat-isolation { color: var(--m-emeraude); }
 
   /* Variante "tag" — pour les overlays sur les photos */
   .cat-tag {
