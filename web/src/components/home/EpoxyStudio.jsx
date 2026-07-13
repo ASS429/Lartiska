@@ -11,11 +11,12 @@ import { useServices } from '@/hooks/useApi';
  * Rendu 100% CSS (dégradés + reflet animé) : aucun asset, aucun WebGL —
  * fluide même sur mobile d'entrée de gamme.
  */
+// Chaque teinte = vraie texture epoxy (web/public/img/epoxy_*.webp).
 const TINTS = [
-  { key: 'emeraude', label: 'Émeraude', base: '#0a4d3c', deep: '#052e23', sheen: 'rgba(255,255,255,0.34)', veined: false },
-  { key: 'ambre', label: 'Ambre doré', base: '#8a5a18', deep: '#4c2f08', sheen: 'rgba(255,236,190,0.4)', veined: false },
-  { key: 'marbre', label: 'Marbre blanc', base: '#c9cbd1', deep: '#9b9ea6', sheen: 'rgba(255,255,255,0.5)', veined: true },
-  { key: 'noir', label: 'Noir métallisé', base: '#1b1d22', deep: '#08090c', sheen: 'rgba(180,200,255,0.28)', veined: false },
+  { key: 'emeraude', label: 'Émeraude', img: '/img/epoxy_emeraude.webp', sheen: 'rgba(255,255,255,0.30)' },
+  { key: 'ambre', label: 'Ambre doré', img: '/img/epoxy_ambre_dore.webp', sheen: 'rgba(255,236,190,0.34)' },
+  { key: 'marbre', label: 'Marbre blanc', img: '/img/epoxy_marbre_blanc.webp', sheen: 'rgba(255,255,255,0.42)' },
+  { key: 'noir', label: 'Noir métallisé', img: '/img/epoxy_noir_metalise.webp', sheen: 'rgba(180,200,255,0.26)' },
 ];
 
 const DRAFT_KEY = 'lartiska_devis_draft';
@@ -65,15 +66,15 @@ export function EpoxyStudio() {
           <div
             className="epoxy-room"
             style={{
-              '--epoxy-base': tint.base,
-              '--epoxy-deep': tint.deep,
+              '--epoxy-img': `url('${tint.img}')`,
               '--epoxy-sheen': tint.sheen,
             }}
             role="img"
             aria-label={`Aperçu d'un sol en résine epoxy, teinte ${tint.label}`}
           >
             <div className="epoxy-wall" />
-            <div className={`epoxy-floor ${tint.veined ? 'is-veined' : ''}`}>
+            {/* key = re-monte la couche à chaque teinte → fondu d'apparition */}
+            <div className="epoxy-floor" key={tint.key}>
               <div className="epoxy-sheen" />
             </div>
           </div>
@@ -93,8 +94,8 @@ export function EpoxyStudio() {
                   }`}
                 >
                   <span
-                    className="w-9 h-9 rounded-full shrink-0 border border-white/20"
-                    style={{ background: `radial-gradient(circle at 32% 28%, ${t.sheen}, transparent 42%), linear-gradient(150deg, ${t.base}, ${t.deep})` }}
+                    className="w-9 h-9 rounded-full shrink-0 border border-white/20 bg-cover bg-center"
+                    style={{ backgroundImage: `radial-gradient(circle at 32% 28%, ${t.sheen}, transparent 42%), url('${t.img}')` }}
                   />
                   <span className="text-sm">{t.label}</span>
                 </button>

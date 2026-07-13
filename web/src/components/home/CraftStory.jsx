@@ -17,10 +17,10 @@ import { gsap, ScrollTrigger, prefersReducedMotion } from '@/lib/motion';
  * simple grille statique lisible.
  */
 const STAGES = [
-  { key: 'brut', label: 'Préparer', text: "Tout commence par un mur brut. On sonde, on répare, on prépare le support — l'œuvre a besoin de fondations saines." },
-  { key: 'enduit', label: 'Lisser', text: "L'enduit efface les défauts. La surface devient peau : douce, régulière, prête à recevoir la couleur." },
-  { key: 'couleur', label: 'Colorer', text: "La teinte signature monte comme une vague. Pigments profonds, passes croisées — la pièce change d'âme." },
-  { key: 'or', label: 'Signer', text: "Les filets d'or dessinent la signature Lartiska. Chaque chantier livré est une pièce unique, signée." },
+  { key: 'brut', label: 'Préparer', img: '/img/mur_brut.webp', text: "Tout commence par un mur brut. On sonde, on répare, on prépare le support — l'œuvre a besoin de fondations saines." },
+  { key: 'enduit', label: 'Lisser', img: '/img/mur_enduit.webp', text: "L'enduit efface les défauts. La surface devient peau : douce, régulière, prête à recevoir la couleur." },
+  { key: 'couleur', label: 'Colorer', img: '/img/mur_colore.webp', text: "La teinte signature monte comme une vague. Pigments profonds, passes croisées — la pièce change d'âme." },
+  { key: 'or', label: 'Signer', img: '/img/mur_trace_or.webp', text: "Les filets d'or dessinent la signature Lartiska. Chaque chantier livré est une pièce unique, signée." },
 ];
 
 export function CraftStory() {
@@ -95,9 +95,12 @@ export function CraftStory() {
         <h2 className="font-serif text-4xl md:text-5xl font-light mb-10">Du brut à <em className="gold-em">l'œuvre</em>.</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {STAGES.map((s, i) => (
-            <article key={s.key} className="surface-card p-7">
-              <p className="text-gold text-xs uppercase tracking-widest mb-3">{String(i + 1).padStart(2, '0')} · {s.label}</p>
-              <p className="text-fg/75 leading-relaxed text-sm">{s.text}</p>
+            <article key={s.key} className="surface-card overflow-hidden">
+              <img src={s.img} alt={s.label} loading="lazy" className="w-full aspect-[4/3] object-cover" />
+              <div className="p-6">
+                <p className="text-gold text-xs uppercase tracking-widest mb-3">{String(i + 1).padStart(2, '0')} · {s.label}</p>
+                <p className="text-fg/75 leading-relaxed text-sm">{s.text}</p>
+              </div>
             </article>
           ))}
         </div>
@@ -108,19 +111,13 @@ export function CraftStory() {
   return (
     <section ref={hostRef} className="craft-story" aria-label="Notre méthode : du mur brut à l'œuvre signée">
       <div className="craft-story__inner container-art">
-        {/* ── Le mur ─────────────────────────────────────────────── */}
+        {/* ── Le mur — vraies photos de chantier (public/img/mur_*.webp) ── */}
         <div className="craft-wall" aria-hidden="true">
           <div className="craft-layer craft-layer--brut" />
           <div className="craft-layer craft-layer--enduit" />
           <div className="craft-layer craft-layer--couleur" />
           <div className="craft-layer craft-layer--or">
-            {/* filets d'or */}
-            <svg className="craft-veins" viewBox="0 0 400 600" preserveAspectRatio="none">
-              <path d="M60 0 C 80 140, 40 260, 70 400 S 90 560, 60 600" stroke="rgba(212,175,55,.5)" strokeWidth="1.4" fill="none" />
-              <path d="M300 0 C 320 120, 280 300, 320 430 S 300 540, 315 600" stroke="rgba(212,175,55,.35)" strokeWidth="1" fill="none" />
-              <path d="M180 0 C 160 180, 220 320, 190 470 S 170 550, 185 600" stroke="rgba(212,175,55,.25)" strokeWidth="0.8" fill="none" />
-            </svg>
-            {/* monogramme LK tracé à la fin */}
+            {/* monogramme LK tracé à la fin, par-dessus le marbre veiné or */}
             <svg className="craft-mono" viewBox="0 0 120 120">
               <path d="M34 22 v62 h30" stroke="#D4AF37" strokeWidth="5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
               <path d="M70 22 v62 M70 52 l26 -30 M70 52 l26 32" stroke="#D4AF37" strokeWidth="5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
