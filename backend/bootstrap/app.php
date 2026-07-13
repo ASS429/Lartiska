@@ -34,5 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        // Sentry : capture les exceptions non gérées en production.
+        // Inactif tant que SENTRY_LARAVEL_DSN n'est pas défini.
+        \Sentry\Laravel\Integration::handles($exceptions);
     })->create();
