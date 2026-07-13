@@ -16,6 +16,9 @@ class ProjectResource extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'cover_image' => MediaUrl::absolute($this->cover_image),
+            // Vignette 640px pour les grilles ; fallback sur l'original
+            // pour les images uploadées avant l'introduction des vignettes.
+            'cover_thumbnail' => MediaUrl::absolute($this->cover_thumbnail ?: $this->cover_image),
             'city' => $this->city,
             'client_name' => $this->client_name,
             'materials' => $this->materials,

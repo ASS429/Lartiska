@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ProjectImageResource;
 use App\Models\Project;
 use App\Models\ProjectImage;
+use App\Support\ImageProcessor;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -23,10 +24,14 @@ class ProjectImageController extends Controller
         $nextOrder = ($project->images()->max('order') ?? -1) + 1;
 
         foreach ($request->file('images', []) as $file) {
-            $path = $file->store('projects/' . $project->id, config('filesystems.default'));
+            // Ré-encodage WebP (strip EXIF/GPS + anti-polyglotte) + vignette.
+            $processed = ImageProcessor::storeProjectImage($file, $project->id);
 
             $image = $project->images()->create([
-                'path' => $path,
+                'path' => $processed['path'],
+                'thumbnail' => $processed['thumbnail'],
+                'width' => $processed['width'],
+                'height' => $processed['height'],
                 'order' => $nextOrder++,
                 'is_cover' => false,
             ]);
@@ -36,7 +41,10 @@ class ProjectImageController extends Controller
 
         // S'il n'y a pas encore de cover, prendre la 1ʳᵉ image uploadée
         if (!$project->cover_image && !empty($created)) {
-            $project->update(['cover_image' => $created[0]->path]);
+            $project->update([
+                'cover_image' => $created[0]->path,
+                'cover_thumbnail' => $created[0]->thumbnail,
+            ]);
             $created[0]->update(['is_cover' => true]);
         }
 
@@ -52,7 +60,10 @@ class ProjectImageController extends Controller
 
         $project->images()->update(['is_cover' => false]);
         $image->update(['is_cover' => true]);
-        $project->update(['cover_image' => $image->path]);
+        $project->update([
+            'cover_image' => $image->path,
+            'cover_thumbnail' => $image->thumbnail,
+        ]);
 
         return response()->json([
             'data' => new ProjectImageResource($image),
@@ -64,8 +75,12 @@ class ProjectImageController extends Controller
     {
         abort_unless($image->project_id === $project->id, 404);
 
+        $disk = Storage::disk(config('filesystems.default'));
         if ($image->path) {
-            Storage::disk(config('filesystems.default'))->delete($image->path);
+            $disk->delete($image->path);
+        }
+        if ($image->thumbnail) {
+            $disk->delete($image->thumbnail);
         }
 
         $wasCover = $image->is_cover;
@@ -76,9 +91,12 @@ class ProjectImageController extends Controller
             $first = $project->images()->orderBy('order')->first();
             if ($first) {
                 $first->update(['is_cover' => true]);
-                $project->update(['cover_image' => $first->path]);
+                $project->update([
+                    'cover_image' => $first->path,
+                    'cover_thumbnail' => $first->thumbnail,
+                ]);
             } else {
-                $project->update(['cover_image' => null]);
+                $project->update(['cover_image' => null, 'cover_thumbnail' => null]);
             }
         }
 

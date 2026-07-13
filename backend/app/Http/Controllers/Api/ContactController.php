@@ -11,6 +11,14 @@ class ContactController extends Controller
 {
     public function store(StoreContactRequest $request): JsonResponse
     {
+        // Honeypot : champ "website" invisible pour un humain (caché en CSS,
+        // tabindex -1). S'il est rempli, c'est un bot → faux succès, rien stocké.
+        if ($request->filled('website')) {
+            return response()->json([
+                'message' => 'Merci, votre message est bien arrivé.',
+            ], 201);
+        }
+
         $message = Message::create([
             ...$request->validated(),
             'source' => 'web',

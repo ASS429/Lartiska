@@ -17,7 +17,9 @@ class RegisterRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:120'],
             'email' => ['required', 'email', 'max:160', 'unique:users,email'],
-            'password' => ['required', 'confirmed', Password::min(8)],
+            // uncompromised() vérifie contre les fuites connues (haveibeenpwned,
+            // via k-anonymity : le mot de passe n'est jamais envoyé en clair).
+            'password' => ['required', 'confirmed', Password::min(10)->letters()->numbers()->uncompromised()],
             'phone' => ['nullable', 'string', 'max:30'],
             'device_name' => ['nullable', 'string', 'max:80'],
         ];

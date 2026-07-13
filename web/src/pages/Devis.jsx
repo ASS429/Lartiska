@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 import { useServices } from '@/hooks/useApi';
 import { submitQuote } from '@/api/endpoints';
 import { Seo } from '@/hooks/useSeo';
+import { HoneypotField } from '@/components/ui/HoneypotField';
 import clsx from 'clsx';
 
 const STEPS = ['Service', 'Détails', 'Coordonnées', 'Récapitulatif'];
@@ -12,21 +13,56 @@ const MAX_ATTACHMENTS = 5;
 const MAX_FILE_SIZE_MB = 10;
 const ACCEPTED_MIMES = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
 
+// Brouillon : un utilisateur interrompu (coupure réseau, appel…) ne repart
+// pas de zéro — le formulaire est restauré à sa prochaine visite.
+const DRAFT_KEY = 'lartiska_devis_draft';
+
+function loadDraft() {
+  try {
+    const raw = localStorage.getItem(DRAFT_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+const EMPTY_FORM = {
+  service_id: '',
+  description: '',
+  surface_m2: '',
+  estimated_budget: '',
+  client_name: '',
+  client_email: '',
+  client_phone: '',
+  client_city: '',
+  site_address: '',
+  website: '', // honeypot — jamais rempli par un humain
+};
+
 export default function Devis() {
   const [searchParams] = useSearchParams();
   const presetServiceId = searchParams.get('service_id') || '';
-  const [step, setStep] = useState(presetServiceId ? 1 : 0); // skip step 0 si préselection
-  const [form, setForm] = useState({
-    service_id: presetServiceId,
-    description: '',
-    surface_m2: '',
-    estimated_budget: '',
-    client_name: '',
-    client_email: '',
-    client_phone: '',
-    client_city: '',
-    site_address: '',
+  const draft = loadDraft();
+  const [step, setStep] = useState(() => {
+    if (presetServiceId) return 1; // skip step 0 si préselection
+    return draft?.step ?? 0;
   });
+  const [form, setForm] = useState(() => ({
+    ...EMPTY_FORM,
+    ...(draft?.form || {}),
+    ...(presetServiceId ? { service_id: presetServiceId } : {}),
+    website: '', // le honeypot n'est jamais restauré
+  }));
+
+  // Sauvegarde du brouillon à chaque changement (données texte uniquement,
+  // pas les fichiers — non sérialisables).
+  useEffect(() => {
+    try {
+      const safe = { ...form };
+      delete safe.website; // le honeypot ne va jamais dans le brouillon
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({ form: safe, step }));
+    } catch { /* stockage plein/désactivé : tant pis pour le brouillon */ }
+  }, [form, step]);
   const [attachments, setAttachments] = useState([]); // File[]
   const [fileError, setFileError] = useState(null);
   const { data: services } = useServices();
@@ -39,6 +75,9 @@ export default function Devis() {
       estimated_budget: form.estimated_budget ? Number(form.estimated_budget) : null,
       attachments,
     }),
+    onSuccess: () => {
+      try { localStorage.removeItem(DRAFT_KEY); } catch { /* ignore */ }
+    },
   });
 
   const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
@@ -147,6 +186,7 @@ export default function Devis() {
       </div>
 
       <section className="surface-card p-7 md:p-10">
+        <HoneypotField value={form.website} onChange={set('website')} />
         {step === 0 && (
           <div>
             <h2 className="font-serif text-2xl mb-6">Quel type de prestation ?</h2>

@@ -2,8 +2,10 @@ import { Outlet } from 'react-router-dom';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { WhatsAppButton } from './WhatsAppButton';
-import { PaintDrops } from './PaintDrops';
+import { GoldDust } from './GoldDust';
 import { PageEnterWipe } from './PageEnterWipe';
+import { SmoothScroll } from './SmoothScroll';
+import { CinematicEffects } from './CinematicEffects';
 import { BusinessSchema } from '@/components/seo/BusinessSchema';
 
 export function Layout() {
@@ -11,7 +13,10 @@ export function Layout() {
     <div className="min-h-screen flex flex-col relative">
       {/* JSON-LD sitewide LocalBusiness pour Google */}
       <BusinessSchema />
-      <PaintDrops />
+      {/* Chorégraphie cinématique : smooth scroll + reveals + tilt + magnétisme */}
+      <SmoothScroll />
+      <CinematicEffects />
+      <GoldDust />
       <Navbar />
       <main className="flex-1 pt-20 relative z-[2]">
         <Outlet />

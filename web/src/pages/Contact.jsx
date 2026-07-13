@@ -3,14 +3,17 @@ import { useMutation } from '@tanstack/react-query';
 import { useSettings } from '@/hooks/useApi';
 import { submitContact } from '@/api/endpoints';
 import { Seo } from '@/hooks/useSeo';
+import { HoneypotField } from '@/components/ui/HoneypotField';
+
+const EMPTY = { name: '', email: '', phone: '', subject: '', body: '', website: '' };
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', body: '' });
+  const [form, setForm] = useState(EMPTY);
   const { data: settings } = useSettings();
 
   const mutation = useMutation({
     mutationFn: () => submitContact(form),
-    onSuccess: () => setForm({ name: '', email: '', phone: '', subject: '', body: '' }),
+    onSuccess: () => setForm(EMPTY),
   });
 
   const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
@@ -198,6 +201,8 @@ export default function Contact() {
             <p className="eyebrow mb-2">Formulaire</p>
             <h2 className="font-serif text-2xl">Écrivez-nous</h2>
           </header>
+
+          <HoneypotField value={form.website} onChange={set('website')} />
 
           {mutation.isSuccess && (
             <p className="text-gold text-sm border border-gold/40 bg-gold/10 px-4 py-3 rounded-xl">

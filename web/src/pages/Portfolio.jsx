@@ -137,7 +137,7 @@ export default function Portfolio() {
                 style={{ animationDelay: `${(idx % PER_PAGE) * 40}ms` }}
               >
                 {p.cover_image && (
-                  <div className="project-img" style={{ backgroundImage: `url('${p.cover_image}')` }} />
+                  <div className="project-img" style={{ backgroundImage: `url('${p.cover_thumbnail || p.cover_image}')` }} />
                 )}
                 <div className="project-ring" />
                 {/* Cat-tag (palette mosaïque) en haut de la carte */}

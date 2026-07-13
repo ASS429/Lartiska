@@ -80,7 +80,7 @@ export default function AdminProjects() {
             <article key={p.id} className="surface-card overflow-hidden flex flex-col">
               <div className="relative aspect-[4/3] bg-ink overflow-hidden">
                 {p.cover_image ? (
-                  <img src={p.cover_image} alt={p.title} loading="lazy" className="w-full h-full object-cover" />
+                  <img src={p.cover_thumbnail || p.cover_image} alt={p.title} loading="lazy" className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full grid place-items-center text-fg/40">Pas d'image</div>
                 )}

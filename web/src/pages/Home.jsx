@@ -4,6 +4,8 @@ import { useCategories, useSettings } from '@/hooks/useApi';
 import { apiClient } from '@/api/client';
 import { Seo } from '@/hooks/useSeo';
 import { SectionWipe } from '@/components/layout/SectionWipe';
+import { LazyVideo } from '@/components/ui/LazyVideo';
+import { BrushStroke } from '@/components/ui/BrushStroke';
 
 export default function Home() {
   const { data: categories } = useCategories();
@@ -53,6 +55,7 @@ export default function Home() {
             L'art qui transforme<br />
             <span className="italic text-gold">vos espaces.</span>
           </h1>
+          <BrushStroke className="hero-brush" delay={0.5} />
           <p className="mt-8 max-w-2xl mx-auto text-fg/85 text-base md:text-lg leading-relaxed">
             Peinture, plafonnage, carrelage et décoration d'intérieur réunis dans une démarche artistique sur-mesure. Chaque chantier devient une œuvre.
           </p>
@@ -83,21 +86,21 @@ export default function Home() {
       <section className="container-art py-12 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
           <figure className="art-frame aspect-[3/4]">
-            <video src="/V3.mp4" autoPlay muted loop playsInline preload="metadata" />
+            <LazyVideo src="/V3.mp4" />
             <figcaption>
               <span className="art-caption-line" />
               <span className="art-caption-text">œuvre #001</span>
             </figcaption>
           </figure>
           <figure className="art-frame aspect-[3/4]">
-            <video src="/V4.mp4" autoPlay muted loop playsInline preload="metadata" />
+            <LazyVideo src="/V4.mp4" />
             <figcaption>
               <span className="art-caption-line" />
               <span className="art-caption-text">œuvre #002</span>
             </figcaption>
           </figure>
           <figure className="art-frame aspect-[3/4]">
-            <video src="/V1.mp4" autoPlay muted loop playsInline preload="metadata" />
+            <LazyVideo src="/V1.mp4" />
             <figcaption>
               <span className="art-caption-line" />
               <span className="art-caption-text">œuvre #003</span>
@@ -183,7 +186,7 @@ export default function Home() {
                     {p.cover_image && (
                       <div
                         className="project-img"
-                        style={{ backgroundImage: `url('${p.cover_image}')` }}
+                        style={{ backgroundImage: `url('${p.cover_thumbnail || p.cover_image}')` }}
                       />
                     )}
                     <div className="project-ring" />
@@ -260,7 +263,7 @@ export default function Home() {
             {projects.slice(4, 8).map((p) => (
               <Link key={p.id} to={`/portfolio/${p.slug}`} className="project-card">
                 {p.cover_image && (
-                  <div className="project-img" style={{ backgroundImage: `url('${p.cover_image}')` }} />
+                  <div className="project-img" style={{ backgroundImage: `url('${p.cover_thumbnail || p.cover_image}')` }} />
                 )}
                 <div className="project-ring" />
                 {p.category?.slug && (

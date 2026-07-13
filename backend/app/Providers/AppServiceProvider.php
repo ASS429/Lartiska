@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,6 +21,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Toutes les URLs générées (liens PDF, reset password…) doivent être
+        // en https en production — Railway termine le TLS en frontal.
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
+
         // Le lien de reset password dans l'email pointe vers le frontend React
         // (et non une route Laravel inexistante) :
         //   {FRONTEND_URL}/reset-password?token={token}&email={email}

@@ -106,7 +106,7 @@ class AuthController extends Controller
         $request->validate([
             'token' => ['required', 'string'],
             'email' => ['required', 'email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'confirmed', \Illuminate\Validation\Rules\Password::min(10)->letters()->numbers()],
         ]);
 
         $status = Password::reset(
@@ -116,6 +116,10 @@ class AuthController extends Controller
                     'password' => Hash::make($password),
                     'remember_token' => Str::random(60),
                 ])->save();
+
+                // Révoquer toutes les sessions API existantes : un attaquant
+                // déjà connecté ne doit pas survivre au changement de mot de passe.
+                $user->tokens()->delete();
             },
         );
 

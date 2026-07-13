@@ -76,7 +76,7 @@ Route::middleware('auth:sanctum')->group(function () {
     /*
     | Espace admin : /api/admin/*  (requiert role=admin)
     */
-    Route::prefix('admin')->middleware('admin')->group(function () {
+    Route::prefix('admin')->middleware(['admin', 'throttle:120,1'])->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index']);
 
         // Devis
@@ -102,7 +102,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/projects/{project}', [AdminProjectController::class, 'update']);
         Route::delete('/projects/{project}', [AdminProjectController::class, 'destroy']);
 
-        Route::post('/projects/{project}/images', [AdminProjectImageController::class, 'store']);
+        Route::post('/projects/{project}/images', [AdminProjectImageController::class, 'store'])->middleware('throttle:20,1');
         Route::patch('/projects/{project}/images/reorder', [AdminProjectImageController::class, 'reorder']);
         Route::patch('/projects/{project}/images/{image}/cover', [AdminProjectImageController::class, 'setCover']);
         Route::patch('/projects/{project}/images/{image}/before-after', [AdminProjectImageController::class, 'setBeforeAfter']);

@@ -18,6 +18,7 @@ class Project extends Model
         'description',
         'category_id',
         'cover_image',
+        'cover_thumbnail',
         'city',
         'client_name',
         'materials',

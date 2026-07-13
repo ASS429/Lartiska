@@ -17,6 +17,14 @@ class QuoteController extends Controller
 {
     public function store(StoreQuoteRequest $request): JsonResponse
     {
+        // Honeypot anti-bot : voir ContactController. Faux succès, rien stocké.
+        if ($request->filled('website')) {
+            return response()->json([
+                'data' => ['reference' => 'DV-' . strtoupper(substr(md5((string) now()->timestamp), 0, 6))],
+                'message' => 'Demande envoyée. Tounkara reviendra vers vous très vite.',
+            ], 201);
+        }
+
         $data = $request->validated();
         $data['user_id'] = $request->user()?->id;
 

@@ -50,7 +50,9 @@ return [
     |
     */
 
-    'expiration' => null,
+    // Un token volé ne doit pas être valable à vie : 14 jours par défaut.
+    // Le frontend re-login silencieusement via hydrate() quand le token expire.
+    'expiration' => env('SANCTUM_TOKEN_EXPIRATION_MINUTES', 60 * 24 * 14),
 
     /*
     |--------------------------------------------------------------------------
