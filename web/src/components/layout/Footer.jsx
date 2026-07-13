@@ -16,9 +16,9 @@ export function Footer() {
             <em className="gold-em font-serif">L'art qui transforme vos espaces.</em>
             <br />
             <span className="text-fg/95">
-              Peinture, plafonnage, carrelage et décoration artistique.
+              Second œuvre &amp; finitions d'art — peinture, menuiserie, carrelage, plafonnage.
               <br />
-              Sénégal · Gambie · Mauritanie.
+              Partout au Sénégal · et à l'international.
             </span>
           </p>
         </div>

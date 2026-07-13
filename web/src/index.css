@@ -289,6 +289,10 @@
   .service-card.cat-couverture { color: var(--m-soleil); }
   .service-card.cat-facade-platrerie { color: var(--m-turquoise); }
   .service-card.cat-isolation { color: var(--m-emeraude); }
+  .service-card.cat-menuiserie { color: var(--m-cuivre); }
+  .service-card.cat-ameublement { color: var(--m-magenta); }
+  .service-card.cat-espaces-verts { color: var(--m-emeraude); }
+  .service-card.cat-etancheite { color: var(--m-turquoise); }
 
   .lartiska-input {
     @apply w-full px-4 py-3 rounded-xl bg-ink/50 border border-line text-fg placeholder:text-fg/35 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all duration-300;
@@ -586,6 +590,10 @@
   .cat-badge.cat-couverture { color: var(--m-soleil); }
   .cat-badge.cat-facade-platrerie { color: var(--m-turquoise); }
   .cat-badge.cat-isolation { color: var(--m-emeraude); }
+  .cat-badge.cat-menuiserie { color: var(--m-cuivre); }
+  .cat-badge.cat-ameublement { color: var(--m-magenta); }
+  .cat-badge.cat-espaces-verts { color: var(--m-emeraude); }
+  .cat-badge.cat-etancheite { color: var(--m-turquoise); }
 
   /* Variante "tag" — pour les overlays sur les photos */
   .cat-tag {

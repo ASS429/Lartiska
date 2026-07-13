@@ -17,14 +17,14 @@ export function BusinessSchema() {
     '@id': `${SITE_URL}/#business`,
     name: 'Lartiska',
     alternateName: 'Lartiska — Atelier Tounkara',
-    description: "Maître Artisan finition luxe au Sénégal. Peinture artistique, fresques murales, plafonnage décoratif, carrelage zellige, mosaïque, epoxy résine et décoration d'intérieur. Atelier Tounkara à Mbour, intervention au Sénégal, Gambie et Mauritanie.",
+    description: "Entreprise du second œuvre et Maître Artisan finition luxe au Sénégal. Peinture artistique et design d'intérieur, menuiserie, ameublement, carrelage, plafonnage, étanchéité, espaces verts, epoxy résine. Atelier Tounkara à Mbour — intervention partout au Sénégal et à l'international.",
     url: SITE_URL,
     logo: `${SITE_URL}/lartiska-logo.jpg`,
     image: [
       `${SITE_URL}/1.jpg`,
       `${SITE_URL}/tounkara-portrait.jpeg`,
     ],
-    telephone: '+221785446363',
+    telephone: ['+221785446363', '+221773468681', '+221772898537'],
     email: 'contact@lartiska.sn',
     priceRange: '$$-$$$',
     address: {
@@ -39,7 +39,9 @@ export function BusinessSchema() {
       longitude: -16.9646,
     },
     areaServed: [
+      // Tout le Sénégal + déplacements internationaux pour les gros projets
       { '@type': 'Country', name: 'Sénégal' },
+      { '@type': 'AdministrativeArea', name: 'Afrique de l\'Ouest' },
       { '@type': 'Country', name: 'Gambie' },
       { '@type': 'Country', name: 'Mauritanie' },
       { '@type': 'City', name: 'Dakar' },
@@ -48,8 +50,6 @@ export function BusinessSchema() {
       { '@type': 'City', name: 'Mbour' },
       { '@type': 'City', name: 'Touba' },
       { '@type': 'City', name: 'Ziguinchor' },
-      { '@type': 'City', name: 'Banjul' },
-      { '@type': 'City', name: 'Nouakchott' },
     ],
     founder: {
       '@type': 'Person',
@@ -58,6 +58,7 @@ export function BusinessSchema() {
       worksFor: { '@id': `${SITE_URL}/#business` },
     },
     knowsAbout: [
+      'Second œuvre',
       'Peinture artistique',
       'Fresques murales',
       'Trompe-l\'œil',
@@ -70,6 +71,13 @@ export function BusinessSchema() {
       'Décoration d\'intérieur',
       'Design d\'intérieur',
       'Dorure à la feuille',
+      'Menuiserie',
+      'Ameublement sur mesure',
+      'Étanchéité',
+      'Espaces verts',
+      'Maçonnerie',
+      'Charpente',
+      'Isolation',
     ],
     makesOffer: [
       { '@type': 'Offer', name: 'Peinture & fresques murales', priceCurrency: 'XOF' },
@@ -77,6 +85,9 @@ export function BusinessSchema() {
       { '@type': 'Offer', name: 'Carrelage artistique & mosaïque', priceCurrency: 'XOF' },
       { '@type': 'Offer', name: 'Décoration & design d\'intérieur', priceCurrency: 'XOF' },
       { '@type': 'Offer', name: 'Epoxy résine & revêtement sol', priceCurrency: 'XOF' },
+      { '@type': 'Offer', name: 'Menuiserie & ameublement sur mesure', priceCurrency: 'XOF' },
+      { '@type': 'Offer', name: 'Étanchéité', priceCurrency: 'XOF' },
+      { '@type': 'Offer', name: 'Espaces verts & paysagisme', priceCurrency: 'XOF' },
       { '@type': 'Offer', name: 'Commandes personnalisées', priceCurrency: 'XOF' },
     ],
     sameAs: [

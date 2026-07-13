@@ -74,17 +74,17 @@ export default function Portfolio() {
     <div className="container-art py-16 md:py-24">
       <Seo
         title="Portfolio · Fresques, mosaïques, plafonds, epoxy résine — Lartiska"
-        description="Réalisations Lartiska : fresques murales, plafonds décoratifs, mosaïques zellige, sols epoxy résine au Sénégal, Gambie, Mauritanie. Filtrer par ville (Dakar, Mbour, Saint-Louis, Touba, Ziguinchor…) ou par technique."
+        description="Réalisations Lartiska : fresques murales, plafonds décoratifs, mosaïques zellige, sols epoxy résine, menuiserie — partout au Sénégal et à l'international. Filtrer par ville (Dakar, Mbour, Saint-Louis, Touba, Ziguinchor…) ou par technique."
         path="/portfolio"
       />
       <header className="max-w-3xl mb-10 md:mb-14">
         <p className="eyebrow mb-4">— Portfolio</p>
         <h1 className="font-serif text-5xl md:text-7xl font-light leading-[1.04]">
-          Nos <em className="gold-em">réalisations</em><br />
-          à travers l'Afrique de l'Ouest.
+          Nos <em className="gold-em">réalisations</em>,<br />
+          partout où l'on nous appelle.
         </h1>
         <p className="mt-6 text-fg/75 leading-relaxed max-w-xl">
-          Du Sénégal à la Mauritanie, en passant par la Gambie — chaque chantier est l'occasion de redéfinir un espace et d'y signer notre art.
+          Partout au Sénégal — et à l'international pour les projets d'envergure. Chaque chantier est l'occasion de redéfinir un espace et d'y signer notre art.
         </p>
       </header>
 

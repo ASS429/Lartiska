@@ -30,7 +30,7 @@ export default function Home() {
     <>
       <Seo
         title=""
-        description="Lartiska — Maître Artisan finition luxe à Mbour, Sénégal. Peinture artistique, fresques murales, plafonnage décoratif, carrelage zellige, mosaïque, epoxy résine. Devis gratuit sous 48h. Intervention Sénégal, Gambie, Mauritanie."
+        description="Lartiska — Maître Artisan finition luxe à Mbour, Sénégal. Peinture artistique, fresques murales, plafonnage décoratif, carrelage zellige, mosaïque, epoxy résine. Devis gratuit sous 48h. Intervention partout au Sénégal et à l'international."
         path="/"
       />
       {/* ─── HERO — section conservée (validée par le user) ─── */}
@@ -50,7 +50,7 @@ export default function Home() {
         <div className="container-art relative z-10 text-center py-20">
           <p className="eyebrow-deco mb-6">
             <span className="w-6 h-px bg-gold" />
-            Lartiska · Sénégal · Gambie · Mauritanie
+            Lartiska · Partout au Sénégal · International
             <span className="w-6 h-px bg-gold" />
           </p>
           <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-light leading-[1.05] text-shadow-soft">
@@ -172,11 +172,11 @@ export default function Home() {
             <header className="max-w-2xl mb-12">
               <p className="eyebrow mb-4">— Portfolio</p>
               <h2 className="font-serif text-4xl md:text-6xl font-light leading-[1.04]">
-                Nos réalisations <em className="gold-em">à travers</em><br />
-                l'Afrique de l'Ouest.
+                Nos réalisations, <em className="gold-em">partout</em><br />
+                où l'on nous appelle.
               </h2>
               <p className="mt-6 text-fg/75 leading-relaxed max-w-xl">
-                Du Sénégal à la Mauritanie, en passant par la Gambie — chaque chantier est l'occasion de redéfinir un espace et d'y signer notre art.
+                Partout au Sénégal — et à l'international pour les projets d'envergure. Chaque chantier est l'occasion de redéfinir un espace et d'y signer notre art.
               </p>
             </header>
 
@@ -333,6 +333,14 @@ function CategoryIcon({ slug }) {
       return <svg {...common}><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 7h3v3H8z"/><path d="M13 7h3v3h-3z"/><path d="M8 13h3v3H8z"/><path d="M13 13h3v3h-3z"/></svg>;
     case 'isolation':
       return <svg {...common}><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"/><path d="M12 8v5"/><path d="M9.5 10.5h5"/></svg>;
+    case 'menuiserie':
+      return <svg {...common}><path d="M4 20 17 7l3 3L7 23z"/><path d="m14 10 3 3"/><path d="M4 20l3 3"/><path d="M19 2l3 3-2 2-3-3z"/></svg>;
+    case 'ameublement':
+      return <svg {...common}><path d="M5 11V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><path d="M3 11a2 2 0 0 1 2 2v2h14v-2a2 2 0 0 1 4 0v4a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2z"/><path d="M5 19v2"/><path d="M19 19v2"/></svg>;
+    case 'espaces-verts':
+      return <svg {...common}><path d="M12 21c4-3 8-6.5 8-11a8 8 0 0 0-16 0c0 4.5 4 8 8 11z"/><path d="M12 21V10"/><path d="M12 13l3-3"/><path d="M12 16l-3-3"/></svg>;
+    case 'etancheite':
+      return <svg {...common}><path d="M12 3c3.5 4.5 6 7.7 6 11a6 6 0 0 1-12 0c0-3.3 2.5-6.5 6-11z"/><path d="M9.5 14a2.5 2.5 0 0 0 2.5 2.5"/></svg>;
     default:
       return <svg {...common}><circle cx="12" cy="12" r="9"/><path d="M12 7v10"/><path d="M7 12h10"/></svg>;
   }

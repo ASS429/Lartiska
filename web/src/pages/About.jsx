@@ -66,10 +66,11 @@ export default function About() {
           un espace.
         </h1>
         <p className="mt-6 text-fg/85 leading-relaxed text-lg">
-          Lartiska est l'entreprise d'un <strong className="text-gold font-semibold">Maître Artisan en finition luxe</strong>,
-          Tounkara — peintre, plafonneur, carreleur, poseur d'epoxy résine et designer d'intérieur.
-          Spécialisée dans les créations uniques et innovantes, elle propose une gamme de prestations
-          qu'on ne trouve nulle part ailleurs sur le marché.
+          Lartiska est une entreprise du <strong className="text-gold font-semibold">second œuvre</strong> —
+          tout ce qui transforme un bâtiment brut en espace de vie. Fondée par Tounkara,
+          <strong className="text-gold font-semibold"> Maître Artisan en finition luxe</strong>, elle réunit
+          peinture &amp; design d'intérieur, menuiserie, ameublement, carrelage, plafonnage, étanchéité
+          et aménagement d'espaces verts — chaque intervention traitée avec la même exigence artistique.
         </p>
       </header>
 
@@ -148,8 +149,8 @@ export default function About() {
           <p className="font-serif text-5xl text-gold">03</p>
           <h2 className="font-serif text-2xl mt-3">Présence</h2>
           <p className="mt-3 text-fg/85 leading-relaxed">
-            Lartiska intervient à travers le Sénégal, la Gambie et la Mauritanie — résidences privées, espaces
-            commerciaux, hôtels, restaurants.
+            Lartiska intervient partout au Sénégal, et se déplace à l'international pour les projets
+            d'envergure — résidences privées, espaces commerciaux, hôtels, restaurants.
           </p>
         </div>
       </section>
@@ -198,11 +199,12 @@ export default function About() {
         <header className="max-w-2xl mb-8">
           <p className="eyebrow mb-3">— Zones desservies</p>
           <h2 className="font-serif text-4xl md:text-5xl font-light leading-tight">
-            Sénégal · Gambie · <em className="gold-em">Mauritanie</em>.
+            Partout au Sénégal · <em className="gold-em">et à l'international</em>.
           </h2>
           <p className="mt-5 text-fg/85 leading-relaxed">
-            Nous intervenons principalement dans les villes ci-dessous. Pour les chantiers en dehors de ces zones
-            ou à plus de 100 km de Dakar, des frais de déplacement peuvent s'ajouter et seront indiqués dans le devis.
+            Où que soit votre chantier au Sénégal, nous venons. Pour les projets d'envergure, nous nous
+            déplaçons aussi à l'étranger. Les villes ci-dessous sont nos bases les plus fréquentes —
+            d'éventuels frais de déplacement sont toujours indiqués clairement dans le devis.
           </p>
         </header>
         <div className="surface-card p-8">

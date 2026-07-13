@@ -21,7 +21,7 @@ const SECTIONS = [
       },
       {
         q: 'Dans quelles zones intervenez-vous ?',
-        a: "Lartiska intervient principalement au Sénégal (Dakar, Thiès, Saint-Louis, Tivaoune, Touba, Ziguinchor, Mbour…). Nous nous déplaçons aussi en Gambie et en Mauritanie pour les projets significatifs. Pour les chantiers à plus de 100 km de Dakar, des frais de déplacement peuvent s'ajouter.",
+        a: "Partout au Sénégal : où que soit votre chantier (Dakar, Thiès, Saint-Louis, Touba, Ziguinchor, Mbour ou ailleurs), nous venons. Pour les projets d'envergure, nous nous déplaçons aussi à l'international. D'éventuels frais de déplacement sont toujours indiqués clairement dans le devis.",
       },
     ],
   },
@@ -72,7 +72,7 @@ export default function FAQ() {
     <div className="container-art py-16 md:py-24">
       <Seo
         title="FAQ · Tarifs, délais, garanties peinture & carrelage Sénégal — Lartiska"
-        description="Tout savoir sur Lartiska au Sénégal : devis gratuit, délais des chantiers (peinture, fresque, plafonnage, carrelage, epoxy résine), paiements (Wave, Orange Money), garantie 1 an, zones desservies (Dakar, Mbour, Saint-Louis, Gambie, Mauritanie)."
+        description="Tout savoir sur Lartiska au Sénégal : devis gratuit, délais des chantiers (peinture, fresque, plafonnage, carrelage, epoxy résine, menuiserie), paiements (Wave, Orange Money), garantie 1 an. Intervention partout au Sénégal et à l'international."
         path="/faq"
         jsonLd={{
           '@context': 'https://schema.org',
@@ -80,7 +80,7 @@ export default function FAQ() {
           mainEntity: [
             { '@type': 'Question', name: 'Comment se passe une demande de devis ?', acceptedAnswer: { '@type': 'Answer', text: 'Vous remplissez le formulaire en 4 étapes. Tounkara revient sous 24h ouvrées avec un devis PDF détaillé. Vous pouvez accepter, refuser ou demander une modification depuis votre espace.' } },
             { '@type': 'Question', name: 'Faut-il payer pour obtenir un devis ?', acceptedAnswer: { '@type': 'Answer', text: 'Non, le devis est entièrement gratuit et sans engagement. Vous ne payez qu\'après acceptation du devis et signature.' } },
-            { '@type': 'Question', name: 'Dans quelles zones intervenez-vous ?', acceptedAnswer: { '@type': 'Answer', text: 'Lartiska intervient au Sénégal (Dakar, Thiès, Saint-Louis, Tivaoune, Touba, Ziguinchor, Mbour), en Gambie et en Mauritanie pour les projets significatifs.' } },
+            { '@type': 'Question', name: 'Dans quelles zones intervenez-vous ?', acceptedAnswer: { '@type': 'Answer', text: 'Partout au Sénégal, où que soit votre chantier. Pour les projets d\'envergure, Lartiska se déplace aussi à l\'international.' } },
             { '@type': 'Question', name: 'Quelle garantie offrez-vous ?', acceptedAnswer: { '@type': 'Answer', text: 'Chaque réalisation Lartiska bénéficie d\'une garantie d\'1 an sur les finitions. En cas de défaut imputable à notre travail, retouche sans frais.' } },
             { '@type': 'Question', name: 'Comment se passent les paiements ?', acceptedAnswer: { '@type': 'Answer', text: '40 % d\'acompte à la signature, 60 % à la livraison. Paiements acceptés : virement bancaire, Wave, Orange Money, espèces avec reçu.' } },
           ],
