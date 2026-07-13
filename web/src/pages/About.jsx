@@ -1,6 +1,43 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSettings } from '@/hooks/useApi';
 import { Seo } from '@/hooks/useSeo';
+
+/**
+ * Carte membre de l'équipe. Si la photo n'est pas (encore) disponible,
+ * bascule sur un placeholder élégant — initiales dorées sur fond sombre.
+ */
+function TeamCard({ name, role, photo, initials }) {
+  const [imgOk, setImgOk] = useState(true);
+
+  return (
+    <article className="surface-card overflow-hidden">
+      <figure className="art-frame aspect-[4/5] m-0 rounded-none border-0 border-b border-line">
+        {imgOk ? (
+          <img
+            src={photo}
+            alt={`${name} — ${role}, Lartiska`}
+            loading="lazy"
+            className="w-full h-full object-cover object-top"
+            onError={() => setImgOk(false)}
+          />
+        ) : (
+          <div className="w-full h-full grid place-items-center bg-ink">
+            <span className="font-serif text-6xl text-gold/70 tracking-widest">{initials}</span>
+          </div>
+        )}
+        <figcaption>
+          <span className="art-caption-line" />
+          <span className="art-caption-text">{name.split(' ')[0]}</span>
+        </figcaption>
+      </figure>
+      <div className="p-6">
+        <h3 className="font-serif text-2xl">{name}</h3>
+        <p className="mt-2 text-[11px] uppercase tracking-[0.28em] text-gold font-semibold">{role}</p>
+      </div>
+    </article>
+  );
+}
 
 const STEPS = [
   {
@@ -94,16 +131,16 @@ export default function About() {
           <div className="p-8 md:p-12 flex flex-col justify-center">
             <p className="eyebrow mb-4">— L'artiste</p>
             <h2 className="font-serif text-3xl md:text-4xl font-light leading-tight">
-              Tounkara, fondateur de <em className="gold-em">Lartiska</em>.
+              Ahmadou Moustapha Tounkara,<br />fondateur de <em className="gold-em">Lartiska</em>.
             </h2>
             <p className="mt-3 text-[11px] uppercase tracking-[0.32em] text-gold font-semibold">
               Maître Artisan · Finition luxe
             </p>
             <p className="mt-5 text-fg/85 leading-relaxed">
               Artiste polyvalent — peintre, plafonneur, carreleur, poseur d'epoxy résine et designer
-              d'intérieur — Tounkara signe chaque chantier comme une pièce unique. Quinze ans à l'œuvre
-              entre Dakar, Saint-Louis, Banjul et Nouakchott, à transformer murs, plafonds, sols
-              et carreaux en récits visuels.
+              d'intérieur — Tounkara signe chaque chantier comme une pièce unique. À ses côtés, ses
+              deux frères aînés Malick et Moussa, piliers de l'entreprise, portent avec lui chaque
+              projet — de l'étude à la livraison, partout où les chantiers les appellent.
             </p>
             <p className="mt-4 text-fg/75 text-sm leading-relaxed">
               Découvrez son portfolio personnel — croquis, études, projets antérieurs et œuvres
@@ -125,6 +162,36 @@ export default function About() {
               <Link to="/contact" className="btn-ghost">Rencontrer Tounkara →</Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ─── L'équipe — les frères Tounkara ─── */}
+      <section className="mt-20" id="equipe">
+        <header className="max-w-2xl mb-10">
+          <p className="eyebrow mb-3">— L'équipe</p>
+          <h2 className="font-serif text-4xl md:text-5xl font-light leading-tight">
+            Une affaire de <em className="gold-em">frères</em>.
+          </h2>
+          <p className="mt-5 text-fg/85 leading-relaxed">
+            Aux côtés d'Ahmadou Moustapha, ses deux frères aînés — <strong className="text-gold font-semibold">Malick</strong> et{' '}
+            <strong className="text-gold font-semibold">Moussa Tounkara</strong> — sont des piliers incontournables
+            de Lartiska. Ensemble, ils portent chaque chantier de l'étude à la livraison.
+          </p>
+        </header>
+
+        <div className="grid sm:grid-cols-2 gap-6 max-w-3xl">
+          <TeamCard
+            name="Malick Tounkara"
+            role="Pilier de l'entreprise · Frère aîné"
+            photo="/img/malick-tounkara.webp"
+            initials="MT"
+          />
+          <TeamCard
+            name="Moussa Tounkara"
+            role="Pilier de l'entreprise · Frère aîné"
+            photo="/img/moussa-tounkara.webp"
+            initials="MT"
+          />
         </div>
       </section>
 

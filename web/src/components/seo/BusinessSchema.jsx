@@ -53,10 +53,24 @@ export function BusinessSchema() {
     ],
     founder: {
       '@type': 'Person',
-      name: 'Tounkara',
+      name: 'Ahmadou Moustapha Tounkara',
       jobTitle: 'Maître Artisan · Finition luxe',
       worksFor: { '@id': `${SITE_URL}/#business` },
     },
+    employee: [
+      {
+        '@type': 'Person',
+        name: 'Malick Tounkara',
+        jobTitle: 'Pilier de l\'entreprise',
+        worksFor: { '@id': `${SITE_URL}/#business` },
+      },
+      {
+        '@type': 'Person',
+        name: 'Moussa Tounkara',
+        jobTitle: 'Pilier de l\'entreprise',
+        worksFor: { '@id': `${SITE_URL}/#business` },
+      },
+    ],
     knowsAbout: [
       'Second œuvre',
       'Peinture artistique',
