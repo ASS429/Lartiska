@@ -28,7 +28,7 @@ class CategorySeeder extends Seeder
                 'name' => 'Plafonnage décoratif',
                 'slug' => 'plafonnage',
                 'icon' => 'ceiling',
-                'description' => 'Faux plafonds, plâtrerie artistique, reliefs et textures.',
+                'description' => 'Plafonnage plâtre et BA13 : faux plafonds, plâtrerie artistique, reliefs et textures.',
                 'order' => 3,
             ],
             [
@@ -93,7 +93,7 @@ class CategorySeeder extends Seeder
                 'name' => 'Menuiserie',
                 'slug' => 'menuiserie',
                 'icon' => 'wood',
-                'description' => 'Menuiserie bois et aluminium : portes, fenêtres, placards, habillages sur mesure.',
+                'description' => 'Menuiserie bois : portes, cuisines américaines, meubles TV standards et mobilier sur mesure.',
                 'order' => 12,
             ],
             [
@@ -116,6 +116,20 @@ class CategorySeeder extends Seeder
                 'icon' => 'droplet',
                 'description' => 'Étanchéité des toitures-terrasses, salles d\'eau et façades — protection durable contre les infiltrations.',
                 'order' => 15,
+            ],
+            [
+                'name' => 'Aluminium',
+                'slug' => 'aluminium',
+                'icon' => 'window',
+                'description' => 'Menuiserie aluminium : portes, fenêtres, baies vitrées et vérandas sur mesure.',
+                'order' => 16,
+            ],
+            [
+                'name' => 'Cuvelage',
+                'slug' => 'cuvelage',
+                'icon' => 'droplet-shield',
+                'description' => 'Traitement étanche des sous-sols, caves, fosses et réservoirs contre les infiltrations d\'eau.',
+                'order' => 17,
             ],
         ];
 

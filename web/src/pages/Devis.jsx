@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
-import { useServices } from '@/hooks/useApi';
+import { useServices, useSettings } from '@/hooks/useApi';
+import { whatsappLink } from '@/utils/format';
 import { submitQuote } from '@/api/endpoints';
 import { Seo } from '@/hooks/useSeo';
 import { HoneypotField } from '@/components/ui/HoneypotField';
@@ -66,6 +67,13 @@ export default function Devis() {
   const [attachments, setAttachments] = useState([]); // File[]
   const [fileError, setFileError] = useState(null);
   const { data: services } = useServices();
+  const { data: settings } = useSettings();
+
+  // Canaux directs — les prix varient selon la zone et le projet :
+  // beaucoup de clients préfèrent l'échange direct au formulaire.
+  const waNumber = settings?.['contact.whatsapp'] || import.meta.env.VITE_WHATSAPP_NUMBER || '221785446363';
+  const waHref = whatsappLink(waNumber, 'Bonjour Lartiska, je souhaite un devis pour mon projet : ');
+  const email = settings?.['contact.email'] || 'lartiska.officiel@gmail.com';
 
   const mutation = useMutation({
     mutationFn: () => submitQuote({
@@ -144,12 +152,42 @@ export default function Devis() {
         description="Demandez un devis gratuit Lartiska au Sénégal : peinture artistique, fresque murale, plafonnage décoratif, carrelage zellige, mosaïque, epoxy résine, décoration d'intérieur. 4 étapes, PDF détaillé sous 48h ouvrées. Photos et plans acceptés."
         path="/devis"
       />
-      <header className="mb-10">
+      <header className="mb-8">
         <p className="eyebrow mb-3">— Demande de devis</p>
         <h1 className="font-serif text-4xl md:text-5xl font-light">
           Quelques étapes pour <em className="text-gold">décrire votre projet</em>.
         </h1>
+        <p className="mt-4 text-fg/70 text-sm leading-relaxed max-w-xl">
+          Chaque projet est unique : le prix dépend de la zone, de la surface et de la
+          complexité. Le devis est <strong className="text-gold">gratuit et personnalisé</strong>.
+        </p>
       </header>
+
+      {/* ── Canaux directs — plus simple pour beaucoup de clients ── */}
+      <div className="surface-card p-5 md:p-6 mb-10 flex flex-wrap items-center gap-4">
+        <p className="text-sm text-fg/80 flex-1 min-w-[220px]">
+          <strong>Plus rapide pour vous ?</strong> Envoyez directement photos et description
+          par WhatsApp ou par email — réponse sous 48h.
+        </p>
+        <div className="flex flex-wrap gap-3">
+          <a
+            href={waHref}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#25D366] text-white text-xs font-semibold uppercase tracking-widest hover:brightness-110 transition-all"
+          >
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.1 3.2 5.1 4.49.71.3 1.27.49 1.7.63.72.23 1.37.2 1.88.12.58-.09 1.76-.72 2-1.42.25-.7.25-1.29.18-1.42-.08-.12-.28-.2-.57-.35z"/><path d="M12.05 2a9.9 9.9 0 0 0-8.4 15.12L2.1 22l5-1.5A9.9 9.9 0 1 0 12.05 2zm0 18.1a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-2.96.89.9-2.88-.2-.3a8.2 8.2 0 1 1 6.74 3.61z"/></svg>
+            WhatsApp
+          </a>
+          <a
+            href={`mailto:${email}?subject=Demande de devis Lartiska`}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-line text-xs font-semibold uppercase tracking-widest text-fg/85 hover:border-gold hover:text-gold transition-colors"
+          >
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            Email
+          </a>
+        </div>
+      </div>
 
       {/* Stepper — mobile : barre fine + label de l'étape courante seulement.
           Desktop (sm+) : tous les labels visibles. */}

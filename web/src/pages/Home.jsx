@@ -341,6 +341,10 @@ function CategoryIcon({ slug }) {
       return <svg {...common}><path d="M12 21c4-3 8-6.5 8-11a8 8 0 0 0-16 0c0 4.5 4 8 8 11z"/><path d="M12 21V10"/><path d="M12 13l3-3"/><path d="M12 16l-3-3"/></svg>;
     case 'etancheite':
       return <svg {...common}><path d="M12 3c3.5 4.5 6 7.7 6 11a6 6 0 0 1-12 0c0-3.3 2.5-6.5 6-11z"/><path d="M9.5 14a2.5 2.5 0 0 0 2.5 2.5"/></svg>;
+    case 'aluminium':
+      return <svg {...common}><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M12 3v18"/><path d="M4 12h16"/><circle cx="9.5" cy="9" r="0.5" fill="currentColor"/><circle cx="14.5" cy="9" r="0.5" fill="currentColor"/></svg>;
+    case 'cuvelage':
+      return <svg {...common}><path d="M4 6h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"/><path d="M6 12v7a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-7"/><path d="M12 15v3"/></svg>;
     default:
       return <svg {...common}><circle cx="12" cy="12" r="9"/><path d="M12 7v10"/><path d="M7 12h10"/></svg>;
   }

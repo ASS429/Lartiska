@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useCategories, useServices } from '@/hooks/useApi';
-import { formatPriceRange } from '@/utils/format';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { Seo } from '@/hooks/useSeo';
@@ -55,7 +54,7 @@ export default function Services() {
     <div className="container-art py-16 md:py-24">
       <Seo
         title="Services & Tarifs · Peinture artistique, fresques, plafonnage, carrelage, epoxy résine Sénégal"
-        description="Tarifs Lartiska au Sénégal : peinture artistique, fresques murales, plafonnage décoratif, carrelage zellige, mosaïque, epoxy résine, décoration d'intérieur. Fourchettes en FCFA, devis détaillé gratuit sous 48h. Mbour, Dakar, Saint-Louis."
+        description="Services Lartiska au Sénégal : peinture, carrelage, plafonnage plâtre & BA13, étanchéité, cuvelage, menuiserie, aluminium, epoxy résine, décoration d'intérieur. Devis gratuit personnalisé selon votre zone et votre projet — sous 48h. Mbour, Dakar, Saint-Louis."
         path="/services"
         jsonLd={{
           '@context': 'https://schema.org',
@@ -153,14 +152,14 @@ export default function Services() {
                 <p className="text-[15px] text-fg/85 leading-[1.7] flex-1">{s.description}</p>
 
                 <div className="flex items-end justify-between border-t border-line pt-5 mt-1">
+                  {/* Les prix ne sont pas fixes (zone, surface, complexité) :
+                      on affiche « Sur devis » — le chiffrage se fait après échange. */}
                   <div>
-                    <p className="text-[10px] uppercase tracking-[0.32em] text-fg/65 font-semibold mb-1">À partir de</p>
-                    <p className="font-serif text-2xl md:text-[28px] text-gold leading-none tabular-nums">
-                      {formatPriceRange(s.price_from, s.price_to)}
-                    </p>
+                    <p className="font-serif text-2xl md:text-[26px] text-gold leading-none">Sur devis</p>
+                    <p className="text-[10px] uppercase tracking-[0.22em] text-fg/55 font-semibold mt-1.5">selon zone &amp; projet · gratuit</p>
                   </div>
                   <Link
-                    to="/devis"
+                    to={`/devis?service_id=${s.id}`}
                     className="text-[11px] uppercase tracking-widest font-semibold text-fg/85 hover:text-gold border-b border-line hover:border-gold pb-0.5 transition-colors"
                   >
                     Demander un devis →
