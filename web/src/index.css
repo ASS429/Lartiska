@@ -777,7 +777,14 @@
    ═══════════════════════════════════════════════════════════════════ */
 .craft-story {
   position: relative;
-  min-height: 100vh;
+  /* Hauteur = distance de scrub du récit (l'équivalent de l'ancien pin GSAP
+     end:+=280%, mais en pur CSS sticky → aucun re-parentage du DOM). */
+  height: 380vh;
+}
+.craft-story__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
   display: flex;
   align-items: center;
   overflow: hidden;

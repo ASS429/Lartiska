@@ -46,12 +46,15 @@ export function CraftStory() {
         gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
       });
 
+      // PAS de pin GSAP : le pin re-parente le DOM (pin-spacer) et fait
+      // crasher React au démontage (removeChild sur un nœud déplacé).
+      // Le "pin" est fait en CSS via position:sticky (.craft-story__sticky) ;
+      // GSAP ne fait que scruber la timeline sur la hauteur de la section.
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: hostRef.current,
           start: 'top top',
-          end: '+=280%',       // 4 états ≈ presque 3 écrans de scroll
-          pin: true,
+          end: 'bottom bottom',
           scrub: 0.6,
         },
       });
@@ -110,7 +113,8 @@ export function CraftStory() {
 
   return (
     <section ref={hostRef} className="craft-story" aria-label="Notre méthode : du mur brut à l'œuvre signée">
-      <div className="craft-story__inner container-art">
+      <div className="craft-story__sticky">
+        <div className="craft-story__inner container-art">
         {/* ── Le mur — vraies photos de chantier (public/img/mur_*.webp) ── */}
         <div className="craft-wall" aria-hidden="true">
           <div className="craft-layer craft-layer--brut" />
@@ -141,6 +145,7 @@ export function CraftStory() {
               </div>
             ))}
           </div>
+        </div>
         </div>
       </div>
     </section>
