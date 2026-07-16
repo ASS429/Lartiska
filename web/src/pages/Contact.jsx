@@ -89,6 +89,7 @@ export default function Contact() {
     { key: 'facebook',  label: 'Facebook',  url: settings?.['social.facebook'],  handle: settings?.['social_handle.facebook']  || '@lartiska',           icon: <FacebookIcon />,  brand: '#1877F2', contrast: '#FFFFFF' },
     { key: 'instagram', label: 'Instagram', url: settings?.['social.instagram'], handle: settings?.['social_handle.instagram'] || '@lartiska_officiel',  icon: <InstagramIcon />, brand: '#E1306C', contrast: '#FFFFFF', gradient: 'linear-gradient(135deg, #FEDA75 0%, #FA7E1E 25%, #D62976 55%, #962FBF 80%, #4F5BD5 100%)' },
     { key: 'tiktok',    label: 'TikTok',    url: settings?.['social.tiktok'],    handle: settings?.['social_handle.tiktok']    || '@lartiska',           icon: <TikTokIcon />,    brand: '#000000', contrast: '#FFFFFF' },
+    { key: 'youtube',   label: 'YouTube',   url: settings?.['social.youtube'],   handle: settings?.['social_handle.youtube']   || '@lartiska6323',       icon: <YouTubeIcon />,   brand: '#FF0000', contrast: '#FFFFFF' },
     { key: 'snapchat',  label: 'Snapchat',  url: settings?.['social.snapchat'],  handle: settings?.['social_handle.snapchat']  || 'lartiska',            icon: <SnapchatIcon />,  brand: '#FFFC00', contrast: '#000000' },
     { key: 'gmail',     label: 'Gmail',     url: gmail.startsWith('http') ? gmail : `mailto:${gmail}`, handle: gmail, icon: <GmailIcon />, brand: '#EA4335', contrast: '#FFFFFF' },
   ].filter((s) => s.url);
@@ -287,4 +288,7 @@ function SnapchatIcon() {
 }
 function GmailIcon() {
   return <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>;
+}
+function YouTubeIcon() {
+  return <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg>;
 }

@@ -26,17 +26,19 @@ class SettingSeeder extends Seeder
             ['key' => 'contact.email', 'value' => 'contact@lartiska.com', 'group' => 'contact', 'is_public' => true],
             ['key' => 'contact.address', 'value' => 'Dakar, Sénégal', 'group' => 'contact', 'is_public' => true],
 
-            // Réseaux sociaux
-            ['key' => 'social.facebook',  'value' => 'https://facebook.com/lartiska', 'group' => 'social', 'is_public' => true],
-            ['key' => 'social.instagram', 'value' => 'https://instagram.com/lartiska_officiel', 'group' => 'social', 'is_public' => true],
+            // Réseaux sociaux — URLs officielles Lartiska (sans paramètres de tracking)
+            ['key' => 'social.facebook',  'value' => 'https://www.facebook.com/share/1U5e5Kr13D/', 'group' => 'social', 'is_public' => true],
+            ['key' => 'social.instagram', 'value' => 'https://www.instagram.com/lartiska_officiel', 'group' => 'social', 'is_public' => true],
             ['key' => 'social.tiktok',    'value' => 'https://www.tiktok.com/@lartiska', 'group' => 'social', 'is_public' => true],
+            ['key' => 'social.youtube',   'value' => 'https://www.youtube.com/@lartiska6323', 'group' => 'social', 'is_public' => true],
             ['key' => 'social.snapchat',  'value' => 'https://www.snapchat.com/add/lartiska', 'group' => 'social', 'is_public' => true],
             ['key' => 'social.gmail',     'value' => 'lartiska.officiel@gmail.com', 'group' => 'social', 'is_public' => true],
 
             // Identifiants courts pour affichage
-            ['key' => 'social_handle.facebook',  'value' => '@lartiska', 'group' => 'social', 'is_public' => true],
+            ['key' => 'social_handle.facebook',  'value' => 'Lartiska', 'group' => 'social', 'is_public' => true],
             ['key' => 'social_handle.instagram', 'value' => '@lartiska_officiel', 'group' => 'social', 'is_public' => true],
             ['key' => 'social_handle.tiktok',    'value' => '@lartiska', 'group' => 'social', 'is_public' => true],
+            ['key' => 'social_handle.youtube',   'value' => '@lartiska6323', 'group' => 'social', 'is_public' => true],
             ['key' => 'social_handle.snapchat',  'value' => 'lartiska', 'group' => 'social', 'is_public' => true],
 
             // Villes desservies

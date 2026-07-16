@@ -106,6 +106,10 @@ export function BusinessSchema() {
     ],
     sameAs: [
       'https://lartiska-portfolio.onrender.com',
+      'https://www.tiktok.com/@lartiska',
+      'https://www.instagram.com/lartiska_officiel',
+      'https://www.facebook.com/share/1U5e5Kr13D/',
+      'https://www.youtube.com/@lartiska6323',
     ],
   };
 

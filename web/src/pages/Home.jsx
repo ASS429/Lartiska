@@ -84,28 +84,28 @@ export default function Home() {
         </section>
       </SectionWipe>
 
-      {/* ─── ŒUVRES — triptyque vidéo (V3 / V4 / V1) ─── */}
+      {/* ─── ŒUVRES — triptyque de VRAIES réalisations Lartiska ─── */}
       <section className="container-art py-12 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
           <figure className="art-frame aspect-[3/4]">
-            <LazyVideo src="/V3.mp4" />
+            <LazyVideo src="/videos/oeuvre-marbre.mp4" />
             <figcaption>
               <span className="art-caption-line" />
-              <span className="art-caption-text">œuvre #001</span>
+              <span className="art-caption-text">intérieur marbré · moulures</span>
             </figcaption>
           </figure>
           <figure className="art-frame aspect-[3/4]">
-            <LazyVideo src="/V4.mp4" />
+            <LazyVideo src="/videos/oeuvre-art3d.mp4" />
             <figcaption>
               <span className="art-caption-line" />
-              <span className="art-caption-text">œuvre #002</span>
+              <span className="art-caption-text">fresque art 3D</span>
             </figcaption>
           </figure>
           <figure className="art-frame aspect-[3/4]">
-            <LazyVideo src="/V1.mp4" />
+            <LazyVideo src="/videos/oeuvre-plafond.mp4" />
             <figcaption>
               <span className="art-caption-line" />
-              <span className="art-caption-text">œuvre #003</span>
+              <span className="art-caption-text">plafond lumière</span>
             </figcaption>
           </figure>
         </div>

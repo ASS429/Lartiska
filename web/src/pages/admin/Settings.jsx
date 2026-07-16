@@ -3,9 +3,10 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchAdminSettings, updateAdminSettings } from '@/api/admin';
 
 const SOCIAL_KEYS = [
-  { key: 'social.facebook',  label: 'Facebook',  placeholder: 'https://facebook.com/lartiska' },
-  { key: 'social.instagram', label: 'Instagram', placeholder: 'https://instagram.com/lartiska_officiel' },
+  { key: 'social.facebook',  label: 'Facebook',  placeholder: 'https://www.facebook.com/share/1U5e5Kr13D/' },
+  { key: 'social.instagram', label: 'Instagram', placeholder: 'https://www.instagram.com/lartiska_officiel' },
   { key: 'social.tiktok',    label: 'TikTok',    placeholder: 'https://www.tiktok.com/@lartiska' },
+  { key: 'social.youtube',   label: 'YouTube',   placeholder: 'https://www.youtube.com/@lartiska6323' },
   { key: 'social.snapchat',  label: 'Snapchat',  placeholder: 'https://www.snapchat.com/add/lartiska' },
   { key: 'social.gmail',     label: 'Gmail',     placeholder: 'lartiska.officiel@gmail.com' },
 ];
@@ -14,6 +15,7 @@ const SOCIAL_HANDLE_KEYS = [
   { key: 'social_handle.facebook',  label: 'Identifiant Facebook' },
   { key: 'social_handle.instagram', label: 'Identifiant Instagram' },
   { key: 'social_handle.tiktok',    label: 'Identifiant TikTok' },
+  { key: 'social_handle.youtube',   label: 'Identifiant YouTube' },
   { key: 'social_handle.snapchat',  label: 'Identifiant Snapchat' },
 ];
 
