@@ -79,6 +79,38 @@ class AuthController extends Controller
     }
 
     /**
+     * Changement de mot de passe par un utilisateur CONNECTÉ (client ou admin).
+     * Exige le mot de passe actuel, et révoque toutes les autres sessions API
+     * (le token courant reste valide pour ne pas déconnecter l'utilisateur).
+     */
+    public function updatePassword(Request $request): JsonResponse
+    {
+        $passwordRule = \Illuminate\Validation\Rules\Password::min(10)->letters()->numbers();
+        if (app()->environment('production')) {
+            $passwordRule = $passwordRule->uncompromised();
+        }
+
+        $request->validate([
+            'current_password' => ['required', 'current_password'],
+            'password' => ['required', 'confirmed', $passwordRule],
+        ]);
+
+        $user = $request->user();
+        $user->forceFill([
+            'password' => Hash::make($request->string('password')),
+        ])->save();
+
+        // Révoquer toutes les sessions SAUF celle-ci (vol de compte : un
+        // attaquant connecté ailleurs est éjecté au changement de mot de passe).
+        $currentTokenId = $user->currentAccessToken()->id;
+        $user->tokens()->where('id', '!=', $currentTokenId)->delete();
+
+        return response()->json([
+            'message' => 'Mot de passe modifié. Vos autres sessions ont été déconnectées.',
+        ]);
+    }
+
+    /**
      * Envoie un email de réinitialisation de mot de passe.
      * On retourne TOUJOURS un succès (200) même si l'email n'existe pas,
      * pour éviter l'énumération des comptes.

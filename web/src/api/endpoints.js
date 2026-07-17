@@ -55,3 +55,6 @@ export const login = (payload) =>
 export const logout = () => apiClient.post('/auth/logout').then((r) => r.data);
 
 export const fetchMe = () => apiClient.get('/auth/me').then((r) => r.data.data);
+
+export const updatePassword = (payload) =>
+  apiClient.patch('/auth/password', payload).then((r) => r.data);

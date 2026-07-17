@@ -60,6 +60,7 @@ Route::get('/settings/public', [SettingController::class, 'publicSettings']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/auth/me', [AuthController::class, 'me']);
     Route::post('/auth/logout', [AuthController::class, 'logout']);
+    Route::patch('/auth/password', [AuthController::class, 'updatePassword'])->middleware('throttle:6,1');
 
     Route::get('/quotes/{quote}', [QuoteController::class, 'show']);
     Route::get('/quotes/{quote}/pdf', [QuoteController::class, 'downloadPdf'])->name('quotes.pdf');

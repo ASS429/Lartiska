@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchAdminSettings, updateAdminSettings } from '@/api/admin';
+import { ChangePasswordForm } from '@/components/auth/ChangePasswordForm';
 
 const SOCIAL_KEYS = [
   { key: 'social.facebook',  label: 'Facebook',  placeholder: 'https://www.facebook.com/share/1U5e5Kr13D/' },
@@ -82,6 +83,7 @@ export default function AdminSettings() {
   if (isLoading) return <p className="text-fg/55">Chargement…</p>;
 
   return (
+    <>
     <form
       onSubmit={(e) => { e.preventDefault(); mutation.mutate(); }}
       className="space-y-8 max-w-4xl"
@@ -186,6 +188,12 @@ export default function AdminSettings() {
         </button>
       </div>
     </form>
+
+    {/* Hors du <form> réglages : formulaire indépendant */}
+    <div className="mt-10 max-w-4xl">
+      <ChangePasswordForm />
+    </div>
+    </>
   );
 }
 

@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { fetchMyQuotes } from '@/api/account';
 import { useAuthStore } from '@/store/auth';
+import { ChangePasswordForm } from '@/components/auth/ChangePasswordForm';
 import { formatPriceXOF } from '@/utils/format';
 
 const STATUS_LABELS = {
@@ -117,6 +118,12 @@ export default function Account() {
             </div>
           </div>
         )}
+      </section>
+
+      {/* ─── Sécurité ─── */}
+      <section className="mt-14">
+        <h2 className="font-serif text-2xl mb-5">Sécurité</h2>
+        <ChangePasswordForm />
       </section>
     </div>
   );
