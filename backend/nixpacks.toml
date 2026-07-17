@@ -3,7 +3,10 @@
 # symfony/* 8.x (php >=8.4). Sans ça Railway tombe sur PHP 8.2 par défaut.
 
 [phases.setup]
-nixPkgs = ["php84", "php84Packages.composer", "nodejs_20"]
+# php84Extensions.gd : indispensable au ré-encodage WebP des images
+# uploadées (ImageProcessor / Intervention Image). Sans lui, l'upload
+# d'images renvoie 500 en prod alors que tout marche en local.
+nixPkgs = ["php84", "php84Extensions.gd", "php84Packages.composer", "nodejs_20"]
 nixLibs = ["openssl"]
 
 [phases.install]

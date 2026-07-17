@@ -59,7 +59,16 @@ class ProjectImageController extends Controller
                 ]);
             } else {
                 // Image : ré-encodage WebP (strip EXIF/GPS + anti-polyglotte) + vignette.
-                $processed = ImageProcessor::storeProjectImage($file, $project->id);
+                try {
+                    $processed = ImageProcessor::storeProjectImage($file, $project->id);
+                } catch (\Throwable $e) {
+                    report($e); // Sentry + logs : la vraie cause, pas un 500 muet
+
+                    return response()->json([
+                        'message' => 'Impossible de traiter l\'image « ' . $file->getClientOriginalName()
+                            . ' » — le serveur d\'images a signalé : ' . $e->getMessage(),
+                    ], 422);
+                }
 
                 $image = $project->images()->create([
                     'path' => $processed['path'],
