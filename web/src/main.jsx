@@ -4,8 +4,13 @@ import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HelmetProvider } from 'react-helmet-async';
 import * as Sentry from '@sentry/react';
+import { registerSW } from 'virtual:pwa-register';
 import './index.css';
 import App from './App.jsx';
+
+// PWA : service worker (cache photos/vidéos/API + notifications push).
+// autoUpdate : les nouvelles versions du site s'installent toutes seules.
+registerSW({ immediate: true });
 
 // Monitoring d'erreurs — actif seulement si VITE_SENTRY_DSN est défini
 // (variable posée sur Render ; en local rien n'est envoyé).

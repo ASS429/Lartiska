@@ -9,8 +9,9 @@ Disallow: /register
 Disallow: /forgot-password
 Disallow: /reset-password
 
-# Sitemap principal (pages publiques)
-Sitemap: https://lartiska.sn/sitemap.xml
-
-# Sitemap dynamique des projets (généré par Laravel)
-Sitemap: https://lartiska-web-production.up.railway.app/sitemap-projects.xml
+# Sitemap complet (pages statiques + projets publiés).
+# Servi sur ce domaine via un rewrite Render vers l'API ; l'URL Railway
+# reste en secours. ⚠️ Après achat du domaine : remplacer l'URL
+# onrender.com par le nouveau domaine (voir docs/GUIDE-DOMAINE.md).
+Sitemap: https://lartiska.onrender.com/sitemap.xml
+Sitemap: https://lartiska-web-production.up.railway.app/sitemap.xml

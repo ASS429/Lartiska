@@ -52,6 +52,11 @@ Route::get('/social/feed', [SocialController::class, 'feed']);
 
 Route::get('/settings/public', [SettingController::class, 'publicSettings']);
 
+// Web Push (PWA) — abonnement public aux notifications de publication
+Route::get('/push/key', [\App\Http\Controllers\Api\PushController::class, 'key']);
+Route::post('/push/subscribe', [\App\Http\Controllers\Api\PushController::class, 'subscribe'])->middleware('throttle:10,1');
+Route::post('/push/unsubscribe', [\App\Http\Controllers\Api\PushController::class, 'unsubscribe'])->middleware('throttle:10,1');
+
 /*
 |--------------------------------------------------------------------------
 | Routes authentifiées (Sanctum)

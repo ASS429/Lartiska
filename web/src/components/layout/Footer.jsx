@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useSettings } from '@/hooks/useApi';
+import { PushBell } from '@/components/ui/PushBell';
 
 export function Footer() {
   const { data: settings } = useSettings();
@@ -87,6 +88,10 @@ export function Footer() {
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-2C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" /><path d="m9.75 15.02 5.75-3.27-5.75-3.27z" fill="currentColor" stroke="none" /></svg>
               </a>
             )}
+          </div>
+
+          <div className="mt-5">
+            <PushBell />
           </div>
         </div>
       </div>

@@ -35,6 +35,7 @@ return [
     'allowed_origins_patterns' => [
         '#^https://([a-z0-9-]+\.)?lartiska\.com$#',
         '#^https://([a-z0-9-]+\.)?lartiska\.art$#',
+        '#^https://([a-z0-9-]+\.)?lartiska\.sn$#',
     ],
 
     'allowed_headers' => ['*'],

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Project;
+use App\Observers\ProjectObserver;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -26,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
         }
+
+        // Notifications push PWA à chaque publication/màj du portfolio.
+        Project::observe(ProjectObserver::class);
 
         // Le lien de reset password dans l'email pointe vers le frontend React
         // (et non une route Laravel inexistante) :
