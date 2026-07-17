@@ -861,48 +861,50 @@
 .craft-step { position: absolute; inset: 0; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   Studio epoxy (EpoxyStudio.jsx) — pièce en fausse perspective,
-   sol clearcoat avec reflet qui balaie en continu. Teinte pilotée
-   par les variables CSS --epoxy-base / --epoxy-deep / --epoxy-sheen.
+   Studio epoxy (EpoxyStudio.jsx) — grille 2×2 des 4 textures réelles.
+   Chaque tuile est cliquable ; la teinte active porte le liseré or
+   et le reflet clearcoat balayé.
    ═══════════════════════════════════════════════════════════════════ */
-.epoxy-room {
+.epoxy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.epoxy-tile {
   position: relative;
   aspect-ratio: 4 / 3;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.55);
+  border: 2px solid transparent;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
-.epoxy-wall {
-  position: absolute;
-  inset: 0 0 42% 0;
-  background:
-    radial-gradient(120% 90% at 50% 0%, rgba(255, 255, 255, 0.10), transparent 60%),
-    linear-gradient(170deg, #35322c 0%, #262420 100%);
+.epoxy-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
-/* plinthe */
-.epoxy-wall::after {
-  content: '';
+.epoxy-tile:hover { transform: translateY(-2px); }
+.epoxy-tile.is-active {
+  border-color: #D4AF37;
+  box-shadow: 0 16px 40px -18px rgba(212, 175, 55, 0.45);
+}
+.epoxy-tile__label {
   position: absolute;
   left: 0; right: 0; bottom: 0;
-  height: 5%;
-  background: linear-gradient(#161513, #0d0c0b);
-}
-.epoxy-floor {
-  position: absolute;
-  inset: 58% 0 0 0;
-  /* vraie texture epoxy (variable --epoxy-img posée par le composant)
-     + reflet du mur dans le vernis + assombrissement de profondeur */
-  background-image:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 34%),
-    linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.18)),
-    var(--epoxy-img);
-  background-size: cover;
-  background-position: center;
-  animation: epoxy-fade-in 0.5s ease;
-}
-@keyframes epoxy-fade-in {
-  from { opacity: 0.25; }
-  to { opacity: 1; }
+  padding: 14px 10px 8px;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #F4ECD8;
+  text-align: left;
+  padding-left: 10px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.65));
+  pointer-events: none;
 }
 /* balayage spéculaire — le "clearcoat" vivant */
 .epoxy-sheen {

@@ -62,21 +62,23 @@ export function EpoxyStudio() {
         </header>
 
         <div className="grid lg:grid-cols-[3fr_2fr] gap-10 items-center max-w-5xl mx-auto">
-          {/* ── La pièce ─────────────────────────────────────────── */}
-          <div
-            className="epoxy-room"
-            style={{
-              '--epoxy-img': `url('${tint.img}')`,
-              '--epoxy-sheen': tint.sheen,
-            }}
-            role="img"
-            aria-label={`Aperçu d'un sol en résine epoxy, teinte ${tint.label}`}
-          >
-            <div className="epoxy-wall" />
-            {/* key = re-monte la couche à chaque teinte → fondu d'apparition */}
-            <div className="epoxy-floor" key={tint.key}>
-              <div className="epoxy-sheen" />
-            </div>
+          {/* ── Les 4 textures en grille — cliquables, la teinte active
+                 est marquée or et porte le reflet balayé ─────────────── */}
+          <div className="epoxy-grid" role="group" aria-label="Aperçus des 4 teintes de sol epoxy">
+            {TINTS.map((t) => (
+              <button
+                key={t.key}
+                type="button"
+                onClick={() => setTint(t)}
+                aria-pressed={tint.key === t.key}
+                className={`epoxy-tile ${tint.key === t.key ? 'is-active' : ''}`}
+                style={{ '--epoxy-sheen': t.sheen }}
+              >
+                <img src={t.img} alt={`Sol en résine epoxy — teinte ${t.label}`} loading="lazy" />
+                {tint.key === t.key && <span className="epoxy-sheen" aria-hidden="true" />}
+                <span className="epoxy-tile__label">{t.label}</span>
+              </button>
+            ))}
           </div>
 
           {/* ── Nuancier + CTA ───────────────────────────────────── */}
