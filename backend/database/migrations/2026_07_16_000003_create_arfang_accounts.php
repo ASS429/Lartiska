@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Comptes demandés par Arfang (mot de passe admin d'origine oublié) :
@@ -9,11 +9,12 @@ use Illuminate\Database\Migrations\Migration;
  *  - un compte CLIENT : arfang@lartiska.sn
  *
  * Seul le hash bcrypt figure ici (jamais le mot de passe en clair dans
- * le repo). Idempotente : upsert par email — si le mot de passe est
- * changé ensuite via l'application, cette migration ne re-tournera pas.
+ * le repo). Idempotente : upsert par email.
  *
- * NB : le cast 'hashed' du modèle User ne re-hash pas une valeur déjà
- * hashée (Hash::isHashed), on peut donc passer le hash directement.
+ * On passe par le Query Builder (pas Eloquent) : le cast 'hashed' du
+ * modèle User vérifie que le coût du hash correspond à la config de
+ * l'environnement (BCRYPT_ROUNDS=4 en tests vs 12 en prod) et jetterait
+ * une RuntimeException. Le builder écrit le hash tel quel, partout.
  */
 return new class extends Migration
 {
@@ -21,29 +22,33 @@ return new class extends Migration
 
     public function up(): void
     {
-        // NB : pas d'email_verified_at — le champ n'est pas fillable et la
-        // connexion ne requiert pas d'email vérifié (pas de MustVerifyEmail).
-        User::updateOrCreate(
+        $now = now();
+
+        DB::table('users')->updateOrInsert(
             ['email' => 'arfang@lartiska.com'],
             [
                 'name' => 'Arfang Souleymane Sané',
                 'password' => self::HASH,
                 'role' => 'admin',
+                'updated_at' => $now,
+                'created_at' => $now,
             ],
         );
 
-        User::updateOrCreate(
+        DB::table('users')->updateOrInsert(
             ['email' => 'arfang@lartiska.sn'],
             [
                 'name' => 'Arfang Sané (client test)',
                 'password' => self::HASH,
                 'role' => 'client',
+                'updated_at' => $now,
+                'created_at' => $now,
             ],
         );
     }
 
     public function down(): void
     {
-        User::whereIn('email', ['arfang@lartiska.com', 'arfang@lartiska.sn'])->delete();
+        DB::table('users')->whereIn('email', ['arfang@lartiska.com', 'arfang@lartiska.sn'])->delete();
     }
 };
