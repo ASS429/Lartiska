@@ -238,7 +238,7 @@ export default function AccountQuoteDetail() {
           )}
 
           <a
-            href="https://wa.me/221785446363"
+            href="https://wa.me/221773468681"
             target="_blank"
             rel="noreferrer"
             className="block text-center text-xs uppercase tracking-widest text-fg/55 hover:text-gold pt-3"

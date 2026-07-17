@@ -71,7 +71,7 @@ export default function Devis() {
 
   // Canaux directs — les prix varient selon la zone et le projet :
   // beaucoup de clients préfèrent l'échange direct au formulaire.
-  const waNumber = settings?.['contact.whatsapp'] || import.meta.env.VITE_WHATSAPP_NUMBER || '221785446363';
+  const waNumber = settings?.['contact.whatsapp'] || import.meta.env.VITE_WHATSAPP_NUMBER || '221773468681';
   const waHref = whatsappLink(waNumber, 'Bonjour Lartiska, je souhaite un devis pour mon projet : ');
   const email = settings?.['contact.email'] || 'lartiska.officiel@gmail.com';
 

@@ -3,7 +3,7 @@ import { whatsappLink } from '@/utils/format';
 
 export function WhatsAppButton() {
   const { data: settings } = useSettings();
-  const number = settings?.['contact.whatsapp'] || import.meta.env.VITE_WHATSAPP_NUMBER || '221785446363';
+  const number = settings?.['contact.whatsapp'] || import.meta.env.VITE_WHATSAPP_NUMBER || '221773468681';
   const href = whatsappLink(number, 'Bonjour Lartiska, je souhaite échanger sur un projet.');
 
   return (

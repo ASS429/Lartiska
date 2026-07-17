@@ -22,8 +22,8 @@ export default function Contact() {
   const phones = Array.isArray(settings?.['contact.phones']) && settings['contact.phones'].length
     ? settings['contact.phones']
     : [
+        { label: 'Malick — Devis & contact', phone: '+221 77 346 86 81', whatsapp: '221773468681' },
         { label: 'Tounkara — Atelier', phone: '+221 78 544 63 63', whatsapp: '221785446363' },
-        { label: 'Devis & projets',    phone: '+221 77 346 86 81', whatsapp: '221773468681' },
         { label: 'Service client',     phone: '+221 77 289 85 37', whatsapp: '221772898537' },
       ];
 
@@ -95,7 +95,7 @@ export default function Contact() {
   ].filter((s) => s.url);
 
   // QR code WhatsApp (premier numéro avec son template contextualisé)
-  const primaryWhatsapp = phones[0]?.whatsapp || '221785446363';
+  const primaryWhatsapp = phones[0]?.whatsapp || '221773468681';
   const primaryLabel = phones[0]?.label || 'Tounkara — Atelier';
   const whatsappUrl = buildWhatsAppUrl(primaryWhatsapp, primaryLabel);
   const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=12&data=${encodeURIComponent(whatsappUrl)}`;

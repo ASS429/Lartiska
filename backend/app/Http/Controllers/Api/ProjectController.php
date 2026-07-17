@@ -33,9 +33,11 @@ class ProjectController extends Controller
             $query->featured();
         }
 
+        // Les dernières publications toujours en premier (demande Lartiska).
+        // "featured" ne réordonne plus la liste : il pilote uniquement la
+        // section vedette de l'accueil (filtre ?featured=1 ci-dessus).
         $projects = $query
-            ->orderByDesc('featured')
-            ->orderByDesc('completed_at')
+            ->orderByDesc('created_at')
             ->orderByDesc('id')
             ->paginate(min($request->integer('per_page', 12), 50));
 
